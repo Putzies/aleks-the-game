@@ -16,12 +16,12 @@
 * Controls: Left/Right Arrow Key for moving left or right. Spacebar for jumping. 
 
 * Current Use cases: Move -> Pickup. 
-Jump
-Attack
-Start game -> 
-    Select level
-Quit game
-Settings
-Scores
-Edit levels 
-Credits
+* Jump
+* Attack
+* Start game -> 
+*       Select level
+* Quit game
+* Settings
+* Scores
+* Edit levels 
+* Credits
