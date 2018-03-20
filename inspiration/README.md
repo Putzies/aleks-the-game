@@ -1,11 +1,7 @@
-# aleks-the-game
+# Inspiration
 
-## The game
-### Basics
-* 2D-platformer with Designed levels
-* Custom level text based format
-* Happy unicorn theme with pink clouds
-* Graphically satisfying
-* Custom level editor in-game
-* Personal high score
-* Share levels?
+### A nice flash retro game:
+* https://www.miniclip.com/games/retro-unicorn-attack/en/
+
+### A nice mobile game
+* https://play.google.com/store/apps/details?id=com.maginal.unicorn.game
