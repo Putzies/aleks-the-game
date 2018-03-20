@@ -1,6 +1,6 @@
 package soldater.johannas.model;
 
-public class Player implements Entity {
+public class Player implements Entity, Movable {
 
     public static final int WIDTH = 100;
     public static final int HEIGHT = 150;
@@ -44,6 +44,22 @@ public class Player implements Entity {
     @Override
     public String getName() {
         return "player";
+    }
+
+    @Override
+    public void left() {
+        x -= 6;
+    }
+
+    @Override
+    public void right() {
+        x += 6;
+    }
+
+    @Override
+    public void jump() {
+        y += 20;
+        yVel = 40;
     }
 
     private void applyGravity() {

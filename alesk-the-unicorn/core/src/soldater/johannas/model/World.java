@@ -10,9 +10,13 @@ public class World implements Entity {
     private List<Entity> entities;
     private List<Drawable> drawables;
 
+    private Player player;
+
     public World() {
+        player = new Player();
+
         entities = new ArrayList<Entity>();
-        entities.add(new Player());
+        entities.add(player);
 
         drawables = new ArrayList<Drawable>();
         drawables.add(new Block(10, 500));
@@ -24,6 +28,10 @@ public class World implements Entity {
         allObjects.addAll(drawables);
         allObjects.addAll(entities);
         return allObjects;
+    }
+
+    public Movable getPlayer() {
+        return player;
     }
 
     @Override
