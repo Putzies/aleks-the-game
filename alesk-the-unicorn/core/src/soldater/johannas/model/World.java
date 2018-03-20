@@ -5,14 +5,22 @@ import java.util.List;
 
 public class World implements Entity {
     private List<Entity> entities;
+    private List<Drawable> drawables;
 
     public World() {
         entities = new ArrayList<Entity>();
         entities.add(new Player());
+
+        drawables = new ArrayList<Drawable>();
+        drawables.add(new Block(10, 500));
+        drawables.add(new Block(800, 300));
     }
 
-    public List<? extends Drawable> getDrawables() {
-        return entities;
+    public List<Drawable> getDrawables() {
+        List<Drawable> allObjects = new ArrayList<Drawable>();
+        allObjects.addAll(drawables);
+        allObjects.addAll(entities);
+        return allObjects;
     }
 
     @Override
@@ -30,5 +38,10 @@ public class World implements Entity {
     @Override
     public int getY() {
         return 0;
+    }
+
+    @Override
+    public String getName() {
+        return "world";
     }
 }

@@ -23,4 +23,9 @@ public class Player implements Entity {
     public int getY() {
         return (x * x) / 500;
     }
+
+    @Override
+    public String getName() {
+        return "player";
+    }
 }
