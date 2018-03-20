@@ -21,6 +21,7 @@ public class World implements Entity {
         drawables = new ArrayList<Drawable>();
         drawables.add(new Block(10, 500));
         drawables.add(new Block(800, 300));
+        drawables.add(new Enemy(200, 200));
     }
 
     public List<Drawable> getDrawables() {

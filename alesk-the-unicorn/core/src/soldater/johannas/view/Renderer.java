@@ -44,7 +44,7 @@ public class Renderer {
     private void loadTextures() {
         textures = new HashMap<String, Texture>();
         for (Drawable drawable : drawables) {
-            textures.put(drawable.getName(), new Texture(drawable.getName() + ".jpg"));
+            textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
     }
 
