@@ -1,7 +1,9 @@
 package soldater.johannas.model;
 
 public interface Drawable {
-    int getX();
-    int getY();
+    double getX();
+    double getY();
+    double getWidth();
+    double getHeight();
     String getName();
 }

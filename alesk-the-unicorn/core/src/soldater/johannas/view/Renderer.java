@@ -30,7 +30,7 @@ public class Renderer {
         batch.begin();
 
         for (Drawable drawable : drawables) {
-            batch.draw(textures.get(drawable.getName()), drawable.getX(), drawable.getY());
+            batch.draw(textures.get(drawable.getName()), (int)drawable.getX(), (int)drawable.getY());
         }
 
         batch.end();

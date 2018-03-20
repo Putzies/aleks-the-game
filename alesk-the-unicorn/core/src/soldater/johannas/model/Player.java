@@ -2,30 +2,51 @@ package soldater.johannas.model;
 
 public class Player implements Entity {
 
-    private int x;
-    private int dir = 1;
+    public static final int WIDTH = 100;
+    public static final int HEIGHT = 150;
+
+    private double x = 100;
+    private double y = 300;
+    private double xVel, yVel;
 
     @Override
     public void update(double dTime) {
-        if ((dir == 1 && x > 500) || (dir == -1 && x < 0)) {
-            dir = -dir;
+        if (y > 0) {
+            applyGravity();
+        } else {
+            yVel = 0;
         }
 
-        x += dir;
+        x += xVel * dTime;
+        y += yVel * dTime;
     }
 
     @Override
-    public int getX() {
+    public double getX() {
         return x;
     }
 
     @Override
-    public int getY() {
-        return (x * x) / 500;
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public double getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public double getHeight() {
+        return HEIGHT;
     }
 
     @Override
     public String getName() {
         return "player";
+    }
+
+    private void applyGravity() {
+        yVel -= 3;
     }
 }
