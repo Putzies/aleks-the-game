@@ -1,6 +1,6 @@
 # aleks-the-game
 
 ## The game
-# Basics
+### Basics
 2D-platformer
 Designed levels
