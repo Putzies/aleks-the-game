@@ -2,7 +2,7 @@ package soldater.johannas.model;
 
 public class Block implements Drawable {
 
-    public static final int WIDTH = 100;
+    public static final int WIDTH = 50;
     public static final int HEIGHT = 50;
 
     private final int X,Y;

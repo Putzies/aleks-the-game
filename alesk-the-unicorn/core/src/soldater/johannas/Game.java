@@ -20,8 +20,8 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		playerController.update();
 		world.update(1);
+		playerController.update();
 		renderer.render();
 	}
 	

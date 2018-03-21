@@ -1,9 +1,18 @@
 package soldater.johannas.model;
 
 public abstract class Character implements Movable, Entity{
+    public static final int UP = 0;
+    public static final int RIGHT = 1;
+    public static final int LEFT = 2;
+    public static final int DOWN = 3;
+
     private int offset = 0;
     private double x,y;
     private double xVel, yVel;
+
+    private boolean[] collisions = {false, false, false, false};
+
+
 
     public Character(int x, int y) {
         this.x = x;
@@ -12,14 +21,32 @@ public abstract class Character implements Movable, Entity{
 
     @Override
     public void update(double dTime) {
-        if (y > 0) {
+        if (!collisions[DOWN]) {
             applyGravity();
-        } else {
-            yVel = 0;
         }
 
         x += xVel * dTime;
         y += yVel * dTime;
+    }
+
+    public void resetCollisions() {
+        for (int i = 0; i < 4; i++) {
+            collisions[i] = false;
+        }
+    }
+
+    public void setCollision(int location, boolean value, double correction) {
+        collisions[location] = value;
+
+        if(value) {
+            if (location == UP || location == DOWN) {
+                y = correction;
+                yVel = 0;
+            } else {
+                x = correction;
+                xVel = 0;
+            }
+        }
     }
 
     @Override
@@ -39,24 +66,29 @@ public abstract class Character implements Movable, Entity{
 
     @Override
     public void left() {
-        x -= 6;
+        if (!collisions[LEFT]) {
+            x -= 10;
+        }
         offset = (offset + 132) % 792;
 
     }
 
     @Override
     public void right() {
-        x += 6;
+        if (!collisions[RIGHT]) {
+            x += 10;
+        }
         offset = (offset + 132) % 792;
     }
 
     @Override
     public void jump() {
-        y += 20;
-        yVel = 40;
+        if (!collisions[UP]) {
+            yVel = 30;
+        }
     }
 
     private void applyGravity() {
-        yVel -= 3;
+        yVel -= 0.8;
     }
 }
