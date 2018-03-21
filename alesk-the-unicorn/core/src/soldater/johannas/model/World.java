@@ -9,19 +9,22 @@ public class World implements Entity {
 
     private List<Entity> entities;
     private List<Drawable> drawables;
+    private List<Character> characters;
 
     private Player player;
 
     public World() {
-        player = new Player();
+        player = new Player(50, 200);
 
         entities = new ArrayList<Entity>();
-        entities.add(player);
 
         drawables = new ArrayList<Drawable>();
         drawables.add(new Block(10, 500));
         drawables.add(new Block(800, 300));
         drawables.add(new Enemy(200, 200));
+
+        characters = new ArrayList<Character>();
+        characters.add(player);
     }
 
     public List<Drawable> getDrawables() {
@@ -37,9 +40,13 @@ public class World implements Entity {
 
     @Override
     public void update(double dTime) {
+        player.update(dTime);
+
         for (Entity entity : entities) {
             entity.update(dTime);
         }
+
+        collideCharacters();
     }
 
     @Override
@@ -70,5 +77,9 @@ public class World implements Entity {
     @Override
     public String getName() {
         return "world";
+    }
+
+    private void collideCharacters() {
+
     }
 }

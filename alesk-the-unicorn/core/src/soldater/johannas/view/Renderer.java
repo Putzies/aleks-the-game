@@ -13,15 +13,22 @@ import java.util.Map;
 public class Renderer {
     private SpriteBatch batch;
     private Map<String, Texture> textures;
+
+    private Drawable player;
     private List<? extends Drawable> drawables;
 
-    public Renderer(List<Drawable> drawables) {
-        this.drawables = drawables;
-    }
+    private int playerX;
+    private int playerY;
 
-    public void init() {
+    public Renderer(Drawable player, List<Drawable> drawables) {
+        this.drawables = drawables;
+        this.player = player;
+
         batch = new SpriteBatch();
         loadTextures();
+
+        playerX = Gdx.graphics.getWidth() / 2 - player.getWidth() / 2;
+        playerY = Gdx.graphics.getHeight() / 2 - player.getHeight() / 2;
     }
 
     public void render() {
@@ -29,8 +36,26 @@ public class Renderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
+        batch.draw(
+                textures.get("player"),
+                playerX,
+                playerY,
+                player.getOffset(),
+                0, // This can be used for different animations!
+                player.getWidth(),
+                player.getHeight()
+        );
+
         for (Drawable drawable : drawables) {
-            batch.draw(textures.get(drawable.getName()), (int)drawable.getX(), (int)drawable.getY(), drawable.getOffset(), 0, drawable.getWidth(), drawable.getHeight());
+            batch.draw(
+                    textures.get(drawable.getName()),
+                    (int)(drawable.getX() - player.getX() + playerX),
+                    (int)(drawable.getY() - player.getY() + playerY),
+                    drawable.getOffset(),
+                    0,
+                    drawable.getWidth(),
+                    drawable.getHeight()
+            );
         }
 
         batch.end();
@@ -43,6 +68,7 @@ public class Renderer {
 
     private void loadTextures() {
         textures = new HashMap<String, Texture>();
+        textures.put(player.getName(), new Texture(player.getName() + ".png"));
         for (Drawable drawable : drawables) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }

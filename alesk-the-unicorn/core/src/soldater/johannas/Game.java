@@ -14,9 +14,8 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		world = new World();
-		renderer = new Renderer(world.getDrawables());
+		renderer = new Renderer(world.getPlayer(), world.getDrawables());
 		playerController = new PlayerController(world.getPlayer());
-		renderer.init();
 	}
 
 	@Override
