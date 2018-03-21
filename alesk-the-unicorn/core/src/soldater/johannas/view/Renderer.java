@@ -25,12 +25,12 @@ public class Renderer {
     }
 
     public void render() {
-        Gdx.gl.glClearColor(1, 1, 2, 1);
+        Gdx.gl.glClearColor(0, 0, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
         for (Drawable drawable : drawables) {
-            batch.draw(textures.get(drawable.getName()), (int)drawable.getX(), (int)drawable.getY());
+            batch.draw(textures.get(drawable.getName()), (int)drawable.getX(), (int)drawable.getY(), drawable.getOffset(), 0, drawable.getWidth(), drawable.getHeight());
         }
 
         batch.end();

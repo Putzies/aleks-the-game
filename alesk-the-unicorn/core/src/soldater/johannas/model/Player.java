@@ -2,9 +2,10 @@ package soldater.johannas.model;
 
 public class Player implements Entity, Movable {
 
-    public static final int WIDTH = 100;
-    public static final int HEIGHT = 150;
+    public static final int WIDTH = 132;
+    public static final int HEIGHT = 93;
 
+    private int offset = 0;
     private double x = 100;
     private double y = 300;
     private double xVel, yVel;
@@ -32,13 +33,18 @@ public class Player implements Entity, Movable {
     }
 
     @Override
-    public double getWidth() {
+    public int getWidth() {
         return WIDTH;
     }
 
     @Override
-    public double getHeight() {
+    public int getHeight() {
         return HEIGHT;
+    }
+
+    @Override
+    public int getOffset() {
+        return offset;
     }
 
     @Override
@@ -49,11 +55,14 @@ public class Player implements Entity, Movable {
     @Override
     public void left() {
         x -= 6;
+        offset = (offset + 132) % 792;
+
     }
 
     @Override
     public void right() {
         x += 6;
+        offset = (offset + 132) % 792;
     }
 
     @Override

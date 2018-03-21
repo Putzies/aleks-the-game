@@ -1,6 +1,9 @@
 package soldater.johannas.model;
 
 public class Enemy implements Entity {
+    public static final int WIDTH = 92;
+    public static final int HEIGHT = 61;
+
     private double x;
     private double y;
 
@@ -25,12 +28,17 @@ public class Enemy implements Entity {
     }
 
     @Override
-    public double getWidth() {
-        return 0;
+    public int getWidth() {
+        return WIDTH;
     }
 
     @Override
-    public double getHeight() {
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
+    public int getOffset() {
         return 0;
     }
 
