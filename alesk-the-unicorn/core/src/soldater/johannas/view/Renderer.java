@@ -3,6 +3,7 @@ package soldater.johannas.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.model.Drawable;
 
@@ -16,6 +17,7 @@ public class Renderer {
 
     private Drawable player;
     private List<? extends Drawable> drawables;
+    public static Sprite backgroundSprite;
 
     private int playerX;
     private int playerY;
@@ -29,12 +31,15 @@ public class Renderer {
 
         playerX = Gdx.graphics.getWidth() / 2 - player.getWidth() / 2;
         playerY = Gdx.graphics.getHeight() / 2 - player.getHeight() / 2;
+        backgroundSprite = new Sprite(new Texture("background.png"));
     }
 
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0.8f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+
+        batch.draw(backgroundSprite, (int)(-player.getX()/3 + playerX), 0);
 
         batch.draw(
                 textures.get("player"),
