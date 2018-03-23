@@ -8,7 +8,6 @@ public interface Drawable {
     double getY();
     int getWidth();
     int getHeight();
-    int getOffset();
     int getDirection();
     String getName();
 }

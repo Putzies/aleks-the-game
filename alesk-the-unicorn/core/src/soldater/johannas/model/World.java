@@ -74,11 +74,6 @@ public class World implements Entity {
     }
 
     @Override
-    public int getOffset() {
-        return 0;
-    }
-
-    @Override
     public int getDirection() {
         return 0;
     }

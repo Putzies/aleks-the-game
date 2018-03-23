@@ -12,8 +12,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Renderer {
+
+    public final int NUM_FRAMES = 6;
+    public final int FRAME_FREQ = 3;
+
+    private int frameTimer = 0;
+
+
     private SpriteBatch batch;
     private Map<String, Texture> textures;
+
+    private int playerFrame = 0;
 
     private Drawable player;
     private List<? extends Drawable> drawables;
@@ -57,7 +66,7 @@ public class Renderer {
                 playerY,
                 player.getWidth(),
                 player.getHeight(), // This can be used for different animations!
-                player.getOffset(),
+                playerFrame * player.getWidth(),
                 0,
                 player.getWidth(),
                 player.getHeight(),
@@ -70,7 +79,7 @@ public class Renderer {
                     textures.get(drawable.getName()),
                     (int)(drawable.getX() - player.getX() + playerX),
                     (int)(drawable.getY() - player.getY() + playerY),
-                    drawable.getOffset(),
+                    0,
                     0,
                     drawable.getWidth(),
                     drawable.getHeight()
@@ -78,6 +87,8 @@ public class Renderer {
         }
 
         batch.end();
+
+        incrementFrames();
     }
 
     public void dispose() {
@@ -97,6 +108,14 @@ public class Renderer {
     private void disposeTextures() {
         for (Texture texture : textures.values()) {
             texture.dispose();
+        }
+    }
+
+    private void incrementFrames() {
+        frameTimer += 1;
+        if (frameTimer > FRAME_FREQ) {
+            playerFrame = (playerFrame + 1) % NUM_FRAMES;
+            frameTimer = 0;
         }
     }
 }

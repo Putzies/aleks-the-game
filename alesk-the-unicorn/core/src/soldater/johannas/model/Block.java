@@ -33,11 +33,6 @@ public class Block implements Drawable {
     }
 
     @Override
-    public int getOffset() {
-        return 0;
-    }
-
-    @Override
     public int getDirection() {
         return 0;
     }
