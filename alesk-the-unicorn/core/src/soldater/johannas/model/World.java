@@ -15,7 +15,7 @@ public class World implements Entity {
     private Player player;
 
     public World() {
-        player = new Player(50, 200);
+        player = new Player(0, 200);
 
         drawables = new ArrayList<Drawable>();
         drawables.add(new Enemy(200, 200));

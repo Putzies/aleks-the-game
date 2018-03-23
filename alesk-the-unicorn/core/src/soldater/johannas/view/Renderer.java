@@ -17,7 +17,6 @@ public class Renderer {
 
     private Drawable player;
     private List<? extends Drawable> drawables;
-    public static Sprite backgroundSprite;
 
     private int playerX;
     private int playerY;
@@ -31,7 +30,6 @@ public class Renderer {
 
         playerX = Gdx.graphics.getWidth() / 2 - player.getWidth() / 2;
         playerY = Gdx.graphics.getHeight() / 2 - player.getHeight() / 2;
-        backgroundSprite = new Sprite(new Texture("background.png"));
     }
 
     public void render() {
@@ -39,7 +37,19 @@ public class Renderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
-        batch.draw(backgroundSprite, (int)(-player.getX()/3 + playerX), 0);
+        Texture background = textures.get("background");
+
+        int addFstBackground = ((int)(player.getX() * 0.25) / (int)background.getWidth()) % 2;
+        int addSndBackground = (((int)(player.getX() * 0.25) + (int)background.getWidth()) / (int)background.getWidth()) % 2;
+
+        double playerOffsetFst = (-player.getX() * 0.25) % (background.getWidth() * 2);
+        double playerOffsetSnd = ((-player.getX() * 0.25) - background.getWidth()) % (background.getWidth() * 2);
+
+        int bgX1 = (int)(playerOffsetFst + addFstBackground * background.getWidth() * 2);
+        int bgX2 = (int)(playerOffsetSnd + addSndBackground * background.getWidth() * 2);
+        batch.draw(background, bgX1, 0);
+        batch.draw(background, bgX2, 0);
+
 
         batch.draw(
                 textures.get("player"),
@@ -74,6 +84,7 @@ public class Renderer {
     private void loadTextures() {
         textures = new HashMap<String, Texture>();
         textures.put(player.getName(), new Texture(player.getName() + ".png"));
+        textures.put("background", new Texture("background.png"));
         for (Drawable drawable : drawables) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
