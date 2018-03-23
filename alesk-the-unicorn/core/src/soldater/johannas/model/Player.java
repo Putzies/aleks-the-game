@@ -45,7 +45,6 @@ public class Player extends Character {
 
     @Override
     public void stop() {
-        System.out.println("stop");
         state = STANDING;
     }
 }
