@@ -4,4 +4,5 @@ public interface Movable extends Entity {
     void left();
     void right();
     void jump();
+    void stop();
 }

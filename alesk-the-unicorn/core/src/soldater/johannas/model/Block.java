@@ -38,6 +38,11 @@ public class Block implements Drawable {
     }
 
     @Override
+    public int getState() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
         return "block";
     }
