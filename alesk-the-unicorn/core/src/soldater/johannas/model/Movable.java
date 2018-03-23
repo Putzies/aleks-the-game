@@ -1,6 +1,6 @@
 package soldater.johannas.model;
 
-public interface Movable {
+public interface Movable extends Entity {
     void left();
     void right();
     void jump();

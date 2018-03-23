@@ -23,13 +23,18 @@ public class Block implements Drawable {
     }
 
     @Override
-    public double getWidth() {
+    public int getWidth() {
         return WIDTH;
     }
 
     @Override
-    public double getHeight() {
+    public int getHeight() {
         return HEIGHT;
+    }
+
+    @Override
+    public int getOffset() {
+        return 0;
     }
 
     @Override
