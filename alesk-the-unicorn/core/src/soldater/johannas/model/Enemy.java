@@ -38,7 +38,7 @@ public class Enemy implements Entity {
     }
 
     @Override
-    public int getOffset() {
+    public int getDirection() {
         return 0;
     }
 

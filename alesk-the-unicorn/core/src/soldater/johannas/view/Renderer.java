@@ -12,12 +12,20 @@ import java.util.List;
 import java.util.Map;
 
 public class Renderer {
+
+    public final int NUM_FRAMES = 6;
+    public final int FRAME_FREQ = 3;
+
+    private int frameTimer = 0;
+
+
     private SpriteBatch batch;
     private Map<String, Texture> textures;
 
+    private int playerFrame = 0;
+
     private Drawable player;
     private List<? extends Drawable> drawables;
-    public static Sprite backgroundSprite;
 
     private int playerX;
     private int playerY;
@@ -31,7 +39,6 @@ public class Renderer {
 
         playerX = Gdx.graphics.getWidth() / 2 - player.getWidth() / 2;
         playerY = Gdx.graphics.getHeight() / 2 - player.getHeight() / 2;
-        backgroundSprite = new Sprite(new Texture("background.png"));
     }
 
     public void render() {
@@ -39,16 +46,32 @@ public class Renderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
-        batch.draw(backgroundSprite, (int)(-player.getX()/3 + playerX), 0);
+        Texture background = textures.get("background");
+
+        int addFstBackground = ((int)(player.getX() * 0.25) / (int)background.getWidth()) % 2;
+        int addSndBackground = (((int)(player.getX() * 0.25) + (int)background.getWidth()) / (int)background.getWidth()) % 2;
+
+        double playerOffsetFst = (-player.getX() * 0.25) % (background.getWidth() * 2);
+        double playerOffsetSnd = ((-player.getX() * 0.25) - background.getWidth()) % (background.getWidth() * 2);
+
+        int bgX1 = (int)(playerOffsetFst + addFstBackground * background.getWidth() * 2);
+        int bgX2 = (int)(playerOffsetSnd + addSndBackground * background.getWidth() * 2);
+        batch.draw(background, bgX1, 0);
+        batch.draw(background, bgX2, 0);
+
 
         batch.draw(
                 textures.get("player"),
                 playerX,
                 playerY,
-                player.getOffset(),
-                0, // This can be used for different animations!
                 player.getWidth(),
-                player.getHeight()
+                player.getHeight(), // This can be used for different animations!
+                playerFrame * player.getWidth(),
+                0,
+                player.getWidth(),
+                player.getHeight(),
+                player.getDirection() == Drawable.LEFT,
+                false
         );
 
         for (Drawable drawable : drawables) {
@@ -56,7 +79,7 @@ public class Renderer {
                     textures.get(drawable.getName()),
                     (int)(drawable.getX() - player.getX() + playerX),
                     (int)(drawable.getY() - player.getY() + playerY),
-                    drawable.getOffset(),
+                    0,
                     0,
                     drawable.getWidth(),
                     drawable.getHeight()
@@ -64,6 +87,8 @@ public class Renderer {
         }
 
         batch.end();
+
+        incrementFrames();
     }
 
     public void dispose() {
@@ -74,6 +99,7 @@ public class Renderer {
     private void loadTextures() {
         textures = new HashMap<String, Texture>();
         textures.put(player.getName(), new Texture(player.getName() + ".png"));
+        textures.put("background", new Texture("background.png"));
         for (Drawable drawable : drawables) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
@@ -82,6 +108,14 @@ public class Renderer {
     private void disposeTextures() {
         for (Texture texture : textures.values()) {
             texture.dispose();
+        }
+    }
+
+    private void incrementFrames() {
+        frameTimer += 1;
+        if (frameTimer > FRAME_FREQ) {
+            playerFrame = (playerFrame + 1) % NUM_FRAMES;
+            frameTimer = 0;
         }
     }
 }
