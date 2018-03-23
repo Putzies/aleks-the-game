@@ -55,10 +55,14 @@ public class Renderer {
                 textures.get("player"),
                 playerX,
                 playerY,
-                player.getOffset(),
-                0, // This can be used for different animations!
                 player.getWidth(),
-                player.getHeight()
+                player.getHeight(), // This can be used for different animations!
+                player.getOffset(),
+                0,
+                player.getWidth(),
+                player.getHeight(),
+                player.getDirection() == Drawable.LEFT,
+                false
         );
 
         for (Drawable drawable : drawables) {

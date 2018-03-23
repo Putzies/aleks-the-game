@@ -79,6 +79,11 @@ public class World implements Entity {
     }
 
     @Override
+    public int getDirection() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
         return "world";
     }

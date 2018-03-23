@@ -6,6 +6,8 @@ public abstract class Character implements Movable, Entity{
     public static final int LEFT = 2;
     public static final int DOWN = 3;
 
+    private int direction = Drawable.RIGHT;
+
     private int offset = 0;
     private double x,y;
     private double xVel, yVel;
@@ -64,12 +66,17 @@ public abstract class Character implements Movable, Entity{
         return offset;
     }
 
+    public int getDirection() {
+        return direction;
+    }
+
     @Override
     public void left() {
         if (!collisions[LEFT]) {
             x -= 10;
         }
         offset = (offset + 132) % 792;
+        direction = Drawable.LEFT;
 
     }
 
@@ -79,6 +86,7 @@ public abstract class Character implements Movable, Entity{
             x += 10;
         }
         offset = (offset + 132) % 792;
+        direction = Drawable.RIGHT;
     }
 
     @Override
