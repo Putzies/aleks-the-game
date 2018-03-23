@@ -69,9 +69,7 @@ public abstract class Character implements Movable, Entity{
         if (!collisions[LEFT]) {
             x -= 10;
         }
-        //offset = (offset + 132) % 792;
         direction = Drawable.LEFT;
-
     }
 
     @Override
@@ -79,7 +77,6 @@ public abstract class Character implements Movable, Entity{
         if (!collisions[RIGHT]) {
             x += 10;
         }
-        //offset = (offset + 132) % 792;
         direction = Drawable.RIGHT;
     }
 

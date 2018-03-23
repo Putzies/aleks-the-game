@@ -67,7 +67,7 @@ public class Renderer {
                 player.getWidth(),
                 player.getHeight(), // This can be used for different animations!
                 playerFrame * player.getWidth(),
-                0,
+                player.getState()*player.getHeight(),
                 player.getWidth(),
                 player.getHeight(),
                 player.getDirection() == Drawable.LEFT,

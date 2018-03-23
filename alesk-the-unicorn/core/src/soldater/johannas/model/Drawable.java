@@ -9,5 +9,6 @@ public interface Drawable {
     int getWidth();
     int getHeight();
     int getDirection();
+    int getState();
     String getName();
 }
