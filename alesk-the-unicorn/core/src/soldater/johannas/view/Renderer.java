@@ -42,23 +42,43 @@ public class Renderer {
     }
 
     public void render() {
-        Gdx.gl.glClearColor(0, 0, 0.8f, 1);
+        Gdx.gl.glClearColor(1, 0.8039f, 0.6667f, 1 + (float)(player.getY()));
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
         Texture background = textures.get("background");
 
-        int addFstBackground = ((int)(player.getX() * 0.25) / (int)background.getWidth()) % 2;
-        int addSndBackground = (((int)(player.getX() * 0.25) + (int)background.getWidth()) / (int)background.getWidth()) % 2;
+        int addFstBackground = ((int)(player.getX() * 0.25) / background.getWidth()) % 2;
+        int addSndBackground = (((int)(player.getX() * 0.25) + background.getWidth()) / background.getWidth()) % 2;
 
-        double playerOffsetFst = (-player.getX() * 0.25) % (background.getWidth() * 2);
-        double playerOffsetSnd = ((-player.getX() * 0.25) - background.getWidth()) % (background.getWidth() * 2);
+        double playerOffsetFirstX = (-player.getX() * 0.25) % (background.getWidth() * 2);
+        double playerOffsetSecondX = ((-player.getX() * 0.25) - background.getWidth()) % (background.getWidth() * 2);
 
-        int bgX1 = (int)(playerOffsetFst + addFstBackground * background.getWidth() * 2);
-        int bgX2 = (int)(playerOffsetSnd + addSndBackground * background.getWidth() * 2);
-        batch.draw(background, bgX1, 0);
-        batch.draw(background, bgX2, 0);
+        int bgX1 = (int)(playerOffsetFirstX + addFstBackground * background.getWidth() * 2);
+        int bgX2 = (int)(playerOffsetSecondX + addSndBackground * background.getWidth() * 2);
+        int bgY = (int)(((-player.getY())+player.getHeight()/2)*0.25);
+        batch.draw(background, bgX1, bgY);
+        batch.draw(background, bgX2, bgY);
 
+        Texture sky = textures.get("sky");
+
+        int addFirstSky = ((int)(player.getY() * 0.25) / sky.getHeight()) % 2;
+        int addSecondSky = (((int)(player.getY() * 0.25) + sky.getHeight()) / sky.getHeight()) % 2;
+
+        double playerOffsetFirstY = (-player.getY() * 0.25) % (sky.getHeight() * 2);
+        double playerOffsetSecondY = ((-player.getY() * 0.25) - sky.getHeight()) % (sky.getHeight() * 2);
+
+        int skyY1 = (int)(playerOffsetFirstY + addFirstSky * sky.getHeight() * 2);
+        int skyY2 = (int)(playerOffsetSecondY + addSecondSky * sky.getHeight() * 2);
+
+        if (player.getY() >= background.getHeight()*4) {
+            batch.draw(sky, bgX1, skyY1);
+            batch.draw(sky, bgX2, skyY1);
+        }
+        if (player.getY() >= 0) {
+            batch.draw(sky, bgX1, skyY2);
+            batch.draw(sky, bgX2, skyY2);
+        }
 
         batch.draw(
                 textures.get("player"),
@@ -100,6 +120,7 @@ public class Renderer {
         textures = new HashMap<String, Texture>();
         textures.put(player.getName(), new Texture(player.getName() + ".png"));
         textures.put("background", new Texture("background.png"));
+        textures.put("sky", new Texture("starsky.png"));
         for (Drawable drawable : drawables) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
