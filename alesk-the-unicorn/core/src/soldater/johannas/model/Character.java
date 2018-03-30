@@ -60,6 +60,10 @@ public abstract class Character implements Movable, Entity{
         return y;
     }
 
+    public double getYvel() {
+        return yVel;
+    }
+
     public int getDirection() {
         return direction;
     }
@@ -86,7 +90,6 @@ public abstract class Character implements Movable, Entity{
             yVel = 30;
         }
     }
-
     private void applyGravity() {
         yVel -= 0.8;
     }

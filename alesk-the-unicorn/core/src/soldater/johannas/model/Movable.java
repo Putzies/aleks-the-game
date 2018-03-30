@@ -5,4 +5,5 @@ public interface Movable extends Entity {
     void right();
     void jump();
     void stop();
+    double getYvel();
 }

@@ -35,10 +35,9 @@ public class PlayerController {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             player.jump();
             spacePressed = true;
-        } else if (spacePressed) {
+        } else if (spacePressed && player.getYvel() == 0) {
             player.stop();
             spacePressed = false;
-
         }
     }
 }

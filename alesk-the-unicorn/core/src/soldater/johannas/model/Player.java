@@ -3,9 +3,11 @@ package soldater.johannas.model;
 public class Player extends Character {
 
     public static final int WIDTH = 132;
-    public static final int HEIGHT = 93;
+    public static final int HEIGHT = 105;
     public static final int STANDING = 0;
     public static final int RUNNING = 1;
+    public static final int JUMPING = 2;
+
 
     private int state = 0;
 
@@ -28,6 +30,10 @@ public class Player extends Character {
         return state;
     }
 
+    public double getYvel() {
+        return super.getYvel();
+    }
+
     @Override
     public String getName() {
         return "player";
@@ -41,6 +47,11 @@ public class Player extends Character {
     @Override public void right() {
         super.right();
         state = RUNNING;
+    }
+
+    @Override public void jump() {
+        super.jump();
+        state = JUMPING;
     }
 
     @Override
