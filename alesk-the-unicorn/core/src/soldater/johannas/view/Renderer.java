@@ -46,6 +46,37 @@ public class Renderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
+        drawBackgrounds();
+        drawPlayer();
+        drawDrawables();
+
+        batch.end();
+
+        incrementFrames();
+    }
+
+    public void dispose() {
+        batch.dispose();
+        disposeTextures();
+    }
+
+    private void loadTextures() {
+        textures = new HashMap<String, Texture>();
+        textures.put(player.getName(), new Texture(player.getName() + ".png"));
+        textures.put("background", new Texture("background.png"));
+        textures.put("sky", new Texture("starsky.png"));
+        for (Drawable drawable : drawables) {
+            textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
+        }
+    }
+
+    private void disposeTextures() {
+        for (Texture texture : textures.values()) {
+            texture.dispose();
+        }
+    }
+
+    private void drawBackgrounds() {
         Texture background = textures.get("background");
 
         int addFstBackground = ((int)(player.getX() * 0.25) / background.getWidth()) % 2;
@@ -79,7 +110,9 @@ public class Renderer {
             batch.draw(sky, bgX1, skyY2);
             batch.draw(sky, bgX2, skyY2);
         }
+    }
 
+    private void drawPlayer() {
         batch.draw(
                 textures.get("player"),
                 playerX,
@@ -93,6 +126,9 @@ public class Renderer {
                 player.getDirection() == Drawable.LEFT,
                 false
         );
+    }
+
+    private void drawDrawables() {
 
         for (Drawable drawable : drawables) {
             if (textures.get(drawable.getName()).getWidth() == drawable.getWidth()) {
@@ -113,31 +149,6 @@ public class Renderer {
                         drawable.getHeight()
                 );
             }
-        }
-
-        batch.end();
-
-        incrementFrames();
-    }
-
-    public void dispose() {
-        batch.dispose();
-        disposeTextures();
-    }
-
-    private void loadTextures() {
-        textures = new HashMap<String, Texture>();
-        textures.put(player.getName(), new Texture(player.getName() + ".png"));
-        textures.put("background", new Texture("background.png"));
-        textures.put("sky", new Texture("starsky.png"));
-        for (Drawable drawable : drawables) {
-            textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
-        }
-    }
-
-    private void disposeTextures() {
-        for (Texture texture : textures.values()) {
-            texture.dispose();
         }
     }
 
