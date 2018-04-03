@@ -14,7 +14,7 @@ public class EnemyController {
     }
 
     public void update() {
-        if (random.nextInt(200) > 198) {
+        if (random.nextInt(200) > 198 && enemy.isOnGround()) {
             enemy.jump();
         }
         if ((enemy.getX() < enemy.getLeftBound() && goingLeft) || random.nextDouble() > 0.99) {
