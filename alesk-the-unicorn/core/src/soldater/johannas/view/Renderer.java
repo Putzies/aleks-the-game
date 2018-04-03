@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import soldater.johannas.model.Drawable;
+import soldater.johannas.model.HangingEnemy;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Renderer {
     private int frameTimer = 0;
 
 
+    private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
     private Map<String, Texture> textures;
 
@@ -26,16 +29,20 @@ public class Renderer {
 
     private Drawable player;
     private List<? extends Drawable> drawables;
+    private List<HangingEnemy> hangingEnemies;
 
     private int playerX;
     private int playerY;
 
-    public Renderer(Drawable player, List<Drawable> drawables) {
+    public Renderer(Drawable player, List<Drawable> drawables, List<HangingEnemy> hangingEnemies) {
         this.drawables = drawables;
         this.player = player;
+        this.hangingEnemies = hangingEnemies;
+
 
         batch = new SpriteBatch();
         loadTextures();
+        shapeRenderer = new ShapeRenderer();
 
         playerX = Gdx.graphics.getWidth() / 2 - player.getWidth() / 2;
         playerY = Gdx.graphics.getHeight() / 2 - player.getHeight() / 2;
@@ -46,11 +53,16 @@ public class Renderer {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
+        shapeRenderer.setAutoShapeType(true);
+        shapeRenderer.begin();
         drawBackgrounds();
+
+        drawShapes();
+
         drawPlayer();
         drawDrawables();
-
         batch.end();
+        shapeRenderer.end();
 
         incrementFrames();
     }
@@ -149,6 +161,16 @@ public class Renderer {
                         drawable.getHeight()
                 );
             }
+        }
+    }
+
+    private void drawShapes() {
+        for(HangingEnemy hangingE : hangingEnemies) {
+            float x = (float) (hangingE.getX() - player.getX() + playerX + hangingE.getWidth()/2);
+            float y = (float) (hangingE.getY() - player.getY() + playerY + hangingE.getHeight() -5);
+            float startY = (float) (hangingE.getStartY() - player.getY() + playerY + hangingE.getHeight());
+
+            shapeRenderer.line(x, startY, x, y);
         }
     }
 

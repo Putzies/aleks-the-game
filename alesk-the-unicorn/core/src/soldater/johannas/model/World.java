@@ -10,28 +10,34 @@ public class World implements Entity {
     private List<Entity> entities;
     private List<Drawable> drawables;
     private List<Character> characters;
-    private List<Enemy> enemies;
+    private List<WalkingEnemy> walkingEnemies;
+    List<HangingEnemy> hangingEnemies;
     private List<Block> blocks;
 
     private Player player;
 
     public World() {
+        hangingEnemies = new ArrayList<HangingEnemy>();
         player = new Player(0, 200);
-
-        enemies = new ArrayList<Enemy>();
-        enemies.add(new Enemy(400, 300, 100, 500));
-        enemies.add(new Enemy(500, 100, 500, 600));
-        drawables = new ArrayList<Drawable>();
-        drawables.addAll(enemies);
-
-        entities = new ArrayList<Entity>();
-
         blocks = new ArrayList<Block>();
         buildSomeExampleBlocks();
 
+        walkingEnemies = new ArrayList<WalkingEnemy>();
+        walkingEnemies.add(new WalkingEnemy(300, 300, 400));
+        walkingEnemies.add(new WalkingEnemy(500, 100, 500));
+
+
+        drawables = new ArrayList<Drawable>();
+        drawables.addAll(walkingEnemies);
+        drawables.addAll(hangingEnemies);
+
+        entities = new ArrayList<Entity>();
+
+
         characters = new ArrayList<Character>();
         characters.add(player);
-        characters.addAll(enemies);
+        characters.addAll(walkingEnemies);
+        characters.addAll(hangingEnemies);
     }
 
     public List<Drawable> getDrawables() {
@@ -157,13 +163,27 @@ public class World implements Entity {
             blocks.add(new Block(i, 250));
         }
 
+        // Test hangingEnemy
+        Block block = new Block(150, 250, true);
+        blocks.add(block);
+        hangingEnemies.add(block.getHangingEnemy());
+        Block block2 = new Block(100, 250, true);
+        blocks.add(block2);
+        hangingEnemies.add(block2.getHangingEnemy());
+
+
         // Test wall at platform
         for (int i = 250; i < 450; i += Block.HEIGHT) {
             blocks.add(new Block(1000, i));
         }
     }
 
-    public List<Enemy> getEnemies() {
-        return enemies;
+    public List<WalkingEnemy> getWalkingEnemies() {
+        return walkingEnemies;
     }
+
+    public List<HangingEnemy> getHangingEnemies() {
+        return hangingEnemies;
+    }
+
 }

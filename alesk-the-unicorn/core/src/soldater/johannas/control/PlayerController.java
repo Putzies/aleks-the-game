@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import soldater.johannas.model.Movable;
 
-public class PlayerController {
+public class PlayerController implements Controller{
     private Movable player;
 
     private boolean rightPressed = false;
