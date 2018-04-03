@@ -90,7 +90,9 @@ public class Player extends Character implements Movable {
         if (!collisions[UP] && collisions[DOWN]) {
             yVel = 30;
         }
-        state = JUMPING;
+        if(state != FALLING) {
+            state = JUMPING;
+        }
     }
 
     @Override
