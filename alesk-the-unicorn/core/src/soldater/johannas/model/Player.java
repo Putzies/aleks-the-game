@@ -7,6 +7,7 @@ public class Player extends Character implements Movable {
     public static final int STANDING = 0;
     public static final int RUNNING = 1;
     public static final int JUMPING = 2;
+    public static final int FALLING = 3;
 
 
     private int state = 0;
@@ -43,7 +44,11 @@ public class Player extends Character implements Movable {
     public void update(double dTime) {
         if (!collisions[DOWN]) {
             applyGravity();
+            if(yVel < 0) {
+                state = FALLING;
+            }
         }
+
 
         super.update(dTime);
     }
@@ -63,7 +68,7 @@ public class Player extends Character implements Movable {
         }
         direction = Drawable.LEFT;
 
-        if (state != JUMPING) {
+        if (state != JUMPING && state != FALLING) {
             state = RUNNING;
         }
     }
@@ -75,7 +80,7 @@ public class Player extends Character implements Movable {
         }
         direction = Drawable.RIGHT;
 
-        if (state != JUMPING){
+        if (state != JUMPING && state != FALLING){
             state = RUNNING;
         }
     }
