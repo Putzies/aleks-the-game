@@ -1,6 +1,6 @@
 package soldater.johannas.model;
 
-public abstract class Character implements Movable, Entity{
+public abstract class Character implements Entity{
     public static final int UP = 0;
     public static final int RIGHT = 1;
     public static final int LEFT = 2;
@@ -19,10 +19,6 @@ public abstract class Character implements Movable, Entity{
 
     @Override
     public void update(double dTime) {
-        if (!collisions[DOWN]) {
-            applyGravity();
-        }
-
         x += xVel * dTime;
         y += yVel * dTime;
     }
@@ -63,31 +59,5 @@ public abstract class Character implements Movable, Entity{
 
     public int getDirection() {
         return direction;
-    }
-
-    @Override
-    public void left() {
-        if (!collisions[LEFT]) {
-            x -= 10;
-        }
-        direction = Drawable.LEFT;
-    }
-
-    @Override
-    public void right() {
-        if (!collisions[RIGHT]) {
-            x += 10;
-        }
-        direction = Drawable.RIGHT;
-    }
-
-    @Override
-    public void jump() {
-        if (!collisions[UP] && collisions[DOWN]) {
-            yVel = 30;
-        }
-    }
-    private void applyGravity() {
-        yVel -= 0.8;
     }
 }
