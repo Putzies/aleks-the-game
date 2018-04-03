@@ -1,6 +1,6 @@
 package soldater.johannas.model;
 
-public class Player extends Character {
+public class Player extends Character implements Movable {
 
     public static final int WIDTH = 132;
     public static final int HEIGHT = 105;
@@ -40,6 +40,15 @@ public class Player extends Character {
     }
 
     @Override
+    public void update(double dTime) {
+        if (!collisions[DOWN]) {
+            applyGravity();
+        }
+
+        super.update(dTime);
+    }
+
+    @Override
     public void setCollision(int collision, boolean value, double correction) {
         super.setCollision(collision, value, correction);
         if (collision == DOWN) {
@@ -47,24 +56,35 @@ public class Player extends Character {
         }
     }
 
-    @Override public void left () {
-        super.left();
+    @Override
+    public void left () {
+        if (!collisions[super.LEFT]) {
+            x -= 10;
+        }
+        direction = Drawable.LEFT;
 
         if (state != JUMPING) {
             state = RUNNING;
         }
     }
 
-    @Override public void right() {
-        super.right();
+    @Override
+    public void right() {
+        if (!collisions[super.RIGHT]) {
+            x += 10;
+        }
+        direction = Drawable.RIGHT;
 
         if (state != JUMPING){
             state = RUNNING;
         }
     }
 
-    @Override public void jump() {
-        super.jump();
+    @Override
+    public void jump() {
+        if (!collisions[UP] && collisions[DOWN]) {
+            yVel = 30;
+        }
         state = JUMPING;
     }
 
@@ -73,5 +93,9 @@ public class Player extends Character {
         if (state != JUMPING) {
             state = STANDING;
         }
+    }
+
+    private void applyGravity() {
+        yVel -= 0.8;
     }
 }

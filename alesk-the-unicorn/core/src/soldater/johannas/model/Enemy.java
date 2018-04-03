@@ -1,6 +1,6 @@
 package soldater.johannas.model;
 
-public class Enemy extends Character {
+public class Enemy extends Character implements Movable {
     public static final int WIDTH = 93;
     public static final int HEIGHT = 36;
 
@@ -18,8 +18,17 @@ public class Enemy extends Character {
     }
 
     @Override
+    public void update(double dTime) {
+        if (!collisions[DOWN]) {
+            applyGravity();
+        }
+
+        super.update(dTime);
+    }
+
+    @Override
     public void left() {
-        if (!collisions[LEFT]) {
+        if (!collisions[super.LEFT]) {
             x -= 2;
         }
         direction = Drawable.LEFT;
@@ -28,7 +37,7 @@ public class Enemy extends Character {
 
     @Override
     public void right() {
-        if (!collisions[RIGHT]) {
+        if (!collisions[super.RIGHT]) {
             x += 2;
         }
         direction = Drawable.RIGHT;
@@ -37,7 +46,7 @@ public class Enemy extends Character {
     @Override
     public void jump() {
         if (!collisions[UP]) {
-            yVel = 12;
+            yVel = 18;
         }
     }
 
@@ -76,5 +85,13 @@ public class Enemy extends Character {
 
     @Override
     public void stop() {
+    }
+
+    public boolean isOnGround() {
+        return collisions[DOWN];
+    }
+
+    private void applyGravity() {
+        yVel -= 2.2;
     }
 }
