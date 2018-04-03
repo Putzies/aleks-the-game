@@ -1,5 +1,9 @@
 package soldater.johannas.model;
 
+import soldater.johannas.model.level.Block;
+import soldater.johannas.model.level.Level;
+import soldater.johannas.model.level.Parser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +11,11 @@ public class World implements Entity {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 600;
 
+    private Level level;
+
     private List<Entity> entities;
     private List<Drawable> drawables;
     private List<Character> characters;
-    private List<Block> blocks;
 
     private Player player;
 
@@ -20,20 +25,23 @@ public class World implements Entity {
         drawables = new ArrayList<Drawable>();
         drawables.add(new Enemy(200, 200));
 
-        entities = new ArrayList<Entity>();
-
-        blocks = new ArrayList<Block>();
-        buildSomeExampleBlocks();
+        entities = new ArrayList<>();
 
         characters = new ArrayList<Character>();
         characters.add(player);
+    }
+
+    public boolean startGame(String levelName) {
+        level = new Parser().loadLevel(levelName);
+
+        return level != null;
     }
 
     public List<Drawable> getDrawables() {
         List<Drawable> allObjects = new ArrayList<Drawable>();
         allObjects.addAll(drawables);
         allObjects.addAll(entities);
-        allObjects.addAll(blocks);
+        allObjects.addAll(level.blocks);
         return allObjects;
     }
 
@@ -92,7 +100,7 @@ public class World implements Entity {
         for(Character character : characters) {
             character.resetCollisions();
 
-            for (Block block : blocks) {
+            for (Block block : level.blocks) {
 
                 boolean withinX = character.getX() + character.getWidth() > block.getX() &&
                             character.getX() < block.getX() + block.getWidth();
@@ -129,35 +137,6 @@ public class World implements Entity {
                     character.setCollision(Character.LEFT, true, block.getX());
                 }
             }
-        }
-    }
-
-    // TODO: Remove :)
-    private void buildSomeExampleBlocks() {
-
-        // Floor
-        for (int i = -10000; i < 10000; i += Block.WIDTH) {
-            blocks.add(new Block(i, 0));
-        }
-
-        // Left wall
-        for (int i = 0; i < 1000; i += Block.HEIGHT) {
-            blocks.add(new Block(-10000 - Block.WIDTH, i));
-        }
-
-        // Right wall
-        for (int i = 0; i < 1000; i += Block.HEIGHT) {
-            blocks.add(new Block(10000 + Block.WIDTH, i));
-        }
-
-        // Test platform
-        for (int i = 200; i < 1000; i += Block.HEIGHT) {
-            blocks.add(new Block(i, 250));
-        }
-
-        // Test wall at platform
-        for (int i = 250; i < 450; i += Block.HEIGHT) {
-            blocks.add(new Block(1000, i));
         }
     }
 }

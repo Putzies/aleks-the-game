@@ -14,6 +14,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		world = new World();
+		world.startGame("level1.json");
 		renderer = new Renderer(world.getPlayer(), world.getDrawables());
 		playerController = new PlayerController(world.getPlayer());
 	}
