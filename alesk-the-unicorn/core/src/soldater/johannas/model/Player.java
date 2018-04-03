@@ -39,14 +39,28 @@ public class Player extends Character {
         return "player";
     }
 
+    @Override
+    public void setCollision(int collision, boolean value, double correction) {
+        super.setCollision(collision, value, correction);
+        if (collision == DOWN) {
+            state = STANDING;
+        }
+    }
+
     @Override public void left () {
         super.left();
-        state = RUNNING;
+
+        if (state != JUMPING) {
+            state = RUNNING;
+        }
     }
 
     @Override public void right() {
         super.right();
-        state = RUNNING;
+
+        if (state != JUMPING){
+            state = RUNNING;
+        }
     }
 
     @Override public void jump() {
@@ -56,6 +70,8 @@ public class Player extends Character {
 
     @Override
     public void stop() {
-        state = STANDING;
+        if (state != JUMPING) {
+            state = STANDING;
+        }
     }
 }

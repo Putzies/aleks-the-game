@@ -6,14 +6,11 @@ public abstract class Character implements Movable, Entity{
     public static final int LEFT = 2;
     public static final int DOWN = 3;
 
+    protected boolean[] collisions = {false, false, false, false};
     protected int direction = Drawable.RIGHT;
 
     protected double x,y;
     protected double xVel, yVel;
-
-    protected boolean[] collisions = {false, false, false, false};
-
-
 
     public Character(int x, int y) {
         this.x = x;
@@ -86,7 +83,7 @@ public abstract class Character implements Movable, Entity{
 
     @Override
     public void jump() {
-        if (!collisions[UP]) {
+        if (!collisions[UP] && collisions[DOWN]) {
             yVel = 30;
         }
     }

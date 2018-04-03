@@ -107,7 +107,7 @@ public class World implements Entity {
                 if (withinX &&
                         character.getY() + character.getHeight() > block.getY() + block.getHeight() &&
                         character.getY() < block.getY() + block.getHeight()) {
-                    character.setCollision(Character.DOWN, true, block.getY() + block.getHeight());
+                    character.setCollision(Character.DOWN, true, block.getY() + block.getHeight() - 1);
                 }
 
                 // TOP
@@ -128,7 +128,7 @@ public class World implements Entity {
                 if (withinY &&
                         character.getX() + character.getWidth() > block.getX() + block.getWidth() &&
                         character.getX() < block.getX() + block.getWidth()) {
-                    character.setCollision(Character.LEFT, true, block.getX() + block.getWidth());
+                    character.setCollision(Character.LEFT, true, block.getX());
                 }
             }
         }
