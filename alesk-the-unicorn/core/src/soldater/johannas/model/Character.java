@@ -60,4 +60,17 @@ public abstract class Character implements Entity{
     public int getDirection() {
         return direction;
     }
+
+    public boolean isOnGround() {
+        return collisions[DOWN];
+    }
+
+    public boolean collidesLeft() {
+        return collisions[LEFT];
+    }
+
+    public boolean collidesRight() {
+        return collisions[RIGHT];
+    }
+
 }
