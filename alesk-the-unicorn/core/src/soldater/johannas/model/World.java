@@ -17,22 +17,18 @@ public class World implements Entity {
     private List<Drawable> drawables;
     private List<Character> characters;
 
-    private Player player;
-
     public World() {
-        player = new Player(0, 200);
-
-        drawables = new ArrayList<Drawable>();
-        drawables.add(new Enemy(200, 200));
+        drawables = new ArrayList<>();
 
         entities = new ArrayList<>();
 
-        characters = new ArrayList<Character>();
-        characters.add(player);
+        characters = new ArrayList<>();
     }
 
     public boolean startGame(String levelName) {
         level = new Parser().loadLevel(levelName);
+        characters.addAll(level.enemies);
+        characters.add(level.player);
 
         return level != null;
     }
@@ -42,20 +38,18 @@ public class World implements Entity {
         allObjects.addAll(drawables);
         allObjects.addAll(entities);
         allObjects.addAll(level.blocks);
+        allObjects.addAll(level.enemies);
         return allObjects;
     }
 
     public Movable getPlayer() {
-        return player;
+        return level.player;
     }
 
     @Override
     public void update(double dTime) {
-
-        player.update(dTime);
-
-        for (Entity entity : entities) {
-            entity.update(dTime);
+        for (Character character : characters) {
+            character.update(dTime);
         }
 
         collideCharacters();
@@ -138,5 +132,9 @@ public class World implements Entity {
                 }
             }
         }
+    }
+
+    public List<Enemy> getEnemies() {
+        return level.enemies;
     }
 }

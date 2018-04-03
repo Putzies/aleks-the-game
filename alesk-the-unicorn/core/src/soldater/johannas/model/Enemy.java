@@ -1,30 +1,52 @@
 package soldater.johannas.model;
 
-public class Enemy implements Entity {
-    public static final int WIDTH = 92;
-    public static final int HEIGHT = 61;
+public class Enemy extends Character {
+    public static final int WIDTH = 93;
+    public static final int HEIGHT = 36;
 
-    private double x;
-    private double y;
+    private int leftBound;
+    private int rightbound;
 
-    public Enemy (double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Enemy(int x, int y, int leftBound, int rightbound) {
+        super(x, y);
+        this.leftBound = leftBound;
+        this.rightbound = rightbound;
+    }
+
+    public Enemy() {
+        super();
     }
 
     @Override
-    public void update(double dTime) {
+    public void left() {
+        if (!collisions[LEFT]) {
+            x -= 2;
+        }
+        direction = Drawable.LEFT;
 
     }
 
     @Override
-    public double getX() {
-        return x;
+    public void right() {
+        if (!collisions[RIGHT]) {
+            x += 2;
+        }
+        direction = Drawable.RIGHT;
     }
 
     @Override
-    public double getY() {
-        return y;
+    public void jump() {
+        if (!collisions[UP]) {
+            yVel = 12;
+        }
+    }
+
+    public int getLeftBound() {
+        return leftBound;
+    }
+
+    public int getRightbound() {
+        return rightbound;
     }
 
     @Override
@@ -50,5 +72,9 @@ public class Enemy implements Entity {
     @Override
     public String getName() {
         return "enemy";
+    }
+
+    @Override
+    public void stop() {
     }
 }

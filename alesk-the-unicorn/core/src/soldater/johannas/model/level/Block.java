@@ -1,5 +1,6 @@
 package soldater.johannas.model.level;
 
+import com.google.gson.annotations.Expose;
 import soldater.johannas.model.Drawable;
 
 public class Block implements Drawable {
@@ -7,6 +8,7 @@ public class Block implements Drawable {
     public static final int WIDTH = 50;
     public static final int HEIGHT = 50;
 
+    @Expose
     private final int X,Y;
 
     public Block(int x, int y) {

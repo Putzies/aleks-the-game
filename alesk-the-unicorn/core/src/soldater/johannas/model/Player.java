@@ -11,8 +11,8 @@ public class Player extends Character {
 
     private int state = 0;
 
-    public Player(int x, int y) {
-        super(x, y);
+    public Player() {
+        super();
     }
 
     @Override

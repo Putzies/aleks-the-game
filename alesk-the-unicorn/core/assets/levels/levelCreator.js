@@ -1,6 +1,27 @@
 let blocks = [];
 
-function createLevel() {
+
+const enemies = [
+    {
+        x: 400,
+        y: 300,
+        leftBound: 0,
+        rightBound: 500,
+    },
+    {
+        x: 700,
+        y: 100,
+        leftBound: 500,
+        rightBound: 8000,
+    }
+];
+
+const player = {
+    x: 0,
+    y: 100,
+};
+
+function createBlocks() {
     
     // Create ground
     for (let i = -100; i < 100; i++) {
@@ -13,10 +34,25 @@ function createLevel() {
     }
 }
 
-createLevel();
+function createALotOfDisgustingSpiders() {
+    for (let i = -300; i < -100; i++) {
+        enemies.push({
+            x: i * 10,
+            y: 100,
+            leftBound: -10000,
+            rightBound: 10000,
+        });
+    }
+}
+
+createBlocks();
+createALotOfDisgustingSpiders();
+
 
 const level = {
-    blocks
+    blocks,
+    enemies,
+    player,
 };
 
 var fs = require('fs');

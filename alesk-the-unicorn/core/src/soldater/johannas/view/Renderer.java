@@ -95,15 +95,24 @@ public class Renderer {
         );
 
         for (Drawable drawable : drawables) {
-            batch.draw(
-                    textures.get(drawable.getName()),
-                    (int)(drawable.getX() - player.getX() + playerX),
-                    (int)(drawable.getY() - player.getY() + playerY),
-                    0,
-                    0,
-                    drawable.getWidth(),
-                    drawable.getHeight()
-            );
+            if (textures.get(drawable.getName()).getWidth() == drawable.getWidth()) {
+                batch.draw(
+                        textures.get(drawable.getName()),
+                        (int)(drawable.getX() - player.getX() + playerX),
+                        (int)(drawable.getY() - player.getY() + playerY)
+                );
+            }
+            else {
+                batch.draw(
+                        textures.get(drawable.getName()),
+                        (int)(drawable.getX() - player.getX() + playerX),
+                        (int)(drawable.getY() - player.getY() + playerY),
+                        textures.get(drawable.getName()).getWidth() == drawable.getWidth() ? 0 : playerFrame * drawable.getWidth(),
+                        0,
+                        drawable.getWidth(),
+                        drawable.getHeight()
+                );
+            }
         }
 
         batch.end();

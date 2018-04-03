@@ -6,8 +6,8 @@ import soldater.johannas.model.Player;
 import java.util.List;
 
 public class Level {
-    public final Player player;
     public final List<Block> blocks;
+    public final Player player;
     public final List<Enemy> enemies;
 
     public Level(Player player, List<Block> blocks, List<Enemy> enemies) {
