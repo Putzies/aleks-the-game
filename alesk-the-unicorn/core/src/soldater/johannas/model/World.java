@@ -10,6 +10,7 @@ public class World implements Entity {
     private List<Entity> entities;
     private List<Drawable> drawables;
     private List<Character> characters;
+    private List<Enemy> enemies;
     private List<Block> blocks;
 
     private Player player;
@@ -17,8 +18,11 @@ public class World implements Entity {
     public World() {
         player = new Player(0, 200);
 
+        enemies = new ArrayList<Enemy>();
+        enemies.add(new Enemy(400, 300, 100, 500));
+        enemies.add(new Enemy(500, 100, 500, 600));
         drawables = new ArrayList<Drawable>();
-        drawables.add(new Enemy(200, 200));
+        drawables.addAll(enemies);
 
         entities = new ArrayList<Entity>();
 
@@ -27,6 +31,7 @@ public class World implements Entity {
 
         characters = new ArrayList<Character>();
         characters.add(player);
+        characters.addAll(enemies);
     }
 
     public List<Drawable> getDrawables() {
@@ -43,11 +48,8 @@ public class World implements Entity {
 
     @Override
     public void update(double dTime) {
-
-        player.update(dTime);
-
-        for (Entity entity : entities) {
-            entity.update(dTime);
+        for (Character character : characters) {
+            character.update(dTime);
         }
 
         collideCharacters();
@@ -159,5 +161,9 @@ public class World implements Entity {
         for (int i = 250; i < 450; i += Block.HEIGHT) {
             blocks.add(new Block(1000, i));
         }
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 }

@@ -6,12 +6,12 @@ public abstract class Character implements Movable, Entity{
     public static final int LEFT = 2;
     public static final int DOWN = 3;
 
-    private int direction = Drawable.RIGHT;
+    protected int direction = Drawable.RIGHT;
 
-    private double x,y;
-    private double xVel, yVel;
+    protected double x,y;
+    protected double xVel, yVel;
 
-    private boolean[] collisions = {false, false, false, false};
+    protected boolean[] collisions = {false, false, false, false};
 
 
 
