@@ -101,7 +101,6 @@ public class World implements Entity {
             character.resetCollisions();
 
             for (Block block : blocks) {
-
                 boolean withinX = character.getX() + character.getWidth() > block.getX() &&
                             character.getX() < block.getX() + block.getWidth();
 
@@ -113,7 +112,15 @@ public class World implements Entity {
                 if (withinX &&
                         character.getY() + character.getHeight() > block.getY() + block.getHeight() &&
                         character.getY() < block.getY() + block.getHeight()) {
-                    character.setCollision(Character.DOWN, true, block.getY() + block.getHeight() - 1);
+
+                    // For debugging purposes.
+                    if (character instanceof Player) {
+                        System.out.println((character.getY() + character.getHeight()) + " " + (block.getY() + block.getHeight()) + " ::"
+                               + character.getY() + " " + (block.getY() + block.getHeight() ));
+
+                    }
+
+                    character.setCollision(Character.DOWN, true, block.getY() + block.getHeight()-1 );
                 }
 
                 // TOP
@@ -133,10 +140,21 @@ public class World implements Entity {
                 // LEFT
                 if (withinY &&
                         character.getX() + character.getWidth() > block.getX() + block.getWidth() &&
-                        character.getX() < block.getX() + block.getWidth()) {
+                        character.getX() < block.getX() + block.getWidth()) { 
                     character.setCollision(Character.LEFT, true, block.getX());
                 }
             }
+
+            /*for (Character character1 : characters){
+                if (character1 == characters){ continue; }
+
+                boolean withinX = character.getX() + character.getWidth() > character1.getX() &&
+                        character.getX() < character1.getX() + character1.getWidth();
+
+                boolean withinY = character.getY() + character.getHeight() > character1.getY() &&
+                        character.getY() + 1 < character1.getY() + character1.getHeight();
+
+            }*/
         }
     }
 
