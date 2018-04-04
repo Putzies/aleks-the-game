@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,61 +103,88 @@ public class World implements Entity {
         for(Character character : characters) {
             character.resetCollisions();
 
+            // Move this somewhere relevant
+            Vector3 min = new Vector3((float) character.getX(), (float) character.getY(), 0);
+            Vector3 max = new Vector3((float) character.getX() + character.getWidth(), (float) character.getY() + character.getHeight(), 0);
+            BoundingBox b1 = new BoundingBox(min, max);
+
+
             for (Block block : blocks) {
-                boolean withinX = character.getX() + character.getWidth() > block.getX() &&
+
+                // Move this somewhere relevant
+                Vector3 min1 = new Vector3((float) block.getX(), (float) block.getY(), 0);
+                Vector3 max1 = new Vector3((float) block.getX() + block.getWidth(), (float) block.getY() + block.getHeight(), 0);
+                BoundingBox b2 = new BoundingBox(min1, max1);
+
+
+                // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
+                if (b1.intersects(b2)) {
+
+
+                    boolean withinX = character.getX() + character.getWidth() > block.getX() &&
                             character.getX() < block.getX() + block.getWidth();
 
-                boolean withinY = character.getY() + character.getHeight() > block.getY() &&
+                    boolean withinY = character.getY() + character.getHeight() > block.getY() &&
                             character.getY() + 1 < block.getY() + block.getHeight();
 
 
-                // DOWN
-                if (withinX &&
-                        character.getY() + character.getHeight() > block.getY() + block.getHeight() &&
-                        character.getY() < block.getY() + block.getHeight()) {
+                    // DOWN
+                    if (withinX &&
+                            character.getY() + character.getHeight() > block.getY() + block.getHeight() &&
+                            character.getY() < block.getY() + block.getHeight()) {
 
-                    // For debugging purposes.
-                    if (character instanceof Player) {
-                        System.out.println((character.getY() + character.getHeight()) + " " + (block.getY() + block.getHeight()) + " ::"
-                               + character.getY() + " " + (block.getY() + block.getHeight() ));
+                        // For debugging purposes.
+                        if (character instanceof Player) {
+                            // System.out.println((character.getY() + character.getHeight()) + " " + (block.getY() + block.getHeight()) + " ::"
+                            //       + character.getY() + " " + (block.getY() + block.getHeight() ));
 
+                        }
+
+                        character.setCollision(Character.DOWN, true, block.getY() + block.getHeight() - 1);
                     }
 
-                    character.setCollision(Character.DOWN, true, block.getY() + block.getHeight()-1 );
-                }
+                    // TOP
+                    if (withinX &&
+                            character.getY() < block.getY() &&
+                            character.getY() + character.getHeight() > block.getY()) {
+                        character.setCollision(Character.UP, true, block.getY() - character.getHeight());
+                    }
 
-                // TOP
-                if (withinX &&
-                        character.getY() < block.getY() &&
-                        character.getY() + character.getHeight() > block.getY()) {
-                    character.setCollision(Character.UP, true, block.getY() - character.getHeight());
-                }
+                    // RIGHT
+                    if (withinY &&
+                            character.getX() < block.getX() &&
+                            character.getX() + character.getWidth() > block.getX()) {
+                        character.setCollision(Character.RIGHT, true, block.getX() - character.getWidth());
+                    }
 
-                // RIGHT
-                if (withinY &&
-                        character.getX() < block.getX() &&
-                        character.getX() + character.getWidth() > block.getX()) {
-                    character.setCollision(Character.RIGHT, true, block.getX() - character.getWidth());
+                    // LEFT
+                    if (withinY &&
+                            character.getX() + character.getWidth() > block.getX() + block.getWidth() &&
+                            character.getX() < block.getX() + block.getWidth()) {
+                        character.setCollision(Character.LEFT, true, block.getX());
+                    }
                 }
+                if (character instanceof Player) {
+                    for (Character character1 : characters) {
+                        if (character1 == character) {
+                            continue;
+                        }
 
-                // LEFT
-                if (withinY &&
-                        character.getX() + character.getWidth() > block.getX() + block.getWidth() &&
-                        character.getX() < block.getX() + block.getWidth()) { 
-                    character.setCollision(Character.LEFT, true, block.getX());
+                        boolean withinX = character.getX() + character.getWidth() > character1.getX() &&
+                                character.getX() < character1.getX() + character1.getWidth();
+
+                        boolean withinY = character.getY() + character.getHeight() > character1.getY() &&
+                                character.getY() + 1 < character1.getY() + character1.getHeight();
+
+                        if (withinX && withinY) {
+                            // TODO: Check from what direction the collision comes from and change velocity accordingly
+
+                            character.yVel =  10;
+                            character.xVel =  -10;
+                        }
+                    }
                 }
             }
-
-            /*for (Character character1 : characters){
-                if (character1 == characters){ continue; }
-
-                boolean withinX = character.getX() + character.getWidth() > character1.getX() &&
-                        character.getX() < character1.getX() + character1.getWidth();
-
-                boolean withinY = character.getY() + character.getHeight() > character1.getY() &&
-                        character.getY() + 1 < character1.getY() + character1.getHeight();
-
-            }*/
         }
     }
 

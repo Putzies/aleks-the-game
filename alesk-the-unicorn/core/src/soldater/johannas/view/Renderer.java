@@ -1,14 +1,18 @@
 package soldater.johannas.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.HangingEnemy;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,6 +142,13 @@ public class Renderer {
                 player.getDirection() == Drawable.LEFT,
                 false
         );
+
+        // Debugging collisions
+        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.box(playerX,playerY,0,player.getWidth(),player.getHeight(),0);
+        shapeRenderer.setColor(Color.BLACK);
+
+
     }
 
     private void drawDrawables() {
