@@ -25,12 +25,30 @@ function createBlocks() {
     
     // Create ground
     for (let i = -100; i < 100; i++) {
-        blocks.push({X: i * 50, Y: 0});
+        blocks.push({
+            X: i * 50, Y: 0
+        });
     }
 
     // Create some really large stairs
     for (let i = 0; i < 1000; i++) {
-        blocks.push({X: 50 * 50 + i * 50, Y: 6 * 50 + 50 * Math.round((i / 6))});
+        blocks.push({
+            X: 50 * 50 + i * 50, Y: 6 * 50 + 50 * Math.round((i / 6))
+        });
+    }
+
+    // Create some blocks with hanging spiders
+    for (let i = -30; i < 30; i++) {
+        blocks.push({
+            X: i * 50, 
+            Y: 50 * 10,
+            hangingEnemy: {
+                startY: 50 * 9 + 12,
+                range: 200,
+                x: i * 50,
+                y: 50 * 9 + 12,
+            }
+        });
     }
 }
 

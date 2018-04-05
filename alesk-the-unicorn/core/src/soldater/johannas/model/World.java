@@ -16,24 +16,23 @@ public class World implements Entity {
     private List<Entity> entities;
     private List<Drawable> drawables;
     private List<Character> characters;
-    private List<WalkingEnemy> walkingEnemies;
-    List<HangingEnemy> hangingEnemies;
-    private List<Block> blocks;
+    private List<HangingEnemy> hangingEnemies;
 
     private Player player;
 
     public World() {
         drawables = new ArrayList<>();
-
         entities = new ArrayList<>();
-
         characters = new ArrayList<>();
+        hangingEnemies = new ArrayList<>();
     }
 
     public boolean startGame(String levelName) {
         level = new Parser().loadLevel(levelName);
         characters.addAll(level.enemies);
         characters.add(level.player);
+
+        level.blocks.stream().filter(b -> b.getHangingEnemy() != null).forEach(b -> hangingEnemies.add(b.getHangingEnemy()));
 
         return level != null;
     }
@@ -44,6 +43,7 @@ public class World implements Entity {
         allObjects.addAll(entities);
         allObjects.addAll(level.blocks);
         allObjects.addAll(level.enemies);
+        allObjects.addAll(hangingEnemies);
         return allObjects;
     }
 
@@ -139,7 +139,11 @@ public class World implements Entity {
         }
     }
 
-    public List<Enemy> getEnemies() {
+    public List<WalkingEnemy> getWalkingEnemies() {
         return level.enemies;
+    }
+
+    public List<HangingEnemy> getHangingEnemies() {
+        return hangingEnemies;
     }
 }

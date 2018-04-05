@@ -1,6 +1,7 @@
 package soldater.johannas.model.level;
 
 import soldater.johannas.model.Drawable;
+import soldater.johannas.model.HangingEnemy;
 
 public class Block implements Drawable {
 

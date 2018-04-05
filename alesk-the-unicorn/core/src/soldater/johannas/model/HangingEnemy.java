@@ -20,6 +20,10 @@ public class HangingEnemy extends Character {
         this.range = range;
     }
 
+    public HangingEnemy() {
+        super();
+    }
+
     @Override
     public void update(double dTime) {
         if (!collisions[DOWN]) {

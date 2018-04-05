@@ -13,7 +13,7 @@ public class WalkingEnemy extends Character implements Movable {
         this.rightbound = x + range;
     }
 
-    public Enemy() {
+    public WalkingEnemy() {
         super();
     }
 
