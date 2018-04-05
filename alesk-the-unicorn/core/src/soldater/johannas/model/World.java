@@ -103,24 +103,14 @@ public class World implements Entity {
         for(Character character : characters) {
             character.resetCollisions();
 
-            // Move this somewhere relevant
-            Vector3 min = new Vector3((float) character.getX(), (float) character.getY(), 0);
-            Vector3 max = new Vector3((float) character.getX() + character.getWidth(), (float) character.getY() + character.getHeight(), 0);
-            BoundingBox b1 = new BoundingBox(min, max);
-
-
             for (Block block : blocks) {
-
-                // Move this somewhere relevant
-                Vector3 min1 = new Vector3((float) block.getX(), (float) block.getY(), 0);
-                Vector3 max1 = new Vector3((float) block.getX() + block.getWidth(), (float) block.getY() + block.getHeight(), 0);
-                BoundingBox b2 = new BoundingBox(min1, max1);
 
 
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
-                if (b1.intersects(b2)) {
+                if (character.bBox.intersects(block.bBox)) {
 
 
+                    // Unneeded since we know they intersect already?
                     boolean withinX = character.getX() + character.getWidth() > block.getX() &&
                             character.getX() < block.getX() + block.getWidth();
 
@@ -137,7 +127,6 @@ public class World implements Entity {
                         if (character instanceof Player) {
                             // System.out.println((character.getY() + character.getHeight()) + " " + (block.getY() + block.getHeight()) + " ::"
                             //       + character.getY() + " " + (block.getY() + block.getHeight() ));
-
                         }
 
                         character.setCollision(Character.DOWN, true, block.getY() + block.getHeight() - 1);

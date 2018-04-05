@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+
 public class Player extends Character implements Movable {
 
     public static final int WIDTH = 132;
@@ -8,11 +11,20 @@ public class Player extends Character implements Movable {
     public static final int RUNNING = 1;
     public static final int JUMPING = 2;
 
-
     private int state = 0;
+
+    // Temporary, used for optimising collision detection.
+    protected Vector3 min;
+    protected Vector3 max;
+    protected BoundingBox bBox;
+
 
     public Player(int x, int y) {
         super(x, y);
+
+        min  = new Vector3((float) this.getX(), (float) this.getY(), 0);
+        max  = new Vector3((float) this.getX() + this.getWidth(), (float) this.getY() + this.getHeight(), 0);
+        bBox = new BoundingBox(min, max);
     }
 
     @Override
@@ -44,6 +56,8 @@ public class Player extends Character implements Movable {
         if (!collisions[DOWN]) {
             applyGravity();
         }
+
+        if(this.isOnGround()){ this.xVel = 0; }
 
         super.update(dTime);
     }

@@ -55,5 +55,6 @@ public class PlayerController implements Controller{
             player.stop();
             spacePressed = false;
         }
+
     }
 }

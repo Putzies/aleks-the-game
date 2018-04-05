@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+
 public abstract class Character implements Entity{
     public static final int UP = 0;
     public static final int RIGHT = 1;
@@ -15,6 +18,7 @@ public abstract class Character implements Entity{
     public Character(int x, int y) {
         this.x = x;
         this.y = y;
+
     }
 
     @Override

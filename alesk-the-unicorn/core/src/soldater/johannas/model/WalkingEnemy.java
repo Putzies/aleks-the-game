@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+
 public class WalkingEnemy extends Character implements Movable {
     public static final int WIDTH = 93;
     public static final int HEIGHT = 36;
@@ -7,10 +10,20 @@ public class WalkingEnemy extends Character implements Movable {
     private int leftBound;
     private int rightbound;
 
+    // Temporary, used for optimising collision detection.
+    protected Vector3 min;
+    protected Vector3 max;
+    protected BoundingBox bBox;
+
+
     public WalkingEnemy(int x, int y, int range) {
         super(x, y);
         this.leftBound = x;
         this.rightbound = x + range;
+
+        min  = new Vector3((float) this.getX(), (float) this.getY(), 0);
+        max  = new Vector3((float) this.getX() + this.getWidth(), (float) this.getY() + this.getHeight(), 0);
+        bBox = new BoundingBox(min, max);
     }
 
     @Override
