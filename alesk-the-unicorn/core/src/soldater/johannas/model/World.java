@@ -103,11 +103,22 @@ public class World implements Entity {
         for(Character character : characters) {
             character.resetCollisions();
 
+            /*
+            Vector3 min = new Vector3(0,0,0);
+            Vector3 max = new Vector3(10,10,0);
+
+            Vector3 min2 = new Vector3(10,10,0);
+            Vector3 max3 = new Vector3(30,30,0);
+
+            BoundingBox bBox2 = new BoundingBox(min,max);
+            BoundingBox bBox  = new BoundingBox(min2,max3);
+
+            System.out.println(bBox.intersects(bBox2));
+
+            */
+
             for (Block block : blocks) {
-
-
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
-                if (character.bBox.intersects(block.bBox)) {
 
 
                     // Unneeded since we know they intersect already?
@@ -153,6 +164,7 @@ public class World implements Entity {
                         character.setCollision(Character.LEFT, true, block.getX());
                     }
                 }
+
                 if (character instanceof Player) {
                     for (Character character1 : characters) {
                         if (character1 == character) {
@@ -160,7 +172,7 @@ public class World implements Entity {
                         }
 
                         boolean withinX = character.getX() + character.getWidth() > character1.getX() &&
-                                character.getX() < character1.getX() + character1.getWidth();
+                                    character.getX() < character1.getX() + character1.getWidth();
 
                         boolean withinY = character.getY() + character.getHeight() > character1.getY() &&
                                 character.getY() + 1 < character1.getY() + character1.getHeight();
@@ -175,7 +187,6 @@ public class World implements Entity {
                 }
             }
         }
-    }
 
     // TODO: Remove :)
     private void buildSomeExampleBlocks() {

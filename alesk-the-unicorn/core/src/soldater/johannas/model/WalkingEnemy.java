@@ -17,13 +17,11 @@ public class WalkingEnemy extends Character implements Movable {
 
 
     public WalkingEnemy(int x, int y, int range) {
-        super(x, y);
-        this.leftBound = x;
-        this.rightbound = x + range;
+        super(x, y, new Vector3((float) x, (float) y, 0),
+                new Vector3((float)x + WIDTH, (float) y + HEIGHT, 0));
 
-        min  = new Vector3((float) this.getX(), (float) this.getY(), 0);
-        max  = new Vector3((float) this.getX() + this.getWidth(), (float) this.getY() + this.getHeight(), 0);
-        bBox = new BoundingBox(min, max);
+        this.rightbound = x + range;
+        this.leftBound = x;
     }
 
     @Override

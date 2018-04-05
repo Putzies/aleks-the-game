@@ -1,5 +1,7 @@
 package soldater.johannas.model;
 
+import com.badlogic.gdx.math.Vector3;
+
 public class HangingEnemy extends Character {
     public static final int WIDTH = 93;
     public static final int HEIGHT = 36;
@@ -10,12 +12,14 @@ public class HangingEnemy extends Character {
 
     public HangingEnemy(int x, int y) {
         super(x, y);
+
         this.startY = y;
         this.range = 200;
     }
 
     public HangingEnemy(int x, int y, int range) {
         super(x, y);
+
         this.startY = y;
         this.range = range;
     }

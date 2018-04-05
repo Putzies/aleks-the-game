@@ -13,19 +13,7 @@ public class Player extends Character implements Movable {
 
     private int state = 0;
 
-    // Temporary, used for optimising collision detection.
-    protected Vector3 min;
-    protected Vector3 max;
-    protected BoundingBox bBox;
-
-
-    public Player(int x, int y) {
-        super(x, y);
-
-        min  = new Vector3((float) this.getX(), (float) this.getY(), 0);
-        max  = new Vector3((float) this.getX() + this.getWidth(), (float) this.getY() + this.getHeight(), 0);
-        bBox = new BoundingBox(min, max);
-    }
+    public Player(int x, int y) { super(x, y); }
 
     @Override
     public int getWidth() {
