@@ -8,10 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.HangingEnemy;
+import soldater.johannas.model.Player;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static soldater.johannas.model.Player.FALLING;
+import static soldater.johannas.model.Player.JUMPING;
 
 public class Renderer {
 
@@ -28,6 +32,7 @@ public class Renderer {
     private int playerFrame = 0;
 
     private Drawable player;
+    private RainbowEmitter rainbowEmitter;
     private List<? extends Drawable> drawables;
     private List<HangingEnemy> hangingEnemies;
 
@@ -38,6 +43,7 @@ public class Renderer {
         this.drawables = drawables;
         this.player = player;
         this.hangingEnemies = hangingEnemies;
+        rainbowEmitter = new RainbowEmitter();
 
 
         batch = new SpriteBatch();
@@ -51,6 +57,7 @@ public class Renderer {
     public void render() {
         Gdx.gl.glClearColor(1, 0.8039f, 0.6667f, 1 + (float)(player.getY()));
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         batch.begin();
 
         shapeRenderer.setAutoShapeType(true);
@@ -58,7 +65,7 @@ public class Renderer {
         drawBackgrounds();
 
         drawShapes();
-
+        drawRainbow();
         drawPlayer();
         drawDrawables();
         batch.end();
@@ -77,6 +84,7 @@ public class Renderer {
         textures.put(player.getName(), new Texture(player.getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
+        textures.put("rainbow", new Texture("rainbow.png"));
         for (Drawable drawable : drawables) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
@@ -121,6 +129,22 @@ public class Renderer {
         if (player.getY() >= 0) {
             batch.draw(sky, bgX1, skyY2);
             batch.draw(sky, bgX2, skyY2);
+        }
+    }
+
+    private void drawRainbow() {
+        rainbowEmitter.update(1, player.getX(), player.getY(), player.getYvel(), player.getXvel(), (player.getState() == FALLING || player.getState() == JUMPING));
+
+        for(RainbowParticle rp : rainbowEmitter.getRainbow()) {
+            batch.draw(
+                    textures.get("rainbow"),
+                    (int)(rp.getX() - player.getX() + playerX),
+                    (int)(rp.getY() - player.getY() + playerY),
+                    playerFrame * rp.getWidth(),
+                    rp.getFadeLevel() * rp.getHeight(),
+                    rp.getWidth(),
+                    rp.getHeight()
+            );
         }
     }
 

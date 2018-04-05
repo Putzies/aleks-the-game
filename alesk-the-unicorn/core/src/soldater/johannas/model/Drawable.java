@@ -6,6 +6,8 @@ public interface Drawable {
 
     double getX();
     double getY();
+    double getYvel();
+    double getXvel();
     int getWidth();
     int getHeight();
     int getDirection();

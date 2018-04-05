@@ -72,6 +72,16 @@ public class World implements Entity {
     }
 
     @Override
+    public double getYvel() {
+        return 0;
+    }
+
+    @Override
+    public double getXvel() {
+        return 0;
+    }
+
+    @Override
     public int getWidth() {
         return WIDTH;
     }
