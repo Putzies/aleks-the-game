@@ -13,6 +13,10 @@ public class WalkingEnemy extends Character implements Movable {
         this.rightbound = x + range;
     }
 
+    public Enemy() {
+        super();
+    }
+
     @Override
     public void update(double dTime) {
         if (!collisions[DOWN]) {

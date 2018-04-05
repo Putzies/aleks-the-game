@@ -1,4 +1,6 @@
-package soldater.johannas.model;
+package soldater.johannas.model.level;
+
+import soldater.johannas.model.Drawable;
 
 public class Block implements Drawable {
 
