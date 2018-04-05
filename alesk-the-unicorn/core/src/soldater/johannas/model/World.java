@@ -177,11 +177,20 @@ public class World implements Entity {
                         boolean withinY = character.getY() + character.getHeight() > character1.getY() &&
                                 character.getY() + 1 < character1.getY() + character1.getHeight();
 
+                        // Check if player and some character are colliding.
                         if (withinX && withinY) {
-                            // TODO: Check from what direction the collision comes from and change velocity accordingly
 
-                            character.yVel =  10;
-                            character.xVel =  -10;
+                            // Either we are facing Right or we are facing Left
+                            if(character.getDirection() == Drawable.RIGHT ) {
+
+                                character.yVel =  10;
+                                character.xVel = -10;
+
+                            } else {
+
+                                character.yVel =  10;
+                                character.xVel =  10;
+                            }
                         }
                     }
                 }

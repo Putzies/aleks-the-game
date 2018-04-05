@@ -15,23 +15,12 @@ public abstract class Character implements Entity{
     protected double x,y;
     protected double xVel, yVel;
 
-    protected Vector3 min;
-    protected Vector3 max;
-    protected BoundingBox bBox;
-
     public Character(int x, int y) {
         this.x = x;
         this.y = y;
 
     }
 
-    public Character(int x, int y, Vector3 min, Vector3 max) {
-        this.x = x;
-        this.y = y;
-
-        bBox = new BoundingBox(min,max);
-
-    }
 
     @Override
     public void update(double dTime) {

@@ -17,8 +17,7 @@ public class WalkingEnemy extends Character implements Movable {
 
 
     public WalkingEnemy(int x, int y, int range) {
-        super(x, y, new Vector3((float) x, (float) y, 0),
-                new Vector3((float)x + WIDTH, (float) y + HEIGHT, 0));
+        super(x, y);
 
         this.rightbound = x + range;
         this.leftBound = x;
