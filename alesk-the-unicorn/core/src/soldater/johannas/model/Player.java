@@ -9,7 +9,6 @@ public class Player extends Character implements Movable {
     public static final int JUMPING = 2;
     public static final int FALLING = 3;
 
-
     private int state = 0;
 
     public Player() {
@@ -49,6 +48,7 @@ public class Player extends Character implements Movable {
             }
         }
 
+        if(this.isOnGround()){ this.xVel = 0; }
 
         super.update(dTime);
     }

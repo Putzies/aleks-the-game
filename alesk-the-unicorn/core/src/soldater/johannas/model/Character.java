@@ -1,15 +1,11 @@
 package soldater.johannas.model;
 
-
-import com.google.gson.annotations.Expose;
-
 public abstract class Character implements Entity{
     public static final int UP = 0;
     public static final int RIGHT = 1;
     public static final int LEFT = 2;
     public static final int DOWN = 3;
 
-    @Expose(deserialize = false, serialize = false)
     protected final boolean[] collisions;
 
     protected int direction = Drawable.RIGHT;
@@ -21,6 +17,7 @@ public abstract class Character implements Entity{
         this();
         this.x = x;
         this.y = y;
+
     }
 
     public Character() {

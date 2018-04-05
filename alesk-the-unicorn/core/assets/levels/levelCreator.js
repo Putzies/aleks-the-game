@@ -53,7 +53,7 @@ function createBlocks() {
 }
 
 function createALotOfDisgustingSpiders() {
-    for (let i = -300; i < -100; i++) {
+    for (let i = -110; i < -100; i++) {
         enemies.push({
             x: i * 10,
             y: 100,

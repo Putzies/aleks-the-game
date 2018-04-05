@@ -3,6 +3,9 @@ package soldater.johannas.model.level;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.HangingEnemy;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+
 public class Block implements Drawable {
 
     public static final int WIDTH = 50;
