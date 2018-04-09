@@ -103,7 +103,7 @@ public class Player extends Character implements Movable {
         if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
             yVel = 30;
         }
-        if(state != FALLING || state != FLYING) {
+        if(state != FALLING ) {
             state = JUMPING;
         }
     }
@@ -119,10 +119,19 @@ public class Player extends Character implements Movable {
 
         this.pickups[pickup] = value;
 
-        // Need to set the state to flying if we are flying, problem right now: It gets change into something else quickly.
-        if (pickup == Player.WINGS){
-            state = Player.FLYING;
-        }
+
+        // This should probably be in some giant setState function instead of setPickup
+        // Set state to Flying if wings & true otherwise set it to falling, which will be changed into the proper state
+        // On the next tick.
+        if (pickup == WINGS && value){
+            state = FLYING;
+        } else if (pickup == BAGUETTE && value){
+            /* Do something here*/
+        } else if (pickup == ENERGYDRINK && value){
+            /* Do something here*/
+        } else { state = FALLING; }
+
+
     }
 
     public boolean getPickup(int pickup){

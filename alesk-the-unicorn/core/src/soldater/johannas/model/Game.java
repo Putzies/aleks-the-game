@@ -26,6 +26,9 @@ public class Game implements Entity {
 
     private Player player;
 
+    // Task object used for disabling a pickup effect after a set time.
+    Timer.Task t;
+
     public Game() {
         drawables = new ArrayList<>();
         entities = new ArrayList<>();
@@ -127,11 +130,11 @@ public class Game implements Entity {
                 // The collision detection is simple
                 if (withinX && withinY){
                     if(d.getName().matches("wings")) {
-                        System.out.println(d.getName());
-
-                        //Trigger the Wings flag, put a timer task for 4 seconds
+                        // Trigger the Wings flag, put a timer task for 4 seconds
                         this.getPlayer1().setPickup(Player.WINGS, true);
-                        Timer.Task t = new Timer.Task() {
+
+                        // This is incredibly ugly but does the job for now.
+                        t = new Timer.Task() {
                             @Override
                             public void run() {
                                 getPlayer1().setPickup(Player.WINGS, false);
@@ -145,10 +148,31 @@ public class Game implements Entity {
                         System.out.println(d.getName());
 
                     } else if(d.getName().matches("baguette")){
-                        System.out.println(d.getName());
+                        // Trigger the Wings flag, put a timer task for 4 seconds
+                        this.getPlayer1().setPickup(Player.BAGUETTE, true);
+
+                        // This is incredibly ugly but does the job for now.
+                        t = new Timer.Task() {
+                            @Override
+                            public void run() {
+                                getPlayer1().setPickup(Player.BAGUETTE, false);
+                            }
+                        };
+                        Timer.schedule(t,4);
 
                     } else if(d.getName().matches("energydrink")){
-                        System.out.println(d.getName());
+                        // Trigger the Wings flag, put a timer task for 4 seconds
+                        this.getPlayer1().setPickup(Player.ENERGYDRINK, true);
+
+                        // This is incredibly ugly but does the job for now.
+                        t = new Timer.Task() {
+                            @Override
+                            public void run() {
+                                getPlayer1().setPickup(Player.ENERGYDRINK, false);
+                            }
+                        };
+                        Timer.schedule(t,4);
+
 
                     }
                 }

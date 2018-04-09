@@ -146,11 +146,7 @@ public class Renderer {
         );
 
         // Debugging collisions
-        if(player.getState() == Player.FLYING) {
-            shapeRenderer.setColor(Color.GREEN);
-        } else {
-            shapeRenderer.setColor(Color.PINK);
-        }
+        shapeRenderer.setColor(Color.PINK);
         shapeRenderer.box(playerX,playerY,0,player.getWidth(),player.getHeight(),0);
         shapeRenderer.setColor(Color.WHITE);
 
