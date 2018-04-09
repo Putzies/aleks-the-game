@@ -52,10 +52,19 @@ public class Game implements Entity {
         return allObjects;
     }
 
+    // Helper method for generating a list of all the pickups
+    public List<Pickup> getPickups(){
+        List<Pickup> pickups = new ArrayList<>();
+
+        pickups.addAll(level.pickups);
+        return pickups;
+    }
+
+
     public Movable getPlayer() {
         return level.player;
     }
-
+    public Player getPlayer1(){return level.player;}
     @Override
     public void update(double dTime) {
         for (Character character : characters) {
@@ -63,6 +72,7 @@ public class Game implements Entity {
         }
 
         collideCharacters();
+        collidePickups();
     }
 
     @Override
@@ -100,6 +110,33 @@ public class Game implements Entity {
         return "world";
     }
 
+    private  void collidePickups(){
+        for (Pickup d : this.getPickups()){
+                boolean withinX = getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
+                        getPlayer().getX() < d.getX() + d.getWidth();
+
+                boolean withinY = getPlayer().getY() + getPlayer().getHeight() > d.getY() &&
+                        getPlayer().getY() + 1 < d.getY() + d.getHeight();
+
+                if (withinX && withinY){
+                    if(d.getName().matches("wings")) {
+                        System.out.println(d.getName());
+                        this.getPlayer1().setPickup(Player.WINGS, true);
+                    } else if(d.getName().matches("lunchbox")) {
+                        System.out.println(d.getName());
+
+                    } else if(d.getName().matches("baguette")){
+                        System.out.println(d.getName());
+
+                    } else if(d.getName().matches("energydrink")){
+                        System.out.println(d.getName());
+
+                    }
+                }
+
+
+        }
+    }
     private void collideCharacters() {
         for(Character character : characters) {
             character.resetCollisions();

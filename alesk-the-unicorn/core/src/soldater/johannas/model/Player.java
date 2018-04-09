@@ -12,6 +12,7 @@ public class Player extends Character implements Movable {
     public static final int WINGS       = 0;
     public static final int BAGUETTE    = 1;
     public static final int ENERGYDRINK = 2;
+    public static final int FLYING      = 4;
 
     private int state = 0;
 
@@ -95,7 +96,8 @@ public class Player extends Character implements Movable {
 
     @Override
     public void jump() {
-        if (!collisions[UP] && collisions[DOWN]) {
+        // If we have wings triggered, then we can jump indefinitiely
+        if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
             yVel = 30;
         }
         if(state != FALLING) {
