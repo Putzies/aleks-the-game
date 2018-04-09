@@ -8,11 +8,14 @@ public class Player extends Character implements Movable {
     public static final int RUNNING     = 1;
     public static final int JUMPING     = 2;
     public static final int FALLING     = 3;
+
+    // For flying, or a state with wings.
+    public static final int FLYING      = 4;
+
     // For pickups
     public static final int WINGS       = 0;
     public static final int BAGUETTE    = 1;
     public static final int ENERGYDRINK = 2;
-    public static final int FLYING      = 4;
 
     private int state = 0;
 
@@ -100,7 +103,7 @@ public class Player extends Character implements Movable {
         if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
             yVel = 30;
         }
-        if(state != FALLING) {
+        if(state != FALLING || state != FLYING) {
             state = JUMPING;
         }
     }
@@ -113,7 +116,13 @@ public class Player extends Character implements Movable {
     }
 
     public void setPickup(int pickup, boolean value){
+
         this.pickups[pickup] = value;
+
+        // Need to set the state to flying if we are flying, problem right now: It gets change into something else quickly.
+        if (pickup == Player.WINGS){
+            state = Player.FLYING;
+        }
     }
 
     public boolean getPickup(int pickup){
