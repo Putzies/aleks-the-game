@@ -2,14 +2,22 @@ package soldater.johannas.model;
 
 public class Player extends Character implements Movable {
 
-    public static final int WIDTH = 132;
-    public static final int HEIGHT = 105;
-    public static final int STANDING = 0;
-    public static final int RUNNING = 1;
-    public static final int JUMPING = 2;
-    public static final int FALLING = 3;
+    public static final int WIDTH       = 132;
+    public static final int HEIGHT      = 105;
+    public static final int STANDING    = 0;
+    public static final int RUNNING     = 1;
+    public static final int JUMPING     = 2;
+    public static final int FALLING     = 3;
+    // For pickups
+    public static final int WINGS       = 0;
+    public static final int BAGUETTE    = 1;
+    public static final int ENERGYDRINK = 2;
 
     private int state = 0;
+
+    // New booleans
+    private final boolean[] pickups = {false,false,false};
+
 
     public Player() {
         super();
@@ -100,6 +108,14 @@ public class Player extends Character implements Movable {
         if (state != JUMPING) {
             state = STANDING;
         }
+    }
+
+    public void setPickup(int pickup, boolean value){
+        this.pickups[pickup] = value;
+    }
+
+    public boolean getPickup(int pickup){
+        return this.pickups[pickup];
     }
 
     private void applyGravity() {
