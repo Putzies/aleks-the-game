@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class World implements Entity {
+public class Game implements Entity {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 600;
 
@@ -24,7 +24,7 @@ public class World implements Entity {
 
     private Player player;
 
-    public World() {
+    public Game() {
         drawables = new ArrayList<>();
         entities = new ArrayList<>();
         characters = new ArrayList<>();

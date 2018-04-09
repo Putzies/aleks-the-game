@@ -5,7 +5,6 @@ import soldater.johannas.control.Controller;
 import soldater.johannas.control.HangingEnemyController;
 import soldater.johannas.control.PlayerController;
 import soldater.johannas.control.WalkingEnemyController;
-import soldater.johannas.model.World;
 import soldater.johannas.view.Renderer;
 
 import java.util.ArrayList;
@@ -13,24 +12,24 @@ import java.util.List;
 
 public class Game extends ApplicationAdapter {
 	private Renderer renderer;
-	private World world;
+	private soldater.johannas.model.Game game;
 
 	private List<Controller> controllers;
 
 	@Override
 	public void create () {
-		world = new World();
-		world.startGame("level1.json");
-		renderer = new Renderer(world.getPlayer(), world.getDrawables(), world.getHangingEnemies());
+		game = new soldater.johannas.model.Game();
+		game.startGame("level1.json");
+		renderer = new Renderer(game.getPlayer(), game.getDrawables(), game.getHangingEnemies());
 		controllers = new ArrayList<>();
-		controllers.add(new PlayerController(world.getPlayer()));
-		world.getWalkingEnemies().forEach(e -> controllers.add(new WalkingEnemyController(e)));
-		world.getHangingEnemies().forEach(e -> controllers.add(new HangingEnemyController(e)));
+		controllers.add(new PlayerController(game.getPlayer()));
+		game.getWalkingEnemies().forEach(e -> controllers.add(new WalkingEnemyController(e)));
+		game.getHangingEnemies().forEach(e -> controllers.add(new HangingEnemyController(e)));
 	}
 
 	@Override
 	public void render () {
-		world.update(1);
+		game.update(1);
 		for (Controller c : controllers) {
 			c.update();
 		}
