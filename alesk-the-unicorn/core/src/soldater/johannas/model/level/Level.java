@@ -2,27 +2,21 @@ package soldater.johannas.model.level;
 
 import soldater.johannas.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
     public final List<Block> blocks;
     public final Player player;
     public final List<WalkingEnemy> enemies;
-    public final List<Pickup> pickups;
     public final List<Score> scores;
 
-    public Level(Player player, List<Block> blocks, List<WalkingEnemy> enemies, List<Pickup>pickups,List<Score> scores){
-        this.player = player;
-        this.blocks = blocks;
-        this.enemies = enemies;
-        this.pickups = pickups;
-        this.scores = scores;
-    }
-    /*
-      public final List<Lunchbox> lunchboxes;
-      public final List<Wings> wings;
-      public final List<EnergyDrink>energyDrinks;
-      public final List<Baguette> baguettes;
+    public List<Pickup> pickups;
+
+    private final List<Lunchbox> lunchboxes;
+    private final List<Wings> wings;
+    private final List<EnergyDrink>energyDrinks;
+    private final List<Baguette> baguettes;
 
     public Level(Player player, List<Block> blocks, List<WalkingEnemy> enemies,
                                 List<Lunchbox> lunchboxes, List<Score> scores,List<Wings> wings,
@@ -36,6 +30,13 @@ public class Level {
         this.energyDrinks = energyDrinks;
         this.baguettes = baguettes;
     }
-    */
+
+    void addPickups() {
+        pickups = new ArrayList<>();
+        pickups.addAll(lunchboxes);
+        pickups.addAll(energyDrinks);
+        pickups.addAll(baguettes);
+        pickups.addAll(wings);
+    }
 
 }

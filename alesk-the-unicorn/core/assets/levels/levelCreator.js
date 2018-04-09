@@ -16,6 +16,8 @@ const enemies = [
     }
 ];
 
+const lunchboxes = [];
+
 const player = {
     x: 0,
     y: 100,
@@ -53,7 +55,7 @@ function createBlocks() {
 }
 
 function createALotOfDisgustingSpiders() {
-    for (let i = -110; i < -100; i++) {
+    for (let i = -300; i < -100; i++) {
         enemies.push({
             x: i * 10,
             y: 100,
@@ -63,14 +65,28 @@ function createALotOfDisgustingSpiders() {
     }
 }
 
+function createPickups() {
+    const lunchBox = {
+        x: 0,
+        y: 50 * 2
+    };
+
+    lunchboxes.push(lunchBox);
+}
+
 createBlocks();
-createALotOfDisgustingSpiders();
+createPickups();
+//createALotOfDisgustingSpiders();
 
 
 const level = {
     blocks,
     enemies,
     player,
+    lunchboxes,
+    wings: [{x: 100, y: 50 * 2}],
+    energyDrinks: [{x: 500, y: 50 * 2}],
+    baguettes: [{x: -200, y: 50 * 15}],
 };
 
 var fs = require('fs');

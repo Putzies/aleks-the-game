@@ -146,7 +146,7 @@ public class Renderer {
         // Debugging collisions
         shapeRenderer.setColor(Color.GREEN);
         shapeRenderer.box(playerX,playerY,0,player.getWidth(),player.getHeight(),0);
-        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.setColor(Color.WHITE);
 
 
     }

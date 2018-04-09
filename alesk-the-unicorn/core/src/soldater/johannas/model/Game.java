@@ -48,6 +48,7 @@ public class Game implements Entity {
         allObjects.addAll(level.blocks);
         allObjects.addAll(level.enemies);
         allObjects.addAll(hangingEnemies);
+        allObjects.addAll(level.pickups);
         return allObjects;
     }
 

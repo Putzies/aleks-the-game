@@ -5,6 +5,10 @@ public class Lunchbox extends Pickup {
     public static final int WIDTH = 50;
     public static final int HEIGHT = 50;
 
+    public Lunchbox() {
+        super();
+    }
+
     @Override
     public int getWidth() {
         return WIDTH;
