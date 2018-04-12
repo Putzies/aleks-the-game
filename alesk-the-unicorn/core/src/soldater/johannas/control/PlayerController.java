@@ -56,5 +56,8 @@ public class PlayerController implements Controller{
             spacePressed = false;
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            Gdx.app.exit();
+        }
     }
 }

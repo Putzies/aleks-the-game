@@ -19,12 +19,12 @@ const enemies = [
 const lunchboxes = [];
 
 const player = {
-    x: 0,
+    x: -200,
     y: 100,
 };
 
 function createBlocks() {
-    
+
     // Create ground
     for (let i = -100; i < 100; i++) {
         blocks.push({
@@ -42,7 +42,7 @@ function createBlocks() {
     // Create some blocks with hanging spiders
     for (let i = -30; i < 30; i++) {
         blocks.push({
-            X: i * 50, 
+            X: i * 50,
             Y: 50 * 10,
             hangingEnemy: {
                 startY: 50 * 9 + 12,

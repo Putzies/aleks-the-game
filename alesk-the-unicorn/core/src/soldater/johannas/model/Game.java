@@ -1,5 +1,6 @@
 package soldater.johannas.model;
 
+import com.badlogic.gdx.utils.Timer;
 import soldater.johannas.model.level.Block;
 import soldater.johannas.model.level.Level;
 import soldater.johannas.model.level.Parser;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 public class Game implements Entity {
     public static final int WIDTH = 1000;
@@ -52,10 +54,21 @@ public class Game implements Entity {
         return allObjects;
     }
 
+    // Helper method for generating a list of all the pickups
+    public List<Pickup> getPickups(){
+        List<Pickup> pickups = new ArrayList<>();
+
+        pickups.addAll(level.pickups);
+        return pickups;
+    }
+
+
     public Movable getPlayer() {
         return level.player;
     }
 
+    // Needed for manipulating the state
+    public Player getPlayer1(){return level.player;}
     @Override
     public void update(double dTime) {
         for (Character character : characters) {
@@ -63,6 +76,7 @@ public class Game implements Entity {
         }
 
         collideCharacters();
+        collidePickups();
     }
 
     @Override
@@ -100,6 +114,48 @@ public class Game implements Entity {
         return "world";
     }
 
+    // Collision code for pickups, sets a flag which triggers the said effect on the proper entity.
+    private  void collidePickups(){
+        for (Pickup d : this.getPickups()){
+
+                boolean withinX = getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
+                        getPlayer().getX() < d.getX() + d.getWidth();
+
+                boolean withinY = getPlayer().getY() + getPlayer().getHeight() > d.getY() &&
+                        getPlayer().getY() + 1 < d.getY() + d.getHeight();
+
+                // The collision detection is simple
+                if (withinX && withinY){
+                    if(d.getName().matches("wings")) {
+                        System.out.println(d.getName());
+
+                        //Trigger the Wings flag, put a timer task for 4 seconds
+                        this.getPlayer1().setPickup(Player.WINGS, true);
+                        Timer.Task t = new Timer.Task() {
+                            @Override
+                            public void run() {
+                                getPlayer1().setPickup(Player.WINGS, false);
+                            }
+                        };
+                        Timer.schedule(t,4);
+
+                        //TODO Remove the pickup from the list
+
+                    } else if(d.getName().matches("lunchbox")) {
+                        System.out.println(d.getName());
+
+                    } else if(d.getName().matches("baguette")){
+                        System.out.println(d.getName());
+
+                    } else if(d.getName().matches("energydrink")){
+                        System.out.println(d.getName());
+
+                    }
+                }
+
+
+        }
+    }
     private void collideCharacters() {
         for(Character character : characters) {
             character.resetCollisions();
