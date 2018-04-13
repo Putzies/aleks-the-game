@@ -1,7 +1,7 @@
 package soldater.johannas.control.menu;
 
 public interface MainMenu {
-    void startGame();
+    boolean startGame();
     void settings();
     void quitGame();
 }

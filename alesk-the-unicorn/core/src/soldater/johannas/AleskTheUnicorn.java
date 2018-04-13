@@ -38,9 +38,10 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
 	}
 
 	@Override
-	public void startGame() {
+	public boolean startGame() {
 	    mainMenu.dispose();
         this.setScreen(levelSelector);
+        return true;
 	}
 
 	@Override
