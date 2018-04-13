@@ -21,21 +21,41 @@ const enemies = [
     }
 ];
 
+const lunchboxes = [];
+
 const player = {
-    x: 0,
+    x: -200,
     y: 100,
 };
 
 function createBlocks() {
-    
+
     // Create ground
     for (let i = -100; i < 100; i++) {
-        blocks.push({X: i * 50, Y: 0});
+        blocks.push({
+            X: i * 50, Y: 0
+        });
     }
 
     // Create some really large stairs
     for (let i = 0; i < 1000; i++) {
-        blocks.push({X: 50 * 50 + i * 50, Y: 6 * 50 + 50 * Math.round((i / 6))});
+        blocks.push({
+            X: 50 * 50 + i * 50, Y: 6 * 50 + 50 * Math.round((i / 6))
+        });
+    }
+
+    // Create some blocks with hanging spiders
+    for (let i = -30; i < 30; i++) {
+        blocks.push({
+            X: i * 50,
+            Y: 50 * 10,
+            hangingEnemy: {
+                startY: 50 * 9 + 12,
+                range: 200,
+                x: i * 50,
+                y: 50 * 9 + 12,
+            }
+        });
     }
 }
 
@@ -50,14 +70,28 @@ function createALotOfDisgustingSpiders() {
     }
 }
 
+function createPickups() {
+    const lunchBox = {
+        x: 0,
+        y: 50 * 2
+    };
+
+    lunchboxes.push(lunchBox);
+}
+
 createBlocks();
-createALotOfDisgustingSpiders();
+createPickups();
+//createALotOfDisgustingSpiders();
 
 
 const level = {
     blocks,
     enemies,
     player,
+    lunchboxes,
+    wings: [{x: 100, y: 50 * 2}],
+    energyDrinks: [{x: 500, y: 50 * 2}],
+    baguettes: [{x: -200, y: 50 * 15}],
 };
 
 const levelMetadata = {

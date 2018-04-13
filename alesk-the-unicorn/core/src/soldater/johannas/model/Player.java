@@ -2,14 +2,23 @@ package soldater.johannas.model;
 
 public class Player extends Character implements Movable {
 
-    public static final int WIDTH = 132;
-    public static final int HEIGHT = 105;
-    public static final int STANDING = 0;
-    public static final int RUNNING = 1;
-    public static final int JUMPING = 2;
-
+    public static final int WIDTH       = 132;
+    public static final int HEIGHT      = 105;
+    public static final int STANDING    = 0;
+    public static final int RUNNING     = 1;
+    public static final int JUMPING     = 2;
+    public static final int FALLING     = 3;
+    // For pickups
+    public static final int WINGS       = 0;
+    public static final int BAGUETTE    = 1;
+    public static final int ENERGYDRINK = 2;
+    public static final int FLYING      = 4;
 
     private int state = 0;
+
+    // New booleans
+    private final boolean[] pickups = {false,false,false};
+
 
     public Player() {
         super();
@@ -43,7 +52,12 @@ public class Player extends Character implements Movable {
     public void update(double dTime) {
         if (!collisions[DOWN]) {
             applyGravity();
+            if(yVel < 0) {
+                state = FALLING;
+            }
         }
+
+        if(this.isOnGround()){ this.xVel = 0; }
 
         super.update(dTime);
     }
@@ -63,7 +77,7 @@ public class Player extends Character implements Movable {
         }
         direction = Drawable.LEFT;
 
-        if (state != JUMPING) {
+        if (state != JUMPING && state != FALLING) {
             state = RUNNING;
         }
     }
@@ -75,17 +89,20 @@ public class Player extends Character implements Movable {
         }
         direction = Drawable.RIGHT;
 
-        if (state != JUMPING){
+        if (state != JUMPING && state != FALLING){
             state = RUNNING;
         }
     }
 
     @Override
     public void jump() {
-        if (!collisions[UP] && collisions[DOWN]) {
-            yVel = 30;
+        // If we have wings triggered, then we can jump indefinitiely
+        if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
+            yVel = 1000;
         }
-        state = JUMPING;
+        if(state != FALLING) {
+            state = JUMPING;
+        }
     }
 
     @Override
@@ -95,7 +112,15 @@ public class Player extends Character implements Movable {
         }
     }
 
+    public void setPickup(int pickup, boolean value){
+        this.pickups[pickup] = value;
+    }
+
+    public boolean getPickup(int pickup){
+        return this.pickups[pickup];
+    }
+
     private void applyGravity() {
-        yVel -= 0.8;
+        yVel -= 25;
     }
 }

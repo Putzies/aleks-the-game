@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import soldater.johannas.AleskTheUnicorn;
+import soldater.johannas.control.GameController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class LevelSelectScreen implements Screen {
         game.batch.end();
 
         if(Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game, levels.get(0).getFileName()));
+            game.setScreen(new GameController(game, levels.get(0).getFileName()));
             dispose();
         }
     }

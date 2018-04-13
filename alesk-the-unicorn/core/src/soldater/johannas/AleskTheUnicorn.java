@@ -3,7 +3,6 @@ package soldater.johannas;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import soldater.johannas.view.GameScreen;
 import soldater.johannas.view.LevelSelectScreen;
 
 

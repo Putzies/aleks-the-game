@@ -1,19 +1,29 @@
 package soldater.johannas.model;
 
-public class Enemy extends Character implements Movable {
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+
+public class WalkingEnemy extends Character implements Movable {
     public static final int WIDTH = 93;
     public static final int HEIGHT = 36;
 
     private int leftBound;
     private int rightbound;
 
-    public Enemy(int x, int y, int leftBound, int rightbound) {
+    // Temporary, used for optimising collision detection.
+    protected Vector3 min;
+    protected Vector3 max;
+    protected BoundingBox bBox;
+
+
+    public WalkingEnemy(int x, int y, int range) {
         super(x, y);
-        this.leftBound = leftBound;
-        this.rightbound = rightbound;
+
+        this.rightbound = x + range;
+        this.leftBound = x;
     }
 
-    public Enemy() {
+    public WalkingEnemy() {
         super();
     }
 
@@ -32,7 +42,6 @@ public class Enemy extends Character implements Movable {
             x -= 2;
         }
         direction = Drawable.LEFT;
-
     }
 
     @Override
@@ -86,11 +95,6 @@ public class Enemy extends Character implements Movable {
     @Override
     public void stop() {
     }
-
-    public boolean isOnGround() {
-        return collisions[DOWN];
-    }
-
     private void applyGravity() {
         yVel -= 2.2;
     }

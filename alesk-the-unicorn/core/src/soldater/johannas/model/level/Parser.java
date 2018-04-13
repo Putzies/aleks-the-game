@@ -15,7 +15,9 @@ public class Parser {
     public Level loadLevel(String name) {
         try {
             String content = new String(Files.readAllBytes(Paths.get(BASE_PATH + name)));
-            return gson.fromJson(content, Level.class);
+            Level level =  gson.fromJson(content, Level.class);
+            level.addPickups();
+            return level;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
