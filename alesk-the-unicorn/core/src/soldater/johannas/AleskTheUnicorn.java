@@ -8,6 +8,7 @@ import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.control.menu.MainMenu;
 import soldater.johannas.view.LevelInfo;
 import soldater.johannas.view.LevelSelector;
+import soldater.johannas.view.MainMenuRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +16,14 @@ import java.util.List;
 
 public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
 
+    private MainMenuRenderer mainMenu;
     private LevelSelector levelSelector;
 
 	@Override
 	public void create() {
+        mainMenu = new MainMenuRenderer(this);
         levelSelector = new LevelSelector(this, loadLevels());
-		this.setScreen(levelSelector);
+        this.setScreen(mainMenu);
 	}
 
 	@Override
@@ -36,9 +39,8 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
 
 	@Override
 	public void startGame() {
-
-
-
+	    mainMenu.dispose();
+        this.setScreen(levelSelector);
 	}
 
 	@Override
@@ -48,7 +50,8 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
 
 	@Override
 	public void quitGame() {
-
+	    mainMenu.dispose();
+        Gdx.app.exit();
 	}
 
 	private List<LevelInfo> loadLevels() {

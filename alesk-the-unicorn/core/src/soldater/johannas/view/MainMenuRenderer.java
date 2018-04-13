@@ -5,24 +5,19 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import soldater.johannas.control.menu.LevelSelection;
+import soldater.johannas.control.menu.MainMenu;
 
-import java.util.List;
-
-public class LevelSelector implements Screen {
-    private LevelSelection levelSelection;
+public class MainMenuRenderer implements Screen {
+    private MainMenu mainMenu;
     private SpriteBatch batch;
     private BitmapFont font;
-    private List<LevelInfo> levels;
 
-    private int startY = 500;
-
-    public LevelSelector(LevelSelection levelSelection, List<LevelInfo> levels) {
-        this.levelSelection = levelSelection;
+    public MainMenuRenderer(MainMenu menu) {
+        this.mainMenu = menu;
         batch = new SpriteBatch();
         font = new BitmapFont();
-        this.levels = levels;
     }
+
 
     @Override
     public void show() {
@@ -31,21 +26,18 @@ public class LevelSelector implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClearColor(0, 0.2f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
 
-        int i = 0;
-        for(LevelInfo level : levels) {
-            font.draw(batch, level.getName(), 100, startY + i*20);
-            i++;
-        }
-        batch.end();
+        font.draw(batch, "Start Game", Gdx.graphics.getWidth() / 2, 500);
 
-        if(Gdx.input.justTouched()) {
-            levelSelection.startLevel(levels.get(0).getFileName());
+        if (Gdx.input.justTouched()) {
+            mainMenu.startGame();
         }
+
+        batch.end();
     }
 
     @Override
