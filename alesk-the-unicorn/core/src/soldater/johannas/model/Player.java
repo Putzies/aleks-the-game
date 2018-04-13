@@ -77,6 +77,11 @@ public class Player extends Character implements Movable {
     public void left () {
         if (!collisions[super.LEFT]) {
             x -= 10;
+
+
+            if(pickups[ENERGYDRINK]){
+                x -= 15;
+            }
         }
         direction = Drawable.LEFT;
 
@@ -87,8 +92,12 @@ public class Player extends Character implements Movable {
 
     @Override
     public void right() {
-        if (!collisions[super.RIGHT]) {
+        if (!collisions[super.RIGHT] ) {
             x += 10;
+
+            if(pickups[ENERGYDRINK]){
+                x += 15;
+            }
         }
         direction = Drawable.RIGHT;
 
@@ -141,4 +150,5 @@ public class Player extends Character implements Movable {
     private void applyGravity() {
         yVel -= 0.8;
     }
+
 }

@@ -13,11 +13,14 @@ public abstract class Character implements Entity{
     protected double x,y;
     protected double xVel, yVel;
 
+    //  // Float for controlling the sound volume if something is far away.
+    public float soundVolume = 1f;
+
     public Character(int x, int y) {
         this();
         this.x = x;
         this.y = y;
-
+        this.soundVolume = 1f;
     }
 
     public Character() {
@@ -67,6 +70,10 @@ public abstract class Character implements Entity{
     public int getDirection() {
         return direction;
     }
+
+    public float getSoundVolume(){ return soundVolume; }
+
+    public void setSoundVolume(float f){soundVolume = f;}
 
     public boolean isOnGround() {
         return collisions[DOWN];

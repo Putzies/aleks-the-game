@@ -27,7 +27,8 @@ public class WalkingEnemyController implements Controller{
             enemy.jump();
 
             // Just call the play method of the sound
-            jmpSound.play();
+            System.out.println(enemy.getSoundVolume());
+            jmpSound.play(enemy.getSoundVolume());
         }
         if ((enemy.getX() < enemy.getLeftBound() && goingLeft) || random.nextDouble() > 0.99 || enemy.collidesLeft()) {
             enemy.right();

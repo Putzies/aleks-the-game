@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.HangingEnemy;
-import soldater.johannas.model.Player;
+
 
 import java.awt.*;
 import java.util.HashMap;
@@ -146,9 +146,9 @@ public class Renderer {
         );
 
         // Debugging collisions
-        shapeRenderer.setColor(Color.PINK);
-        shapeRenderer.box(playerX,playerY,0,player.getWidth(),player.getHeight(),0);
-        shapeRenderer.setColor(Color.WHITE);
+        //shapeRenderer.setColor(Color.RED);
+        //shapeRenderer.box(playerX,playerY,0,player.getWidth(),player.getHeight(),0);
+        //shapeRenderer.setColor(Color.WHITE);
 
 
     }

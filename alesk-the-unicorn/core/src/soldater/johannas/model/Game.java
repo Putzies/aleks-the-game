@@ -23,11 +23,22 @@ public class Game implements Entity {
     private List<Drawable> drawables;
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
-
     private Player player;
 
     // Task object used for disabling a pickup effect after a set time.
     Timer.Task t;
+
+    //Just testing
+    BoundingBox bBox = generateConnected();
+
+    public BoundingBox generateConnected(){
+        Vector3 min = new Vector3(-400,0,0);
+        Vector3 max = new Vector3(400,Block.WIDTH,0);
+
+        BoundingBox bBox2 = new BoundingBox(min,max);
+
+        return bBox2;
+    }
 
     public Game() {
         drawables = new ArrayList<>();
@@ -75,9 +86,58 @@ public class Game implements Entity {
     @Override
     public void update(double dTime) {
         for (Character character : characters) {
+
+            // Mid point caluclation for our main character.
+            double midX = character.x + character.getWidth() / 2;
+            double midY = character.y + character.getHeight() / 2;
+
+            // Check if the character object is our point of reference: Player.
+            if(character instanceof Player){
+                // Check every other character.
+                for(Character character1 : characters){
+
+                    // Mid point calcualtion for player.
+                    double midX2 = character1.x + character1.getWidth() / 2;
+                    double midY2 = character1.y + character1.getHeight() / 2;
+                    double Max_dist = 800;
+                    double newVolume;
+
+                    // If we find the player object again, just continue.
+                    if (character == character1){continue;}
+
+                     newVolume = Math.sqrt( (midX-midX2) *(midX - midX2) + (midY - midY2)*(midY - midY2));
+                     if (Max_dist > newVolume){ character.soundVolume = 1f; System.out.println(character.getSoundVolume()); }
+                     else {
+
+                         newVolume = Math.abs(newVolume - Max_dist);
+                         float i = 1f;
+                         for( ;newVolume > 0; newVolume -= 100){
+                             i -= 0.2f;
+                             if (i < 0){ i = 0; break;}
+                         }
+
+                         character.setSoundVolume(i);
+                         System.out.println(i + " " + character.getSoundVolume() );
+
+                     }
+
+
+                    /*
+                    // Check whether the character is outside of the player "hearing boundary".
+                    if (character1.getX() < character.getX() - 300 || character1.getX() > character.getX() + 300 ){
+
+                        // Arbitrary distance formula to mute the volume.
+                        System.out.println((float)Math.abs((character1.getX() - character.getX()) -300 )* 0.001f);
+                        character1.soundVolume = (float)Math.abs((character1.getX() - character.getX()) -300 )* 0.0001f;
+                    } else {
+                        // If within boundary then play on max volume.
+                        character1.soundVolume = 1f;
+                    }*/
+                }
+            }
+
             character.update(dTime);
         }
-
         collideCharacters();
         collidePickups();
     }
@@ -118,7 +178,7 @@ public class Game implements Entity {
     }
 
     // Collision code for pickups, sets a flag which triggers the said effect on the proper entity.
-    private  void collidePickups(){
+    private void collidePickups(){
         for (Pickup d : this.getPickups()){
 
                 boolean withinX = getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
@@ -145,7 +205,7 @@ public class Game implements Entity {
                         //TODO Remove the pickup from the list
 
                     } else if(d.getName().matches("lunchbox")) {
-                        System.out.println(d.getName());
+                      //  System.out.println(d.getName());
 
                     } else if(d.getName().matches("baguette")){
                         // Trigger the Wings flag, put a timer task for 4 seconds
@@ -180,23 +240,32 @@ public class Game implements Entity {
 
         }
     }
+
     private void collideCharacters() {
         for(Character character : characters) {
             character.resetCollisions();
 
             /*
-            Vector3 min = new Vector3(0,0,0);
-            Vector3 max = new Vector3(10,10,0);
+            if (character instanceof Player){ System.out.println(character.getX());}
 
-            Vector3 min2 = new Vector3(10,10,0);
-            Vector3 max3 = new Vector3(30,30,0);
+            Vector3 min = new Vector3((float)character.getX(),(float)character.getY(),0);
+            Vector3 max = new Vector3(character.getWidth(),character.getHeight(),0);
 
             BoundingBox bBox2 = new BoundingBox(min,max);
-            BoundingBox bBox  = new BoundingBox(min2,max3);
 
-            System.out.println(bBox.intersects(bBox2));
+            if(bBox2.intersects(this.bBox)){
+                boolean withinY = character.getY() + character.getHeight() > bBox.min.y &&
+                        character.getY() + 1 < bBox.min.y + bBox.max.y;
 
-            */
+                boolean withinX = character.getX() + character.getWidth() > bBox.min.x &&
+                        character.getX() < bBox.min.x + bBox.max.x;
+
+               // System.out.println("test2? " + withinY);
+
+                if(withinY & withinX){
+                    character.setCollision(Character.DOWN,true,bBox.min.y + bBox.max.y -1);
+                }
+            }*/
 
             for (Block block : level.blocks) {
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
