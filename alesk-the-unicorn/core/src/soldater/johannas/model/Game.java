@@ -87,41 +87,49 @@ public class Game implements Entity {
     public void update(double dTime) {
         for (Character character : characters) {
 
-            // Mid point caluclation for our main character.
-            double midX = character.x + character.getWidth() / 2;
-            double midY = character.y + character.getHeight() / 2;
+                if(character instanceof WalkingEnemy){
+                    // Mid point caluclation for our main character.
+                    double midX = character.x + character.getWidth() / 2;
+                    double midY = character.y + character.getHeight() / 2;
 
-            // Check if the character object is our point of reference: Player.
-            if(character instanceof Player){
-                // Check every other character.
-                for(Character character1 : characters){
+                    // Check if the character object is our point of reference: Player.
+                    if(character instanceof Player){
 
-                    // Mid point calcualtion for player.
-                    double midX2 = character1.x + character1.getWidth() / 2;
-                    double midY2 = character1.y + character1.getHeight() / 2;
-                    double Max_dist = 800;
-                    double newVolume;
+                        // Check every other character.
+                        for(Character character1 : characters) {
 
-                    // If we find the player object again, just continue.
-                    if (character == character1){continue;}
+                            // Mid point calcualtion for player.
+                            double midX2 = character1.x + character1.getWidth() / 2;
+                            double midY2 = character1.y + character1.getHeight() / 2;
+                            double Max_dist = 800;
+                            double newVolume;
 
-                     newVolume = Math.sqrt( (midX-midX2) *(midX - midX2) + (midY - midY2)*(midY - midY2));
-                     if (Max_dist > newVolume){ character.soundVolume = 1f; System.out.println(character.getSoundVolume()); }
-                     else {
+                            // If we find the player object again, just continue.
+                            if (character == character1) { continue; }
 
-                         newVolume = Math.abs(newVolume - Max_dist);
-                         float i = 1f;
-                         for( ;newVolume > 0; newVolume -= 100){
-                             i -= 0.2f;
-                             if (i < 0){ i = 0; break;}
-                         }
+                            newVolume = Math.sqrt((midX - midX2) * (midX - midX2) + (midY - midY2) * (midY - midY2));
 
-                         character.setSoundVolume(i);
-                         System.out.println(i + " " + character.getSoundVolume() );
+                            if (Max_dist > newVolume) {
+                                character.soundVolume = 1f;
+                                System.out.println(character.getSoundVolume());
+                            } else {
+                                 newVolume = Math.abs(newVolume - Max_dist);
+                                float i = 1f;
+                                for (; newVolume > 0; newVolume -= 100) {
+                                    i -= 0.2f;
+                                    if (i < 0) {
+                                        i = 0;
+                                        break;
+                                     }
+                                }
 
-                     }
+                                character1.x += 1;
+                                character.setSoundVolume(i);
+                                System.out.println(i + " " + character.getSoundVolume());
 
+                            }
 
+                        }
                     /*
                     // Check whether the character is outside of the player "hearing boundary".
                     if (character1.getX() < character.getX() - 300 || character1.getX() > character.getX() + 300 ){
