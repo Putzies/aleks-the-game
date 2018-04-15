@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static soldater.johannas.model.Player.FALLING;
+import static soldater.johannas.model.Player.JUMPING;
+
 public class Renderer {
 
     public final int NUM_FRAMES = 6;
@@ -32,6 +35,7 @@ public class Renderer {
     private int playerFrame = 0;
 
     private Drawable player;
+    private RainbowEmitter rainbowEmitter;
     private List<? extends Drawable> drawables;
     private List<HangingEnemy> hangingEnemies;
 
@@ -42,6 +46,7 @@ public class Renderer {
         this.drawables = drawables;
         this.player = player;
         this.hangingEnemies = hangingEnemies;
+        rainbowEmitter = new RainbowEmitter();
 
 
         batch = new SpriteBatch();
@@ -63,6 +68,7 @@ public class Renderer {
 
         drawShapes();
 
+        drawRainbow();
         drawPlayer();
         drawDrawables();
         batch.end();
@@ -126,6 +132,13 @@ public class Renderer {
             batch.draw(sky, bgX1, skyY2);
             batch.draw(sky, bgX2, skyY2);
         }
+    }
+
+
+
+    private void drawRainbow() {
+        rainbowEmitter.update(1, player.getX(), player.getY(), (player.getState() == FALLING || player.getState() == JUMPING), player.getWidth());
+        rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY());
     }
 
     private void drawPlayer() {
