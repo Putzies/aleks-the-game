@@ -3,6 +3,7 @@ package soldater.johannas.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -16,10 +17,20 @@ import com.badlogic.gdx.utils.Align;
 import soldater.johannas.control.menu.MainMenu;
 
 import java.awt.event.KeyListener;
+import java.util.List;
+import java.util.Map;
 
 public class MainMenuRenderer implements Screen {
+
+    private final int ITEM_WIDTH = 400;
+
     private MainMenu mainMenu;
     private SpriteBatch batch;
+
+    private Texture textBackground;
+    private Texture textStartGame;
+    private Texture textQuitGame;
+
 
     private Stage stage;
     private Table table;
@@ -28,15 +39,17 @@ public class MainMenuRenderer implements Screen {
         this.mainMenu = menu;
         batch = new SpriteBatch();
 
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
+        loadTextures();
 
-        table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
-        table.setDebug(false);
-
-        addButtons();
+//        stage = new Stage();
+//        Gdx.input.setInputProcessor(stage);
+//
+//        table = new Table();
+//        table.setFillParent(true);
+//        stage.addActor(table);
+//        table.setDebug(false);
+//
+//        addButtons();
     }
 
 
@@ -51,8 +64,14 @@ public class MainMenuRenderer implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        stage.act(Gdx.graphics.getDeltaTime());
-        stage.draw();
+
+
+//        stage.act(Gdx.graphics.getDeltaTime());
+//        stage.draw();
+
+        batch.draw(textBackground, 0, 0);
+        batch.draw(textStartGame, Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2, 400);
+
         batch.end();
     }
 
@@ -79,6 +98,11 @@ public class MainMenuRenderer implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    private void loadTextures() {
+        textBackground = new Texture("menu/mainMenuBackground.png");
+        textStartGame = new Texture("menu/startGame.png");
     }
 
     private void addButtons() {

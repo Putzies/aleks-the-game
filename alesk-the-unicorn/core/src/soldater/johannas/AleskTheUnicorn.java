@@ -23,6 +23,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
 	public void create() {
         mainMenu = new MainMenuRenderer(this);
         levelSelector = new LevelSelector(this, loadLevels());
+        //setScreen(levelSelector);
         this.setScreen(mainMenu);
 	}
 
