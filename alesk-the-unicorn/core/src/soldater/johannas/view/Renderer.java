@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.HangingEnemy;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,7 @@ public class Renderer {
         drawBackgrounds();
 
         drawShapes();
+
         drawRainbow();
         drawPlayer();
         drawDrawables();
