@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.HangingEnemy;
-import soldater.johannas.model.Player;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +55,6 @@ public class Renderer {
     public void render() {
         Gdx.gl.glClearColor(1, 0.8039f, 0.6667f, 1 + (float)(player.getY()));
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         batch.begin();
 
         shapeRenderer.setAutoShapeType(true);
@@ -84,7 +81,6 @@ public class Renderer {
         textures.put(player.getName(), new Texture(player.getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
-        textures.put("rainbow", new Texture("rainbow.png"));
         for (Drawable drawable : drawables) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }

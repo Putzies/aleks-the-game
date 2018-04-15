@@ -64,7 +64,7 @@ public class Player extends Character implements Movable {
     @Override
     public void left () {
         if (!collisions[super.LEFT]) {
-            xVel = -9;
+            x -= 10;
         }
         direction = Drawable.LEFT;
 
@@ -76,7 +76,7 @@ public class Player extends Character implements Movable {
     @Override
     public void right() {
         if (!collisions[super.RIGHT]) {
-            xVel = 9;
+            x += 10;
         }
         direction = Drawable.RIGHT;
 
@@ -100,7 +100,6 @@ public class Player extends Character implements Movable {
         if (state != JUMPING) {
             state = STANDING;
         }
-        xVel = 0;
     }
 
     private void applyGravity() {

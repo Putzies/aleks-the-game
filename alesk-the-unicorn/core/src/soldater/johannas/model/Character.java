@@ -57,10 +57,6 @@ public abstract class Character implements Entity{
         return yVel;
     }
 
-    public double getXvel() {
-        return xVel;
-    }
-
     public int getDirection() {
         return direction;
     }
