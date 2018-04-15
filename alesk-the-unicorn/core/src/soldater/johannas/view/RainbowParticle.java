@@ -7,7 +7,7 @@ public class RainbowParticle {
     private final int width = 3;
     private final int height = 60;
     private double x, y;
-    private Random rand;
+    private static Random rand = new Random();
     private double timeExisted = 0;
     private static final double lifetime = 30;
 
@@ -17,7 +17,6 @@ public class RainbowParticle {
     public RainbowParticle(double x, double y) {
         this.x = x;
         this.y = y;
-        rand = new Random();
     }
 
     public void update(double dTime) {
@@ -27,6 +26,9 @@ public class RainbowParticle {
         if (lifePart > 5) {
             randPos = rand.nextInt((int)Math.pow(lifePart-4, 2.2));
             fadeLevel = (int) ((lifePart-5)*1.4) + rand.nextInt(4);
+        } else {
+            fadeLevel = 0;
+            randPos = 0;
         }
 
         timeExisted += dTime;

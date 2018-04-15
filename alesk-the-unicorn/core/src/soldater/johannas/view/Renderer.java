@@ -133,7 +133,7 @@ public class Renderer {
 
 
     private void drawRainbow() {
-        rainbowEmitter.update(1, player.getX(), player.getY(), (player.getState() == FALLING || player.getState() == JUMPING));
+        rainbowEmitter.update(1, player.getX(), player.getY(), (player.getState() == FALLING || player.getState() == JUMPING), player.getWidth());
         rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY());
     }
 
