@@ -1,6 +1,7 @@
 let blocks = [];
 
 let name = process.argv[2];
+
 if(!name) {
     console.log('You must supply a name for the level as an argument to the program');
     return;

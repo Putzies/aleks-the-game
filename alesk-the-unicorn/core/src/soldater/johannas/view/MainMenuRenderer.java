@@ -1,55 +1,39 @@
 package soldater.johannas.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
 import soldater.johannas.control.menu.MainMenu;
 
-import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MainMenuRenderer implements Screen {
 
     private final int ITEM_WIDTH = 400;
+    private int START_Y = Gdx.graphics.getHeight() / 3;
+    private final int MARGIN = 40;
 
     private MainMenu mainMenu;
     private SpriteBatch batch;
 
     private Texture textBackground;
-    private Texture textStartGame;
-    private Texture textQuitGame;
+    private List<Texture> items = new ArrayList<>();
 
+    private int selectItem = 0;
 
-    private Stage stage;
-    private Table table;
+    private final int N_FRAMES = 10;
+    private int frame;
+    private float frameCounter = 0;
 
     public MainMenuRenderer(MainMenu menu) {
         this.mainMenu = menu;
         batch = new SpriteBatch();
 
         loadTextures();
-
-//        stage = new Stage();
-//        Gdx.input.setInputProcessor(stage);
-//
-//        table = new Table();
-//        table.setFillParent(true);
-//        stage.addActor(table);
-//        table.setDebug(false);
-//
-//        addButtons();
     }
 
 
@@ -63,14 +47,20 @@ public class MainMenuRenderer implements Screen {
         Gdx.gl.glClearColor(0, 0.2f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        checkInput();
+        incrementFrames(delta);
+
         batch.begin();
 
+        batch.draw(
+                textBackground,
+                0,
+                0,
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight()
+        );
 
-//        stage.act(Gdx.graphics.getDeltaTime());
-//        stage.draw();
-
-        batch.draw(textBackground, 0, 0);
-        batch.draw(textStartGame, Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2, 400);
+        renderItems();
 
         batch.end();
     }
@@ -97,39 +87,77 @@ public class MainMenuRenderer implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+
     }
 
     private void loadTextures() {
         textBackground = new Texture("menu/mainMenuBackground.png");
-        textStartGame = new Texture("menu/startGame.png");
+
+        items.add(new Texture("menu/startGame.png"));
+        items.add(new Texture("menu/quitGame.png"));
     }
 
-    private void addButtons() {
+    private void renderItems() {
+        for (int i = 0; i < items.size(); i++) {
+            Texture item = items.get(i);
 
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-        //buttonStyle.up = new TextureRegionDrawable(upRegion);
-        //buttonStyle.down = new TextureRegionDrawable(downRegion);
-        buttonStyle.font = new BitmapFont();
-        buttonStyle.font.getData().setScale(4);
+            if (i == selectItem) {
+                renderSelected();
+            } else {
+                batch.draw(
+                        item,
+                        Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2,
+                        START_Y - (item.getHeight() + MARGIN) * i
+                );
+            }
+        }
+    }
 
-        TextButton btnStartGame = new TextButton("Start Game", buttonStyle);
-        TextButton btnQuitGame = new TextButton("Quit Game", buttonStyle);
+    private void renderSelected() {
+        Texture item = items.get(selectItem);
 
-        btnStartGame.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
+        int offsetX = (int)(Math.sin(((double) frame / N_FRAMES) * (Math.PI * 2)) * 3);
+        int offsetY = (int)(Math.cos(((double) frame / N_FRAMES) * (Math.PI * 2)) * 5);
+
+        batch.draw(
+                item,
+                Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2 + offsetX,
+                START_Y - (item.getHeight() + MARGIN) * selectItem + offsetY
+        );
+    }
+
+    private void incrementFrames(float delta) {
+        frameCounter += delta;
+
+        if (frameCounter > 0.03) {
+            frame = (frame + 1) % N_FRAMES;
+            frameCounter = 0;
+        }
+    }
+
+    private void checkInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            selectItem = selectItem - 1;
+            if (selectItem < 0) {
+                selectItem += items.size();
+            }
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            selectItem = (selectItem + 1) % items.size();
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            enter();
+        }
+    }
+
+    private void enter() {
+        switch (selectItem) {
+            case 0: // Start game
                 mainMenu.startGame();
-            }
-        });
-
-        btnQuitGame.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
+                break;
+            case 1: // Quit game
                 mainMenu.quitGame();
-            }
-        });
-
-        table.add(btnStartGame);
-        table.row();
-        table.add(btnQuitGame);
+                break;
+        }
     }
 }
