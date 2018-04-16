@@ -5,38 +5,37 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import soldater.johannas.control.menu.MainMenu;
+import soldater.johannas.control.menu.LevelSelection;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenuRenderer implements Screen {
-
-    private final int ITEM_WIDTH = 400;
+public class LevelSelectRenderer implements Screen {
     private int START_Y = Gdx.graphics.getHeight() / 3;
     private final int MARGIN = 40;
 
-    private MainMenu mainMenu;
+    private LevelSelection levelSelection;
     private SpriteBatch batch;
+    private BitmapFont font;
 
     private Texture textBackground;
-    private List<Texture> items = new ArrayList<>();
-
+    private List<LevelInfo> levels;
     private int selectItem = 0;
 
     private final int N_FRAMES = 10;
     private int frame;
     private float frameCounter = 0;
 
-    public MainMenuRenderer(MainMenu menu) {
-        this.mainMenu = menu;
+    public LevelSelectRenderer(LevelSelection levelSelection, List<LevelInfo> levels) {
+        this.levelSelection = levelSelection;
         batch = new SpriteBatch();
+        font = new BitmapFont();
+        this.levels = levels;
 
         loadTextures();
     }
-
 
     @Override
     public void show() {
@@ -45,11 +44,11 @@ public class MainMenuRenderer implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0.2f, 0.5f, 1);
+        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        checkInput();
         incrementFrames(delta);
+        checkInput();
 
         batch.begin();
 
@@ -61,7 +60,7 @@ public class MainMenuRenderer implements Screen {
                 Gdx.graphics.getHeight()
         );
 
-        renderItems();
+        renderLevels();
 
         batch.end();
     }
@@ -92,39 +91,7 @@ public class MainMenuRenderer implements Screen {
     }
 
     private void loadTextures() {
-        textBackground = new Texture("menu/mainMenuBackground.png");
-
-        items.add(new Texture("menu/startGame.png"));
-        items.add(new Texture("menu/quitGame.png"));
-    }
-
-    private void renderItems() {
-        for (int i = 0; i < items.size(); i++) {
-            Texture item = items.get(i);
-
-            if (i == selectItem) {
-                renderSelected();
-            } else {
-                batch.draw(
-                        item,
-                        Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2,
-                        START_Y - (item.getHeight() + MARGIN) * i
-                );
-            }
-        }
-    }
-
-    private void renderSelected() {
-        Texture item = items.get(selectItem);
-
-        int offsetX = (int)(Math.sin(((double) frame / N_FRAMES) * (Math.PI * 2)) * 3);
-        int offsetY = (int)(Math.cos(((double) frame / N_FRAMES) * (Math.PI * 2)) * 5);
-
-        batch.draw(
-                item,
-                Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2 + offsetX,
-                START_Y - (item.getHeight() + MARGIN) * selectItem + offsetY
-        );
+        textBackground = new Texture("menu/selectLevelBackground.png");
     }
 
     private void incrementFrames(float delta) {
@@ -140,25 +107,44 @@ public class MainMenuRenderer implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             selectItem = selectItem - 1;
             if (selectItem < 0) {
-                selectItem += items.size();
+                selectItem += levels.size();
             }
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            selectItem = (selectItem + 1) % items.size();
+            selectItem = (selectItem + 1) % levels.size();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            levelSelection.goBack();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            enter();
+            levelSelection.startLevel(levels.get(selectItem).getFileName());
         }
     }
 
-    private void enter() {
-        switch (selectItem) {
-            case 0: // Start game
-                mainMenu.startGame();
-                break;
-            case 1: // Quit game
-                mainMenu.quitGame();
-                break;
+    private void renderLevels() {
+        for (int i = 0; i < levels.size(); i++) {
+            if (i == selectItem) {
+                renderSelected();
+            } else {
+                String levelName = levels.get(i).getName().replace("_", " ");
+                font.draw(
+                        batch,
+                        levelName,
+                        Gdx.graphics.getWidth() / 2 - 200 / 2,
+                        START_Y - (50 + MARGIN) * i
+                );
+            }
         }
+    }
+
+    private void renderSelected() {
+        int offsetX = (int)(Math.sin(((double) frame / N_FRAMES) * (Math.PI * 2)) * 3);
+        int offsetY = (int)(Math.cos(((double) frame / N_FRAMES) * (Math.PI * 2)) * 5);
+
+        font.draw(
+                batch,
+                levels.get(selectItem).getName(),
+                Gdx.graphics.getWidth() / 2 - 200 / 2 + offsetX,
+                START_Y - (50 + MARGIN) * selectItem + offsetY
+        );
     }
 }
