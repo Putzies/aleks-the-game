@@ -89,6 +89,7 @@ public class Game implements Entity {
             character.update(dTime);
 
             if (character instanceof WalkingEnemy){
+                //TODO Refactor, should the controller hold this logic or should world.
                 double midX = level.player.getX() + level.player.getWidth() / 2;
                 double midY = level.player.getY() + level.player.getHeight() / 2;
                 double midX2 = character.getX() + character.getWidth() / 2;
@@ -153,7 +154,7 @@ public class Game implements Entity {
     // Collision code for pickups, sets a flag which triggers the said effect on the proper entity.
     private void collidePickups(){
         for (Pickup d : this.getPickups()){
-
+                // TODO Refactor, make withinX/WithinY own methods.
                 boolean withinX = getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
                         getPlayer().getX() < d.getX() + d.getWidth();
 
@@ -161,50 +162,27 @@ public class Game implements Entity {
                         getPlayer().getY() + 1 < d.getY() + d.getHeight();
 
                 // The collision detection is simple
+                // TODO Remove the pickup from the list
                 if (withinX && withinY){
                     if(d.getName().matches("wings")) {
                         // Trigger the Wings flag, put a timer task for 4 seconds
                         this.getPlayer1().setPickup(Player.WINGS, true);
 
-                        // This is incredibly ugly but does the job for now.
-                        t = new Timer.Task() {
-                            @Override
-                            public void run() {
-                                getPlayer1().setPickup(Player.WINGS, false);
-                            }
-                        };
-                        Timer.schedule(t,4);
-
-                        //TODO Remove the pickup from the list
+                        Timer.schedule(generateTask(Player.WINGS, false),4);
 
                     } else if(d.getName().matches("lunchbox")) {
-                      //  System.out.println(d.getName());
 
                     } else if(d.getName().matches("baguette")){
                         // Trigger the Wings flag, put a timer task for 4 seconds
                         this.getPlayer1().setPickup(Player.BAGUETTE, true);
 
-                        // This is incredibly ugly but does the job for now.
-                        t = new Timer.Task() {
-                            @Override
-                            public void run() {
-                                getPlayer1().setPickup(Player.BAGUETTE, false);
-                            }
-                        };
-                        Timer.schedule(t,4);
+                        Timer.schedule(generateTask(Player.BAGUETTE, false),4);
 
                     } else if(d.getName().matches("energydrink")){
                         // Trigger the Wings flag, put a timer task for 4 seconds
                         this.getPlayer1().setPickup(Player.ENERGYDRINK, true);
 
-                        // This is incredibly ugly but does the job for now.
-                        t = new Timer.Task() {
-                            @Override
-                            public void run() {
-                                getPlayer1().setPickup(Player.ENERGYDRINK, false);
-                            }
-                        };
-                        Timer.schedule(t,4);
+                        Timer.schedule(generateTask(Player.ENERGYDRINK, false),4);
 
 
                     }
@@ -326,5 +304,17 @@ public class Game implements Entity {
 
     public List<HangingEnemy> getHangingEnemies() {
         return hangingEnemies;
+    }
+
+    // Generate the appropriate Task given an n and the truth value.
+    private Timer.Task generateTask(int n, boolean val){
+        Timer.Task task = new Timer.Task() {
+            @Override
+            public void run() {
+                getPlayer1().setPickup(n, val);
+            }
+        };
+
+        return task;
     }
 }
