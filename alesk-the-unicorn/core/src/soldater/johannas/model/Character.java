@@ -16,6 +16,9 @@ public abstract class Character implements Entity{
     //  // Float for controlling the sound volume if something is far away.
     public float soundVolume = 1f;
 
+    // Boolean for disabling arrow key movement while being knockbacked.
+    protected boolean knockbacked = false;
+
     public Character(int x, int y) {
         this();
         this.x = x;
@@ -87,4 +90,6 @@ public abstract class Character implements Entity{
         return collisions[RIGHT];
     }
 
+    // Method for getting the value of knockbacked.
+    public boolean isKnockbacked(){return knockbacked;}
 }

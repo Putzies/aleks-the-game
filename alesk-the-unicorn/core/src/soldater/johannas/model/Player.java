@@ -60,7 +60,7 @@ public class Player extends Character implements Movable {
             }
         }
 
-        if(this.isOnGround()){ this.xVel = 0; }
+        if(this.isOnGround()){ this.xVel = 0; knockbacked = false; }
 
         super.update(dTime);
     }
@@ -75,34 +75,37 @@ public class Player extends Character implements Movable {
 
     @Override
     public void left () {
-        if (!collisions[super.LEFT]) {
-            x -= 10;
+        if (!isKnockbacked()) {
+            if (!collisions[super.LEFT]) {
+                x -= 10;
 
-
-            if(pickups[ENERGYDRINK]){
-                x -= 15;
+                if (pickups[ENERGYDRINK]) {
+                    x -= 15;
+                }
             }
-        }
-        direction = Drawable.LEFT;
+            direction = Drawable.LEFT;
 
-        if (state != JUMPING && state != FALLING) {
-            state = RUNNING;
+            if (state != JUMPING && state != FALLING) {
+                state = RUNNING;
+            }
         }
     }
 
     @Override
     public void right() {
-        if (!collisions[super.RIGHT] ) {
-            x += 10;
+        if (!isKnockbacked()) {
+            if (!collisions[super.RIGHT]) {
+                x += 10;
 
-            if(pickups[ENERGYDRINK]){
-                x += 15;
+                if (pickups[ENERGYDRINK]) {
+                    x += 15;
+                }
             }
-        }
-        direction = Drawable.RIGHT;
+            direction = Drawable.RIGHT;
 
-        if (state != JUMPING && state != FALLING){
-            state = RUNNING;
+            if (state != JUMPING && state != FALLING) {
+                state = RUNNING;
+            }
         }
     }
 
@@ -112,7 +115,7 @@ public class Player extends Character implements Movable {
         if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
             yVel = 30;
         }
-        if(state != FALLING ) {
+        if (state != FALLING) {
             state = JUMPING;
         }
     }

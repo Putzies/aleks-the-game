@@ -280,15 +280,14 @@ public class Game implements Entity {
 
                         // Check if player and some character are colliding.
                         if (withinX && withinY) {
+                            character.knockbacked = true;
 
                             // Either we are facing Right or we are facing Left
                             if(character.getDirection() == Drawable.RIGHT ) {
-
                                 character.yVel =  10;
                                 character.xVel = -10;
 
                             } else {
-
                                 character.yVel =  10;
                                 character.xVel =  10;
                             }
