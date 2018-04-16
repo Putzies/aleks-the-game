@@ -86,65 +86,30 @@ public class Game implements Entity {
     @Override
     public void update(double dTime) {
         for (Character character : characters) {
-
-                if(character instanceof WalkingEnemy){
-                    // Mid point caluclation for our main character.
-                    double midX = character.x + character.getWidth() / 2;
-                    double midY = character.y + character.getHeight() / 2;
-
-                    // Check if the character object is our point of reference: Player.
-                    if(character instanceof Player){
-
-                        // Check every other character.
-                        for(Character character1 : characters) {
-
-                            // Mid point calcualtion for player.
-                            double midX2 = character1.x + character1.getWidth() / 2;
-                            double midY2 = character1.y + character1.getHeight() / 2;
-                            double Max_dist = 800;
-                            double newVolume;
-
-                            // If we find the player object again, just continue.
-                            if (character == character1) { continue; }
-
-                            newVolume = Math.sqrt((midX - midX2) * (midX - midX2) + (midY - midY2) * (midY - midY2));
-
-                            if (Max_dist > newVolume) {
-                                character.soundVolume = 1f;
-                                System.out.println(character.getSoundVolume());
-                            } else {
-                                 newVolume = Math.abs(newVolume - Max_dist);
-                                float i = 1f;
-                                for (; newVolume > 0; newVolume -= 100) {
-                                    i -= 0.2f;
-                                    if (i < 0) {
-                                        i = 0;
-                                        break;
-                                     }
-                                }
-
-                                character1.x += 1;
-                                character.setSoundVolume(i);
-                                System.out.println(i + " " + character.getSoundVolume());
-
-                            }
-
-                        }
-                    /*
-                    // Check whether the character is outside of the player "hearing boundary".
-                    if (character1.getX() < character.getX() - 300 || character1.getX() > character.getX() + 300 ){
-
-                        // Arbitrary distance formula to mute the volume.
-                        System.out.println((float)Math.abs((character1.getX() - character.getX()) -300 )* 0.001f);
-                        character1.soundVolume = (float)Math.abs((character1.getX() - character.getX()) -300 )* 0.0001f;
-                    } else {
-                        // If within boundary then play on max volume.
-                        character1.soundVolume = 1f;
-                    }*/
-                }
-            }
-
             character.update(dTime);
+
+            if (character instanceof WalkingEnemy){
+                double midX = level.player.getX() + level.player.getWidth() / 2;
+                double midY = level.player.getY() + level.player.getHeight() / 2;
+                double midX2 = character.getX() + character.getWidth() / 2;
+                double midY2 = character.getY() + character.getHeight() / 2;
+                double max_dist = 800;
+                double newVolume = Math.sqrt((midX - midX2) * (midX - midX2)) + Math.sqrt((midY - midY2) * (midY - midY2));
+
+                if (max_dist > newVolume){ character.setSoundVolume(1f); }
+                else {
+                    float f = 1;
+                    newVolume = newVolume - max_dist;
+                    for (; newVolume > 0; newVolume -=100){
+                        f -= 0.1;
+                        if( f <= 0){ f = 0; break;}
+
+                    }
+                    //System.out.println(f);
+                    character.setSoundVolume(f);
+                }
+                //System.out.println(character.getSoundVolume());
+            }
         }
         collideCharacters();
         collidePickups();
