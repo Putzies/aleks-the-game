@@ -34,12 +34,19 @@ public class Game implements Entity {
     Timer.Task t;
 
     //Just testing
-    BoundingBox bBox = generateConnected();
+    public BoundingBox generateConnected(int n){
+        Vector3 min;
+        Vector3 max;
+        if(n == 0) {
+            min = new Vector3((float) platform.getX(), (float) platform.getY(), 0);
+            max = new Vector3((float) platform.getX() + platform.getWidth(), (float) platform.getY() + platform.getHeight(), 0);
 
-    public BoundingBox generateConnected(){
-        Vector3 min = new Vector3(-400,0,0);
-        Vector3 max = new Vector3(400,Block.WIDTH,0);
+        }
+        else {
+            min = new Vector3((float) getPlayer1().getX(), (float) getPlayer1().getY(), 0);
+            max = new Vector3((float) getPlayer1().getX() + getPlayer1().getWidth(), (float) getPlayer1().getY() + getPlayer1().getHeight(), 0);
 
+        }
         BoundingBox bBox2 = new BoundingBox(min,max);
 
         return bBox2;
@@ -207,6 +214,17 @@ public class Game implements Entity {
     private void collideCharacters() {
         for(Character character : characters) {
             character.resetCollisions();
+
+            BoundingBox bBox = generateConnected(0);
+            BoundingBox pBox = generateConnected(1);
+            if (pBox.intersects(bBox)){
+                if (
+                        getPlayer1().getY() + getPlayer1().getHeight() > platform.getY() + platform.getHeight() &&
+                        getPlayer1().getY() < platform.getY() + platform.getHeight()) {
+                    character.setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
+                }
+
+            }
             /*
             if (character instanceof Player){ System.out.println(character.getX());}
 
@@ -228,24 +246,7 @@ public class Game implements Entity {
                     character.setCollision(Character.DOWN,true,bBox.min.y + bBox.max.y -1);
                 }
             }*/
-            boolean withinX1 = getPlayer1().getX() + getPlayer1().getWidth() > platform.getX() &&
-                    getPlayer1().getX() < platform.getX() + platform.getWidth();
-
-            boolean withinY1 = getPlayer1().getY() + getPlayer1().getHeight() > platform.getY() &&
-                    getPlayer1().getY() + 1 < platform.getY() + platform.getHeight();
-
-            if (withinX1 &&
-                    getPlayer1().getY() + getPlayer1().getHeight() > platform.getY() + platform.getHeight() &&
-                    getPlayer1().getY() < platform.getY() + platform.getHeight()) {
-
-                // For debugging purposes.
-                if (character instanceof Player) {
-                    // System.out.println((character.getY() + character.getHeight()) + " " + (block.getY() + block.getHeight()) + " ::"
-                    //       + character.getY() + " " + (block.getY() + block.getHeight() ));
-                }
-
-                character.setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
-            }
+     
                 /*
             for (Block block : level.blocks) {
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
