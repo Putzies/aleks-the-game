@@ -8,7 +8,7 @@ public class WalkingEnemy extends Character implements Movable {
     public static final int HEIGHT = 36;
 
     private int leftBound;
-    private int rightbound;
+    private int rightBound;
 
     // Temporary, used for optimising collision detection.
     protected Vector3 min;
@@ -19,7 +19,7 @@ public class WalkingEnemy extends Character implements Movable {
     public WalkingEnemy(int x, int y, int range) {
         super(x, y);
 
-        this.rightbound = x + range;
+        this.rightBound = x + range;
         this.leftBound = x;
     }
 
@@ -64,7 +64,7 @@ public class WalkingEnemy extends Character implements Movable {
     }
 
     public int getRightbound() {
-        return rightbound;
+        return rightBound;
     }
 
     @Override
