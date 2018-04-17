@@ -3,8 +3,8 @@ package soldater.johannas.model;
 public class EnergyDrink extends Pickup {
 
     // TODO Remember to double check the actual size of the EnergyDrink!
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+    public static final int WIDTH = 27;
+    public static final int HEIGHT = 48;
 
     @Override
     public int getWidth() {

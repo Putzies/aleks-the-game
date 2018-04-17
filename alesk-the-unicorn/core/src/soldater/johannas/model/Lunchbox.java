@@ -2,8 +2,8 @@ package soldater.johannas.model;
 
 public class Lunchbox extends Pickup {
     // TODO Remember to double check the actual size of the Lunchboxes!
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+    public static final int WIDTH = 69;
+    public static final int HEIGHT = 87;
 
     public Lunchbox() {
         super();
