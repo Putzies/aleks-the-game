@@ -26,24 +26,25 @@ public class RainbowEmitter {
 
     }
 
-    public void update(double dTime, double x, double y, boolean add, int offset) {
+    public void update(double dTime, double x, double y, boolean add) {
+        y += 15;
         xVel = roundTo3(x - this.x);
         yVel = (y - this.y);
         this.x = x;
         this.y = y;
         if (add) {
-            addParticles(x, y, offset);
+            addParticles(x, y);
         }
         deleteParticles(dTime);
     }
 
-    private void addParticles(double x, double y, int offset) {
-            int z = (int)Math.abs(xVel)/width;
+    private void addParticles(double x, double y) {
+            int ratio = (int)Math.abs(xVel)/width;
             for(double i = width; i <= xVel; i += width) {
-                rainbow.add(new RainbowParticle(x-(xVel-i), y - ((xVel-i)/width)*(yVel)/z));
+                rainbow.add(new RainbowParticle(x-(xVel-i), y - ((xVel-i)/width)*(yVel)/ratio));
             }
             for(double i = width; i <= -xVel; i += width) {
-                rainbow.add(new RainbowParticle(x+(-xVel-i)+offset, y - ((-xVel-i)/width)*(yVel)/z));
+                rainbow.add(new RainbowParticle(x+(-xVel-i), y - ((-xVel-i)/width)*(yVel)/ratio));
             }
     }
 

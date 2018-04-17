@@ -9,7 +9,7 @@ public class RainbowParticle {
     private double x, y;
     private static Random rand = new Random();
     private double timeExisted = 0;
-    private static final double lifetime = 30;
+    private static final double lifetime = 60;
 
     private int fadeLevel;
     private double randPos;
