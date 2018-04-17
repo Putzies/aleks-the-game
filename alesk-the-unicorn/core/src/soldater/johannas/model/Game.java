@@ -24,8 +24,6 @@ public class Game implements Entity {
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
 
-    private Player player;
-
     public Game() {
         drawables = new ArrayList<>();
         entities = new ArrayList<>();

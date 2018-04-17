@@ -98,7 +98,7 @@ public class Player extends Character implements Movable {
     public void jump() {
         // If we have wings triggered, then we can jump indefinitiely
         if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
-            yVel = 30;
+            yVel = 1000;
         }
         if(state != FALLING) {
             state = JUMPING;
@@ -121,6 +121,6 @@ public class Player extends Character implements Movable {
     }
 
     private void applyGravity() {
-        yVel -= 0.8;
+        yVel -= 25;
     }
 }

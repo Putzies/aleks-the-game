@@ -1,5 +1,11 @@
 let blocks = [];
 
+let name = process.argv[2];
+
+if(!name) {
+    console.log('You must supply a name for the level as an argument to the program');
+    return;
+}
 
 const enemies = [
     {
@@ -89,5 +95,13 @@ const level = {
     baguettes: [{x: -200, y: 50 * 15}],
 };
 
+const levelMetadata = {
+    name,
+    highScores: []
+}
+
+const fileName = name.replace(/ /g, '_').toLowerCase();
+
 var fs = require('fs');
-fs.writeFile('level1.json', JSON.stringify(level), 'utf8', () => {console.log('Done.')});
+fs.writeFile(fileName + '.json', JSON.stringify(level), 'utf8', () => {console.log('Done writing level.')});
+fs.writeFile(fileName + '.meta.json', JSON.stringify(levelMetadata, 'utf8', () => {console.log('Done writing file metadata')}));
