@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.LevelSelection;
 
@@ -24,6 +25,8 @@ public class LevelSelectRenderer implements Screen {
     private List<LevelInfo> levels;
     private int selectItem = 0;
 
+    private GlyphLayout layout = new GlyphLayout();
+
     private final int N_FRAMES = 10;
     private int frame;
     private float frameCounter = 0;
@@ -33,6 +36,8 @@ public class LevelSelectRenderer implements Screen {
         batch = new SpriteBatch();
         font = new BitmapFont();
         this.levels = levels;
+
+        layout.setText(font, "Hello");
 
         loadTextures();
     }
@@ -126,11 +131,13 @@ public class LevelSelectRenderer implements Screen {
                 renderSelected();
             } else {
                 String levelName = levels.get(i).getName().replace("_", " ");
+                layout.setText(font, levelName);
+
                 font.draw(
                         batch,
                         levelName,
-                        Gdx.graphics.getWidth() / 2 - 200 / 2,
-                        START_Y - (50 + MARGIN) * i
+                        Gdx.graphics.getWidth() / 2 - layout.width / 2,
+                        START_Y - (layout.height + MARGIN) * i
                 );
             }
         }
@@ -140,11 +147,14 @@ public class LevelSelectRenderer implements Screen {
         int offsetX = (int)(Math.sin(((double) frame / N_FRAMES) * (Math.PI * 2)) * 3);
         int offsetY = (int)(Math.cos(((double) frame / N_FRAMES) * (Math.PI * 2)) * 5);
 
+        String levelName = levels.get(selectItem).getName().replace("_", " ");
+        layout.setText(font, levelName);
+
         font.draw(
                 batch,
                 levels.get(selectItem).getName(),
-                Gdx.graphics.getWidth() / 2 - 200 / 2 + offsetX,
-                START_Y - (50 + MARGIN) * selectItem + offsetY
+                Gdx.graphics.getWidth() / 2 - layout.width / 2 + offsetX,
+                START_Y - (layout.height + MARGIN) * selectItem + offsetY
         );
     }
 }
