@@ -1,5 +1,7 @@
 package soldater.johannas.model;
 
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.utils.Box2DBuild;
 import com.badlogic.gdx.utils.Timer;
 import soldater.johannas.model.level.Block;
 import soldater.johannas.model.level.Level;
@@ -7,6 +9,7 @@ import soldater.johannas.model.level.Parser;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import soldater.johannas.model.level.Platform;
 
 
 import java.util.ArrayList;
@@ -24,6 +27,8 @@ public class Game implements Entity {
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
     private Player player;
+    private Platform platform;
+
 
     // Task object used for disabling a pickup effect after a set time.
     Timer.Task t;
@@ -53,6 +58,17 @@ public class Game implements Entity {
         characters.add(level.player);
 
         level.blocks.stream().filter(b -> b.getHangingEnemy() != null).forEach(b -> hangingEnemies.add(b.getHangingEnemy()));
+
+        // Testing platform
+        List<Block> quickList = new ArrayList<>();
+
+        for(Block b: level.blocks){
+            if ( b.getX() >= 0 && b.getY() + b.getHeight() <= 50){
+                quickList.add(b);
+
+            }
+        }
+        platform = new Platform(0,0,quickList,1,1*quickList.size());
 
         return level != null;
     }
@@ -90,17 +106,17 @@ public class Game implements Entity {
 
             if (character instanceof WalkingEnemy){
                 //TODO Refactor, should the controller hold this logic or should world.
-                double midX = level.player.getX() + level.player.getWidth() / 2;
+                // X refactored
+
                 double midY = level.player.getY() + level.player.getHeight() / 2;
                 double midX2 = character.getX() + character.getWidth() / 2;
                 double midY2 = character.getY() + character.getHeight() / 2;
-                double max_dist = 800;
-                double newVolume = Math.sqrt((midX - midX2) * (midX - midX2)) + Math.sqrt((midY - midY2) * (midY - midY2));
+                double newVolume = Math.sqrt((level.player.midX- midX2) * (level.player.midX- midX2)) + Math.sqrt((midY - midY2) * (midY - midY2));
 
-                if (max_dist > newVolume){ character.setSoundVolume(1f); }
+                if (level.player.max_dist > newVolume){ character.setSoundVolume(1f); }
                 else {
                     float f = 1;
-                    newVolume = newVolume - max_dist;
+                    newVolume = newVolume - level.player.max_dist;
                     for (; newVolume > 0; newVolume -=100){
                         f -= 0.1;
                         if( f <= 0){ f = 0; break;}
@@ -183,19 +199,14 @@ public class Game implements Entity {
                         this.getPlayer1().setPickup(Player.ENERGYDRINK, true);
 
                         Timer.schedule(generateTask(Player.ENERGYDRINK, false),4);
-
-
                     }
                 }
-
-
         }
     }
 
     private void collideCharacters() {
         for(Character character : characters) {
             character.resetCollisions();
-
             /*
             if (character instanceof Player){ System.out.println(character.getX());}
 
@@ -217,7 +228,25 @@ public class Game implements Entity {
                     character.setCollision(Character.DOWN,true,bBox.min.y + bBox.max.y -1);
                 }
             }*/
+            boolean withinX1 = getPlayer1().getX() + getPlayer1().getWidth() > platform.getX() &&
+                    getPlayer1().getX() < platform.getX() + platform.getWidth();
 
+            boolean withinY1 = getPlayer1().getY() + getPlayer1().getHeight() > platform.getY() &&
+                    getPlayer1().getY() + 1 < platform.getY() + platform.getHeight();
+
+            if (withinX1 &&
+                    getPlayer1().getY() + getPlayer1().getHeight() > platform.getY() + platform.getHeight() &&
+                    getPlayer1().getY() < platform.getY() + platform.getHeight()) {
+
+                // For debugging purposes.
+                if (character instanceof Player) {
+                    // System.out.println((character.getY() + character.getHeight()) + " " + (block.getY() + block.getHeight()) + " ::"
+                    //       + character.getY() + " " + (block.getY() + block.getHeight() ));
+                }
+
+                character.setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
+            }
+                /*
             for (Block block : level.blocks) {
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
 
@@ -265,7 +294,7 @@ public class Game implements Entity {
                         character.setCollision(Character.LEFT, true, block.getX());
                     }
                 }
-
+*/
                 if (character instanceof Player) {
                     for (Character character1 : characters) {
                         if (character1 == character) {

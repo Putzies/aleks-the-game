@@ -172,7 +172,6 @@ public class Renderer {
                         0,
                         drawable.getWidth(),
                         drawable.getHeight()
-
                 );
             }
         }

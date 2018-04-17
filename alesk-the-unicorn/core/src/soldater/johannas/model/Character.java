@@ -13,17 +13,26 @@ public abstract class Character implements Entity{
     protected double x,y;
     protected double xVel, yVel;
 
-    //  // Float for controlling the sound volume if something is far away.
-    public float soundVolume = 1f;
+    // Float for controlling the sound volume if something is far away.
+    protected float soundVolume = 1f;
+
+    // The maximum interaction distance, used for sound and collision
+    protected double max_dist = 800;
 
     // Boolean for disabling arrow key movement while being knockbacked.
     protected boolean knockbacked = false;
+
+    // Mid points, used for calculating sound distance.
+    // TODO use midpoints for collisions
+    protected double midX,midY;
 
     public Character(int x, int y) {
         this();
         this.x = x;
         this.y = y;
+        this.midX = x + getWidth()  / 2 ;
         this.soundVolume = 1f;
+
     }
 
     public Character() {

@@ -11,7 +11,6 @@ public class WalkingEnemyController implements Controller{
     private boolean goingLeft = true;
     private Random random = new Random();
 
-
     /* Create a new Sound which uses the input .wav or .mp3 file
      * In case of error, the main problem seems to be sampling in the .wav file being wrong.
      *
@@ -26,8 +25,7 @@ public class WalkingEnemyController implements Controller{
         if (random.nextInt(200) > 198 && enemy.isOnGround()) {
             enemy.jump();
 
-            // Just call the play method of the sound with the given volume
-            System.out.println( enemy.getSoundVolume());
+            // Just call the play method of the sound with the given volume§
             jmpSound.play(enemy.getSoundVolume());
         }
         if ((enemy.getX() < enemy.getLeftBound() && goingLeft) || random.nextDouble() > 0.99 || enemy.collidesLeft()) {

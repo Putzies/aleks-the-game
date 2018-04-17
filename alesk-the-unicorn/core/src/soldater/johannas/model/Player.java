@@ -131,7 +131,6 @@ public class Player extends Character implements Movable {
 
         this.pickups[pickup] = value;
 
-
         // This should probably be in some giant setState function instead of setPickup
         // Set state to Flying if wings & true otherwise set it to falling, which will be changed into the proper state
         // On the next tick.
