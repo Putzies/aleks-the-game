@@ -215,6 +215,41 @@ public class Game implements Entity {
 
     // Collision code for player versus some character.
     private void collideCharacters(){
+        //More efficient version - try 1.
+
+        // We will constantly be using player. So lets store him for the time being.
+        Player player = getPlayer1();
+
+        // Cause: We loop over characters twice, first to find the player and then to check against others.
+        // Fix: Comment out the outer loop - replace every instance of character with player.
+        //for (Character character : characters) {
+            if (player instanceof Player) {
+                for (Character character1 : characters) {
+                    if (character1 == player) { continue; }
+
+                    boolean withinX = player.getX() + player.getWidth() > character1.getX() &&
+                            player.getX() < character1.getX() + character1.getWidth();
+
+                    boolean withinY = player.getY() + player.getHeight() > character1.getY() &&
+                            player.getY() + 1 < character1.getY() + character1.getHeight();
+
+                    // Check if player and some character are colliding.
+                    if (withinX && withinY) {
+                        player.knockbacked = true;
+
+                        // Either we are facing Right or we are facing Left
+                        if (player.getDirection() == Drawable.RIGHT) {
+                            player.yVel = 10;
+                            player.xVel = -10;
+
+                        } else {
+                            player.yVel = 10;
+                            player.xVel = 10;
+                        }
+                    }
+                }
+          //  }
+        }
 
         //Ineffective version.
         for (Character character : characters) {
