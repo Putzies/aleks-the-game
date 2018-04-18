@@ -34,20 +34,19 @@ public class Game implements Entity {
     Timer.Task t;
 
     //Just testing
-    public BoundingBox generateConnected(int n){
+    public BoundingBox generateConnected(int n) {
         Vector3 min;
         Vector3 max;
-        if(n == 0) {
+        if (n == 0) {
             min = new Vector3((float) platform.getX(), (float) platform.getY(), 0);
             max = new Vector3((float) platform.getX() + platform.getWidth(), (float) platform.getY() + platform.getHeight(), 0);
 
-        }
-        else {
+        } else {
             min = new Vector3((float) getPlayer1().getX(), (float) getPlayer1().getY(), 0);
             max = new Vector3((float) getPlayer1().getX() + getPlayer1().getWidth(), (float) getPlayer1().getY() + getPlayer1().getHeight(), 0);
 
         }
-        BoundingBox bBox2 = new BoundingBox(min,max);
+        BoundingBox bBox2 = new BoundingBox(min, max);
 
         return bBox2;
     }
@@ -69,13 +68,13 @@ public class Game implements Entity {
         // Testing platform
         List<Block> quickList = new ArrayList<>();
 
-        for(Block b: level.blocks){
-            if ( b.getX() >= 0 && b.getY() + b.getHeight() <= 50){
+        for (Block b : level.blocks) {
+            if (b.getX() >= 0 && b.getY() + b.getHeight() <= 50) {
                 quickList.add(b);
 
             }
         }
-        platform = new Platform(0,0,quickList,1,1*quickList.size());
+        platform = new Platform(0, 0, quickList, 1, 1 * quickList.size());
 
         return level != null;
     }
@@ -92,7 +91,7 @@ public class Game implements Entity {
     }
 
     // Helper method for generating a list of all the pickups
-    public List<Pickup> getPickups(){
+    public List<Pickup> getPickups() {
         List<Pickup> pickups = new ArrayList<>();
 
         pickups.addAll(level.pickups);
@@ -104,25 +103,31 @@ public class Game implements Entity {
     }
 
     // Needed for manipulating the state
-    public Player getPlayer1(){return level.player;}
+    public Player getPlayer1() {
+        return level.player;
+    }
 
     @Override
     public void update(double dTime) {
         for (Character character : characters) {
             character.update(dTime);
 
-            if (character instanceof WalkingEnemy){
+            if (character instanceof WalkingEnemy) {
                 //TODO Refactor, should the controller hold this logic or should world (World enforces how far we can hear).
-                double newVolume = Math.sqrt((level.player.midX- character.getMidX()) * (level.player.midX- character.getMidX())) +
-                                   Math.sqrt((level.player.midY - character.getMidY()) * (level.player.midY - character.getMidY()));
+                double newVolume = Math.sqrt((level.player.midX - character.getMidX()) * (level.player.midX - character.getMidX())) +
+                        Math.sqrt((level.player.midY - character.getMidY()) * (level.player.midY - character.getMidY()));
 
-                if (level.player.max_dist > newVolume){ character.setSoundVolume(1f); }
-                else {
+                if (level.player.max_dist > newVolume) {
+                    character.setSoundVolume(1f);
+                } else {
                     float f = 1;
                     newVolume = newVolume - level.player.max_dist;
-                    for (; newVolume > 0; newVolume -=100){
+                    for (; newVolume > 0; newVolume -= 100) {
                         f -= 0.1;
-                        if( f <= 0){ f = 0; break;}
+                        if (f <= 0) {
+                            f = 0;
+                            break;
+                        }
                     }
                     character.setSoundVolume(f);
                 }
@@ -170,51 +175,52 @@ public class Game implements Entity {
     }
 
     // Collision code for pickups, sets a flag which triggers the said effect on the proper entity.
-    private void collidePickups(){
-        for (Pickup d : this.getPickups()){
-                // TODO Refactor, make withinX/WithinY own methods.
-                boolean withinX = getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
-                        getPlayer().getX() < d.getX() + d.getWidth();
+    private void collidePickups() {
+        for (Pickup d : this.getPickups()) {
 
-                boolean withinY = getPlayer().getY() + getPlayer().getHeight() > d.getY() &&
-                        getPlayer().getY() + 1 < d.getY() + d.getHeight();
 
-                // Detecting a collision is simple
-                // TODO Remove the pickup from the list
-                if (withinX && withinY){
-                    if(d.getName().matches("wings")) {
+            boolean withinX = isWithinX(getPlayer(),d);//getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
+                    //getPlayer().getX() < d.getX() + d.getWidth();
 
-                        // Trigger the Wings flag, put a timer task for 4 seconds
-                        this.getPlayer1().setPickup(Player.WINGS, true);
+            boolean withinY = isWithinY(getPlayer(),d);// getPlayer().getY() + getPlayer().getHeight() > d.getY() &&
+                    //getPlayer().getY() + 1 < d.getY() + d.getHeight();
 
-                        // Schedule the disabling of the powerup sometime soon.
-                        Timer.schedule(generateTask(Player.WINGS, false),4);
+            // Detecting a collision is simple
+            // TODO Remove the pickup from the list
+            if (withinX && withinY) {
+                if (d.getName().matches("wings")) {
 
-                    } else if(d.getName().matches("lunchbox")) {
-                        // TODO Define behavior for picking up a luncbhox.
+                    // Trigger the Wings flag, put a timer task for 4 seconds
+                    this.getPlayer1().setPickup(Player.WINGS, true);
 
-                    } else if(d.getName().matches("baguette")){
+                    // Schedule the disabling of the powerup sometime soon.
+                    Timer.schedule(generateTask(Player.WINGS, false), 4);
 
-                        // Trigger the Baguette flag, put a timer task for 4 seconds
-                        this.getPlayer1().setPickup(Player.BAGUETTE, true);
+                } else if (d.getName().matches("lunchbox")) {
+                    // TODO Define behavior for picking up a luncbhox.
 
-                        // Schedule the disabling of the powerup sometime soon.
-                        Timer.schedule(generateTask(Player.BAGUETTE, false),4);
+                } else if (d.getName().matches("baguette")) {
 
-                    } else if(d.getName().matches("energydrink")){
+                    // Trigger the Baguette flag, put a timer task for 4 seconds
+                    this.getPlayer1().setPickup(Player.BAGUETTE, true);
 
-                        // Trigger the Energydrink flag, put a timer task for 4 seconds
-                        this.getPlayer1().setPickup(Player.ENERGYDRINK, true);
+                    // Schedule the disabling of the powerup sometime soon.
+                    Timer.schedule(generateTask(Player.BAGUETTE, false), 4);
 
-                        // Schedule the disabling of the powerup sometime soon.
-                        Timer.schedule(generateTask(Player.ENERGYDRINK, false),4);
-                    }
+                } else if (d.getName().matches("energydrink")) {
+
+                    // Trigger the Energydrink flag, put a timer task for 4 seconds
+                    this.getPlayer1().setPickup(Player.ENERGYDRINK, true);
+
+                    // Schedule the disabling of the powerup sometime soon.
+                    Timer.schedule(generateTask(Player.ENERGYDRINK, false), 4);
                 }
+            }
         }
     }
 
     // Collision code for player versus some character.
-    private void collideCharacters(){
+    private void collideCharacters() {
         //More efficient version - try 1.
 
         // We will constantly be using player. So lets store him for the time being.
@@ -223,39 +229,47 @@ public class Game implements Entity {
         // Cause: We loop over characters twice, first to find the player and then to check against others.
         // Fix: Comment out the outer loop - replace every instance of character with player.
         //for (Character character : characters) {
-            if (player instanceof Player) {
-                for (Character character1 : characters) {
-                    if (character1 == player) { continue; }
+        //if (player instanceof Player) {
+        for (Character character : characters) {
+            if (character == player) {
+                continue;
+            }
 
-                    boolean withinX = player.getX() + player.getWidth() > character1.getX() &&
-                            player.getX() < character1.getX() + character1.getWidth();
+            // Cause: This piece of code is used in every collision, inefficient.
+            // Fix: Until boundingboxes are implemented properly, refactor this code into separate functions.
+            boolean withinX = isWithinX(player, character); // player.getX() + player.getWidth() > character1.getX() &&
+            //player.getX() < character1.getX() + character1.getWidth();
 
-                    boolean withinY = player.getY() + player.getHeight() > character1.getY() &&
-                            player.getY() + 1 < character1.getY() + character1.getHeight();
+            boolean withinY = isWithinY(player, character);//player.getY() + player.getHeight() > character1.getY() &&
+            //player.getY() + 1 < character1.getY() + character1.getHeight();
 
-                    // Check if player and some character are colliding.
-                    if (withinX && withinY) {
-                        player.knockbacked = true;
+            // Check if player and some character are colliding.
+            if (withinX && withinY) {
+                player.knockbacked = true;
 
-                        // Either we are facing Right or we are facing Left
-                        if (player.getDirection() == Drawable.RIGHT) {
-                            player.yVel = 10;
-                            player.xVel = -10;
+                // Either we are facing Right or we are facing Left
+                if (player.getDirection() == Drawable.RIGHT) {
+                    player.yVel = 10;
+                    player.xVel = -10;
 
-                        } else {
-                            player.yVel = 10;
-                            player.xVel = 10;
-                        }
-                    }
+                } else {
+                    player.yVel = 10;
+                    player.xVel = 10;
                 }
-          //  }
+            }
         }
-
-        //Ineffective version.
+        //  }
+        //}
+    }
+        // Ineffective version.
+        // Fix: Improved version works, follwing code to be removed within next commit.
+        /*
         for (Character character : characters) {
             if (character instanceof Player) {
                 for (Character character1 : characters) {
-                    if (character1 == character) { continue; }
+                    if (character1 == character) {
+                        continue;
+                    }
 
                     boolean withinX = character.getX() + character.getWidth() > character1.getX() &&
                             character.getX() < character1.getX() + character1.getWidth();
@@ -282,7 +296,9 @@ public class Game implements Entity {
         }
 
     }
-    private void collideTerrain() {
+
+*/
+    private void collideTerrain(){
 /*
         getPlayer1().resetCollisions();
         // On each collision, generate two specific bounding boxes. 0 for platform, 1 for player
@@ -302,49 +318,51 @@ public class Game implements Entity {
 
         }
         */
-        for(Character character : characters) {
+        for (Character character : characters) {
             character.resetCollisions();
 
             for (Block block : level.blocks) {
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
-                    boolean withinX = character.getX() + character.getWidth() > block.getX() &&
-                            character.getX() < block.getX() + block.getWidth();
+                // Cause: Inefficiency since we have a function for this now
+                // Fix: Comment out, replace with function, check if working.
+                boolean withinX = isWithinX(character,block);//character.getX() + character.getWidth() > block.getX() &&
+                        //character.getX() < block.getX() + block.getWidth();
 
-                    boolean withinY = character.getY() + character.getHeight() > block.getY() &&
-                            character.getY() + 1 < block.getY() + block.getHeight();
+                boolean withinY = isWithinY(character,block);// character.getY() + character.getHeight() > block.getY() &&
+                      //  character.getY() + 1 < block.getY() + block.getHeight();
 
 
-                    // DOWN
-                    if (withinX &&
-                            character.getY() + character.getHeight() > block.getY() + block.getHeight() &&
-                            character.getY() < block.getY() + block.getHeight()) {
-                        character.setCollision(Character.DOWN, true, block.getY() + block.getHeight() - 1);
-                    }
-
-                    // TOP
-                    if (withinX &&
-                            character.getY() < block.getY() &&
-                            character.getY() + character.getHeight() > block.getY()) {
-                        character.setCollision(Character.UP, true, block.getY() - character.getHeight());
-                    }
-
-                    // RIGHT
-                    if (withinY &&
-                            character.getX() < block.getX() &&
-                            character.getX() + character.getWidth() > block.getX()) {
-                        character.setCollision(Character.RIGHT, true, block.getX() - character.getWidth());
-                    }
-
-                    // LEFT
-                    if (withinY &&
-                            character.getX() + character.getWidth() > block.getX() + block.getWidth() &&
-                            character.getX() < block.getX() + block.getWidth()) {
-                        character.setCollision(Character.LEFT, true, block.getX());
-                    }
+                // DOWN
+                if (withinX &&
+                        character.getY() + character.getHeight() > block.getY() + block.getHeight() &&
+                        character.getY() < block.getY() + block.getHeight()) {
+                    character.setCollision(Character.DOWN, true, block.getY() + block.getHeight() - 1);
                 }
 
+                // TOP
+                if (withinX &&
+                        character.getY() < block.getY() &&
+                        character.getY() + character.getHeight() > block.getY()) {
+                    character.setCollision(Character.UP, true, block.getY() - character.getHeight());
+                }
+
+                // RIGHT
+                if (withinY &&
+                        character.getX() < block.getX() &&
+                        character.getX() + character.getWidth() > block.getX()) {
+                    character.setCollision(Character.RIGHT, true, block.getX() - character.getWidth());
+                }
+
+                // LEFT
+                if (withinY &&
+                        character.getX() + character.getWidth() > block.getX() + block.getWidth() &&
+                        character.getX() < block.getX() + block.getWidth()) {
+                    character.setCollision(Character.LEFT, true, block.getX());
+                }
             }
+
         }
+    }
 
     public List<WalkingEnemy> getWalkingEnemies() {
         return level.enemies;
@@ -355,7 +373,7 @@ public class Game implements Entity {
     }
 
     // Generate the appropriate Task given an n and the truth value.
-    private Timer.Task generateTask(int n, boolean val){
+    private Timer.Task generateTask(int n, boolean val) {
         Timer.Task task = new Timer.Task() {
             @Override
             public void run() {
@@ -364,5 +382,23 @@ public class Game implements Entity {
         };
 
         return task;
+    }
+
+    /* Ugly for now as we are checking against the drawable interface.
+     * Affector for the drawable that is moving
+     * Affected for the drawable that we might collide against
+     */
+    private boolean isWithinX(Drawable affector, Drawable affected) {
+        boolean withinX = affector.getX() + affector.getWidth() > affected.getX() &&
+                affector.getX() < affected.getX() + affected.getWidth();
+
+        return withinX;
+    }
+
+    private boolean isWithinY(Drawable affector, Drawable affected) {
+        boolean withinY = affector.getY() + affector.getHeight() > affected.getY() &&
+                affector.getY() + 1 < affected.getY() + affected.getHeight();
+
+        return withinY;
     }
 }
