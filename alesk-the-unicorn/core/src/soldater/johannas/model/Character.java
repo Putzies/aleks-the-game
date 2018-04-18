@@ -31,6 +31,7 @@ public abstract class Character implements Entity{
         this.x = x;
         this.y = y;
         this.midX = x + getWidth()  / 2 ;
+        this.midY = y + getHeight()  / 2 ;
         this.soundVolume = 1f;
 
     }
@@ -74,6 +75,10 @@ public abstract class Character implements Entity{
     public double getY() {
         return y;
     }
+
+    public double getMidX(){ return midX;}
+
+    public double getMidY(){ return midY;}
 
     public double getYvel() {
         return yVel;
