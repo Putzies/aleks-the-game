@@ -33,24 +33,6 @@ public class Game implements Entity {
     // Task object used for disabling a pickup effect after a set time.
     Timer.Task t;
 
-    //Just testing
-    public BoundingBox generateConnected(int n) {
-        Vector3 min;
-        Vector3 max;
-        if (n == 0) {
-            min = new Vector3((float) platform.getX(), (float) platform.getY(), 0);
-            max = new Vector3((float) platform.getX() + platform.getWidth(), (float) platform.getY() + platform.getHeight(), 0);
-
-        } else {
-            min = new Vector3((float) getPlayer1().getX(), (float) getPlayer1().getY(), 0);
-            max = new Vector3((float) getPlayer1().getX() + getPlayer1().getWidth(), (float) getPlayer1().getY() + getPlayer1().getHeight(), 0);
-
-        }
-        BoundingBox bBox2 = new BoundingBox(min, max);
-
-        return bBox2;
-    }
-
     public Game() {
         drawables = new ArrayList<>();
         entities = new ArrayList<>();
@@ -111,28 +93,10 @@ public class Game implements Entity {
     public void update(double dTime) {
         for (Character character : characters) {
             character.update(dTime);
-
-            if (character instanceof WalkingEnemy) {
-                //TODO Refactor, should the controller hold this logic or should world (World enforces how far we can hear).
-                double newVolume = Math.sqrt((level.player.midX - character.getMidX()) * (level.player.midX - character.getMidX())) +
-                        Math.sqrt((level.player.midY - character.getMidY()) * (level.player.midY - character.getMidY()));
-
-                if (level.player.max_dist > newVolume) {
-                    character.setSoundVolume(1f);
-                } else {
-                    float f = 1;
-                    newVolume = newVolume - level.player.max_dist;
-                    for (; newVolume > 0; newVolume -= 100) {
-                        f -= 0.1;
-                        if (f <= 0) {
-                            f = 0;
-                            break;
-                        }
-                    }
-                    character.setSoundVolume(f);
-                }
-            }
         }
+
+        calculateNewSoundVolumes();
+
         // Ordering here is important. Characters before Terrain will cause bugs.
         collideTerrain();
         collideCharacters();
@@ -177,13 +141,8 @@ public class Game implements Entity {
     // Collision code for pickups, sets a flag which triggers the said effect on the proper entity.
     private void collidePickups() {
         for (Pickup d : this.getPickups()) {
-
-
-            boolean withinX = isWithinX(getPlayer(),d);//getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
-                    //getPlayer().getX() < d.getX() + d.getWidth();
-
-            boolean withinY = isWithinY(getPlayer(),d);// getPlayer().getY() + getPlayer().getHeight() > d.getY() &&
-                    //getPlayer().getY() + 1 < d.getY() + d.getHeight();
+            boolean withinX = isWithinX(getPlayer(),d);
+            boolean withinY = isWithinY(getPlayer(),d);
 
             // Detecting a collision is simple
             // TODO Remove the pickup from the list
@@ -219,29 +178,17 @@ public class Game implements Entity {
         }
     }
 
-    // Collision code for player versus some character.
+    // Collision code for Player versus some Character.
+    // Future expansion: Collide against hanging spiders, which for some reason are not in characters.
     private void collideCharacters() {
-        //More efficient version - try 1.
-
-        // We will constantly be using player. So lets store him for the time being.
+        // We will constantly be using player. So lets store it for the time being.
         Player player = getPlayer1();
 
-        // Cause: We loop over characters twice, first to find the player and then to check against others.
-        // Fix: Comment out the outer loop - replace every instance of character with player.
-        //for (Character character : characters) {
-        //if (player instanceof Player) {
         for (Character character : characters) {
-            if (character == player) {
-                continue;
-            }
+            if (character == player) { continue; }
 
-            // Cause: This piece of code is used in every collision, inefficient.
-            // Fix: Until boundingboxes are implemented properly, refactor this code into separate functions.
-            boolean withinX = isWithinX(player, character); // player.getX() + player.getWidth() > character1.getX() &&
-            //player.getX() < character1.getX() + character1.getWidth();
-
-            boolean withinY = isWithinY(player, character);//player.getY() + player.getHeight() > character1.getY() &&
-            //player.getY() + 1 < character1.getY() + character1.getHeight();
+            boolean withinX = isWithinX(player, character);
+            boolean withinY = isWithinY(player, character);
 
             // Check if player and some character are colliding.
             if (withinX && withinY) {
@@ -258,46 +205,9 @@ public class Game implements Entity {
                 }
             }
         }
-        //  }
-        //}
-    }
-        // Ineffective version.
-        // Fix: Improved version works, follwing code to be removed within next commit.
-        /*
-        for (Character character : characters) {
-            if (character instanceof Player) {
-                for (Character character1 : characters) {
-                    if (character1 == character) {
-                        continue;
-                    }
-
-                    boolean withinX = character.getX() + character.getWidth() > character1.getX() &&
-                            character.getX() < character1.getX() + character1.getWidth();
-
-                    boolean withinY = character.getY() + character.getHeight() > character1.getY() &&
-                            character.getY() + 1 < character1.getY() + character1.getHeight();
-
-                    // Check if player and some character are colliding.
-                    if (withinX && withinY) {
-                        character.knockbacked = true;
-
-                        // Either we are facing Right or we are facing Left
-                        if (character.getDirection() == Drawable.RIGHT) {
-                            character.yVel = 10;
-                            character.xVel = -10;
-
-                        } else {
-                            character.yVel = 10;
-                            character.xVel = 10;
-                        }
-                    }
-                }
-            }
-        }
 
     }
 
-*/
     private void collideTerrain(){
 /*
         getPlayer1().resetCollisions();
@@ -323,14 +233,8 @@ public class Game implements Entity {
 
             for (Block block : level.blocks) {
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
-                // Cause: Inefficiency since we have a function for this now
-                // Fix: Comment out, replace with function, check if working.
-                boolean withinX = isWithinX(character,block);//character.getX() + character.getWidth() > block.getX() &&
-                        //character.getX() < block.getX() + block.getWidth();
-
-                boolean withinY = isWithinY(character,block);// character.getY() + character.getHeight() > block.getY() &&
-                      //  character.getY() + 1 < block.getY() + block.getHeight();
-
+                boolean withinX = isWithinX(character,block);
+                boolean withinY = isWithinY(character,block);
 
                 // DOWN
                 if (withinX &&
@@ -400,5 +304,50 @@ public class Game implements Entity {
                 affector.getY() + 1 < affected.getY() + affected.getHeight();
 
         return withinY;
+    }
+
+    //Just testing, generates a bounding box for either player or plattform
+    private BoundingBox generateConnected(int n) {
+        Vector3 min;
+        Vector3 max;
+        if (n == 0) {
+            min = new Vector3((float) platform.getX(), (float) platform.getY(), 0);
+            max = new Vector3((float) platform.getX() + platform.getWidth(), (float) platform.getY() + platform.getHeight(), 0);
+
+        } else {
+            min = new Vector3((float) getPlayer1().getX(), (float) getPlayer1().getY(), 0);
+            max = new Vector3((float) getPlayer1().getX() + getPlayer1().getWidth(), (float) getPlayer1().getY() + getPlayer1().getHeight(), 0);
+
+        }
+        BoundingBox bBox2 = new BoundingBox(min, max);
+
+        return bBox2;
+    }
+
+    // Ugly, semi-hard coded version.
+    private void calculateNewSoundVolumes(){
+        for (Character character : characters) {
+            if (character instanceof WalkingEnemy) {
+                //TODO Refactor, should the controller hold this logic or should world (World enforces how far we can hear).
+                double newVolume = Math.sqrt((level.player.midX - character.getMidX()) * (level.player.midX - character.getMidX())) +
+                        Math.sqrt((level.player.midY - character.getMidY()) * (level.player.midY - character.getMidY()));
+
+                if (level.player.max_dist > newVolume) {
+                    character.setSoundVolume(1f);
+                } else {
+                    float f = 1;
+                    newVolume = newVolume - level.player.max_dist;
+                    for (; newVolume > 0; newVolume -= 100) {
+                        f -= 0.1;
+                        if (f <= 0) {
+                            f = 0;
+                            break;
+                        }
+                    }
+                    character.setSoundVolume(f);
+                }
+            }
+        }
+
     }
 }

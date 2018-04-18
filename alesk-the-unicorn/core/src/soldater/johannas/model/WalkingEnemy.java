@@ -10,12 +10,6 @@ public class WalkingEnemy extends Character implements Movable {
     private int leftBound;
     private int rightbound;
 
-    // Temporary, used for optimising collision detection.
-    protected Vector3 min;
-    protected Vector3 max;
-    protected BoundingBox bBox;
-
-
     public WalkingEnemy(int x, int y, int range) {
         super(x, y);
 
