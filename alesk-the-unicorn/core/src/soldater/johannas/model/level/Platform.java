@@ -5,22 +5,30 @@ import soldater.johannas.model.Drawable;
 import java.util.List;
 
 public class Platform implements Drawable{
-    private final int width;
-    private final int height;
+    private final int WIDTH;
+    private final int HEIGHT;
 
     private final int X,Y;
 
     // For safety reasons, dont make the platforms larger than 10-15 blocks each.
-    private final List<Block> blocks;
+    private final List<Block> BLOCKS;
 
+    public Platform(int x, int y, List<Block>blocks){
+        X = x;
+        Y = y;
+        this.BLOCKS = blocks;
+
+        WIDTH  = blocks.size()*Block.WIDTH;
+        HEIGHT = Block.HEIGHT;
+    }
     public Platform(int x, int y, List<Block>blocks, int vertical, int horizontal) {
         X = x;
         Y = y;
 
-        width  = horizontal * Block.WIDTH;
-        height = vertical   * Block.HEIGHT;
+        WIDTH  = horizontal * Block.WIDTH;
+        HEIGHT = vertical   * Block.HEIGHT;
 
-        this.blocks = blocks;
+        this.BLOCKS = blocks;
     }
 
     @Override
@@ -35,12 +43,12 @@ public class Platform implements Drawable{
 
     @Override
     public int getWidth() {
-        return width;
+        return WIDTH;
     }
 
     @Override
     public int getHeight() {
-        return height;
+        return HEIGHT;
     }
 
     @Override
@@ -59,6 +67,6 @@ public class Platform implements Drawable{
     }
 
     public List<Block>getBlocks(){
-        return blocks;
+        return BLOCKS;
     }
 }

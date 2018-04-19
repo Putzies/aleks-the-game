@@ -26,6 +26,7 @@ public class Game implements Entity {
     private List<Drawable> drawables;
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
+
     private Player player;
     private Platform platform;
 
