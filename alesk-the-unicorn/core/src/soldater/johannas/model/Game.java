@@ -286,6 +286,7 @@ public class Game implements Entity {
      * Affector for the drawable that is moving
      * Affected for the drawable that we might collide against
      */
+
     private boolean isWithinX(Drawable affector, Drawable affected) {
         boolean withinX = affector.getX() + affector.getWidth() > affected.getX() &&
                 affector.getX() < affected.getX() + affected.getWidth();
