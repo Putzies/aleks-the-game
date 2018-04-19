@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MainMenuRenderer implements Screen {
 
-    private final int ITEM_WIDTH = 400;
+    private final int ITEM_WIDTH = 225;
     private int START_Y = Gdx.graphics.getHeight() / 3;
     private final int MARGIN = 40;
 

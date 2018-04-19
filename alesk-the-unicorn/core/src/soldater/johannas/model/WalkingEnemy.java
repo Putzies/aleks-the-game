@@ -55,7 +55,7 @@ public class WalkingEnemy extends Character implements Movable {
     @Override
     public void jump() {
         if (!collisions[UP]) {
-            yVel = 18;
+            yVel = 300;
         }
     }
 
@@ -96,6 +96,6 @@ public class WalkingEnemy extends Character implements Movable {
     public void stop() {
     }
     private void applyGravity() {
-        yVel -= 2.2;
+        yVel -= 25;
     }
 }
