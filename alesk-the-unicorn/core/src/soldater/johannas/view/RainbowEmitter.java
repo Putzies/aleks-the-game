@@ -11,7 +11,7 @@ import java.util.Random;
 public class RainbowEmitter {
 
     private List<RainbowParticle> rainbow;
-    private Texture texture = new Texture("rainbow.png");
+    private Texture texture = new Texture("rainbow2.png");
     private int width = 3;
     private int nrXSprites;
     private double x;
@@ -67,7 +67,7 @@ public class RainbowEmitter {
                             (int)(rp.getX() + xOffset),
                             (int)(rp.getY() + yOffset),
                             Math.abs((rainbow.size() - i)-nrXSprites)*rp.getWidth(),
-                            0,
+                            rp.getFadeLevel() * rp.getHeight(),
                             rp.getWidth(),
                             rp.getHeight()
                     );

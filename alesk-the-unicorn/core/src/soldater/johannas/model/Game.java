@@ -74,6 +74,17 @@ public class Game implements Entity, DrawableGame {
     }
 
     @Override
+    public int getTakenLunchBoxes(){
+        return level.takenLunchboxes;
+    };
+
+    @Override
+    public int getTotalLunchBoxes() {
+        return level.totalLunchboxes;
+    }
+
+
+    @Override
     public Player getPlayer() {
         return level.player;
     }
@@ -151,6 +162,7 @@ public class Game implements Entity, DrawableGame {
                     timer.schedule(generateTask(Player.WINGS, false), 4000);
 
                 } else if (pickup.getName().matches("lunchbox")) {
+                    level.incrementLunchBoxes();
                     // TODO Define behavior for picking up a luncbhox.
 
                 } else if (pickup.getName().matches("baguette")) {
