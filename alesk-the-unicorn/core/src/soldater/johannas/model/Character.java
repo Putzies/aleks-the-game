@@ -12,6 +12,7 @@ public abstract class Character implements Entity{
 
     protected double x,y;
     protected double xVel, yVel;
+    protected int life;
 
     public Character(int x, int y) {
         this();
@@ -78,6 +79,14 @@ public abstract class Character implements Entity{
 
     public boolean collidesRight() {
         return collisions[RIGHT];
+    }
+
+    public int getLife(){
+        return life;
+    }
+
+    public void decrementLife() {
+        life--;
     }
 
 }

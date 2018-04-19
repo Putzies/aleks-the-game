@@ -20,8 +20,10 @@ public class Player extends Character implements Movable {
     private final boolean[] pickups = {false,false,false};
 
 
+
     public Player() {
         super();
+        life = 4;
     }
 
     @Override
@@ -123,4 +125,5 @@ public class Player extends Character implements Movable {
     private void applyGravity() {
         yVel -= 25;
     }
+
 }

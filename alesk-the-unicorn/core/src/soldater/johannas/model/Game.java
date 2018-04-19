@@ -52,7 +52,7 @@ public class Game implements Entity {
         return allObjects;
     }
 
-    public Movable getPlayer() {
+    public Player getPlayer() {
         return level.player;
     }
 

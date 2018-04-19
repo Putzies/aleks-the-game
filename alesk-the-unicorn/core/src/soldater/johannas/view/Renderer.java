@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.HangingEnemy;
+import soldater.johannas.model.Player;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class Renderer {
 
     private int playerFrame = 0;
 
-    private Drawable player;
+    private Player player;
     private RainbowEmitter rainbowEmitter;
     private List<? extends Drawable> drawables;
     private List<HangingEnemy> hangingEnemies;
@@ -42,7 +43,7 @@ public class Renderer {
     private int playerX;
     private int playerY;
 
-    public Renderer(Drawable player, List<Drawable> drawables, List<HangingEnemy> hangingEnemies) {
+    public Renderer(Player player, List<Drawable> drawables, List<HangingEnemy> hangingEnemies) {
         this.drawables = drawables;
         this.player = player;
         this.hangingEnemies = hangingEnemies;
@@ -71,6 +72,8 @@ public class Renderer {
         drawRainbow();
         drawPlayer();
         drawDrawables();
+        drawGUI();
+
         batch.end();
         shapeRenderer.end();
 
@@ -87,6 +90,7 @@ public class Renderer {
         textures.put(player.getName(), new Texture(player.getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
+        textures.put("horn", new Texture("horn.png"));
         for (Drawable drawable : drawables) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
@@ -197,6 +201,20 @@ public class Renderer {
 
             shapeRenderer.line(x, startY, x, y);
         }
+    }
+
+    private void drawGUI() {
+        int width = textures.get("horn").getWidth()/4;
+        int height = textures.get("horn").getHeight();
+        batch.draw(textures.get("horn"),
+                20,
+                Gdx.graphics.getHeight()-height-20,
+                (player.getLife()-1)*width,
+                0,
+                width,
+                height
+        );
+
     }
 
     private void incrementFrames() {
