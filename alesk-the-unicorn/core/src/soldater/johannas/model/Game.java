@@ -205,7 +205,6 @@ public class Game implements Entity, DrawableGame {
                 }
 
                 if(!player.isDamaged()) {
-                    System.out.println(player.getLife());
                     player.decrementLife();
                 }
 
