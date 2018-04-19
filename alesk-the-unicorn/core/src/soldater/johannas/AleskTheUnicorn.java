@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import soldater.johannas.control.GameController;
+import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.control.menu.MainMenu;
 import soldater.johannas.view.LevelInfo;
@@ -14,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
+public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, GameMenu {
 
     private MainMenuRenderer mainMenu;
     private LevelSelectRenderer levelSelectRenderer;
+    private GameController gameController;
 
 	@Override
 	public void create() {
@@ -33,7 +35,8 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
 
 	@Override
 	public void startLevel(String level) {
-		setScreen(new GameController(this, level));
+		gameController = new GameController(this, level);
+		setScreen(gameController);
 		levelSelectRenderer.dispose();
 	}
 
@@ -73,5 +76,11 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection {
 		}
 
 		return levels;
+	}
+
+	@Override
+	public void exitLevel() {
+		gameController.dispose();
+		setScreen(levelSelectRenderer);
 	}
 }

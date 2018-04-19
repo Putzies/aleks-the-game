@@ -152,7 +152,7 @@ public class LevelSelectRenderer implements Screen {
 
         font.draw(
                 batch,
-                levels.get(selectItem).getName(),
+                levelName,
                 Gdx.graphics.getWidth() / 2 - layout.width / 2 + offsetX,
                 START_Y - (layout.height + MARGIN) * selectItem + offsetY
         );

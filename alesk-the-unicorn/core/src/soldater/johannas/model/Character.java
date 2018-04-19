@@ -13,10 +13,26 @@ public abstract class Character implements Entity{
     protected double x,y;
     protected double xVel, yVel;
 
+    // Float for controlling the sound volume if something is far away.
+    protected float soundVolume = 1f;
+
+    // The maximum interaction distance, used for sound and collision
+    protected double max_dist = 800;
+
+    // Boolean for disabling arrow key movement while being knockbacked.
+    protected boolean knockbacked = false;
+
+    // Mid points, used for calculating sound distance.
+    // TODO use midpoints for collisions
+    protected double midX,midY;
+
     public Character(int x, int y) {
         this();
         this.x = x;
         this.y = y;
+        this.midX = x + getWidth()  / 2 ;
+        this.midY = y + getHeight()  / 2 ;
+        this.soundVolume = 1f;
 
     }
 
@@ -60,6 +76,10 @@ public abstract class Character implements Entity{
         return y;
     }
 
+    public double getMidX(){ return midX;}
+
+    public double getMidY(){ return midY;}
+
     public double getYvel() {
         return yVel;
     }
@@ -67,6 +87,10 @@ public abstract class Character implements Entity{
     public int getDirection() {
         return direction;
     }
+
+    public float getSoundVolume(){ return soundVolume; }
+
+    public void setSoundVolume(float f){soundVolume = f;}
 
     public boolean isOnGround() {
         return collisions[DOWN];
@@ -80,4 +104,6 @@ public abstract class Character implements Entity{
         return collisions[RIGHT];
     }
 
+    // Method for getting the value of knockbacked.
+    public boolean isKnockbacked(){return knockbacked;}
 }

@@ -1,8 +1,9 @@
 package soldater.johannas.control;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import soldater.johannas.AleskTheUnicorn;
+import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.view.Renderer;
 
 import java.util.ArrayList;
@@ -10,14 +11,14 @@ import java.util.List;
 
 public class GameController implements Screen {
 
-	private final Game alesk;
+	private final GameMenu gameMenu;
 	private Renderer renderer;
 	private soldater.johannas.model.Game game;
 
 	private List<Controller> controllers;
 
-	public GameController(final AleskTheUnicorn alesk, String level) {
-		this.alesk = alesk;
+	public GameController(GameMenu levelSection, String level) {
+		this.gameMenu = levelSection;
 
 		System.out.println(level);
 		// Initialize the world!
@@ -41,6 +42,10 @@ public class GameController implements Screen {
 			c.update();
 		}
 		renderer.render();
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+			gameMenu.exitLevel();
+		}
 	}
 
 	@Override

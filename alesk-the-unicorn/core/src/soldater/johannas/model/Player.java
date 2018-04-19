@@ -8,11 +8,14 @@ public class Player extends Character implements Movable {
     public static final int RUNNING     = 1;
     public static final int JUMPING     = 2;
     public static final int FALLING     = 3;
+
+    // For flying, or a state with wings.
+    public static final int FLYING      = 4;
+
     // For pickups
     public static final int WINGS       = 0;
     public static final int BAGUETTE    = 1;
     public static final int ENERGYDRINK = 2;
-    public static final int FLYING      = 4;
 
     private int state = 0;
 
@@ -57,7 +60,7 @@ public class Player extends Character implements Movable {
             }
         }
 
-        if(this.isOnGround()){ this.xVel = 0; }
+        if(this.isOnGround()){ this.xVel = 0; knockbacked = false; }
 
         super.update(dTime);
     }
@@ -72,25 +75,37 @@ public class Player extends Character implements Movable {
 
     @Override
     public void left () {
-        if (!collisions[super.LEFT]) {
-            x -= 10;
-        }
-        direction = Drawable.LEFT;
+        if (!isKnockbacked()) {
+            if (!collisions[super.LEFT]) {
+                x -= 10;
 
-        if (state != JUMPING && state != FALLING) {
-            state = RUNNING;
+                if (pickups[ENERGYDRINK]) {
+                    x -= 15;
+                }
+            }
+            direction = Drawable.LEFT;
+
+            if (state != JUMPING && state != FALLING) {
+                state = RUNNING;
+            }
         }
     }
 
     @Override
     public void right() {
-        if (!collisions[super.RIGHT]) {
-            x += 10;
-        }
-        direction = Drawable.RIGHT;
+        if (!isKnockbacked()) {
+            if (!collisions[super.RIGHT]) {
+                x += 10;
 
-        if (state != JUMPING && state != FALLING){
-            state = RUNNING;
+                if (pickups[ENERGYDRINK]) {
+                    x += 15;
+                }
+            }
+            direction = Drawable.RIGHT;
+
+            if (state != JUMPING && state != FALLING) {
+                state = RUNNING;
+            }
         }
     }
 
@@ -100,7 +115,7 @@ public class Player extends Character implements Movable {
         if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
             yVel = 1000;
         }
-        if(state != FALLING) {
+        if (state != FALLING) {
             state = JUMPING;
         }
     }
@@ -113,7 +128,21 @@ public class Player extends Character implements Movable {
     }
 
     public void setPickup(int pickup, boolean value){
+
         this.pickups[pickup] = value;
+
+        // This should probably be in some giant setState function instead of setPickup
+        // Set state to Flying if wings & true otherwise set it to falling, which will be changed into the proper state
+        // On the next tick.
+        if (pickup == WINGS && value){
+            state = FLYING;
+        } else if (pickup == BAGUETTE && value){
+            /* Do something here*/
+        } else if (pickup == ENERGYDRINK && value){
+            /* Do something here*/
+        } else { state = FALLING; }
+
+
     }
 
     public boolean getPickup(int pickup){
@@ -123,4 +152,5 @@ public class Player extends Character implements Movable {
     private void applyGravity() {
         yVel -= 25;
     }
+
 }
