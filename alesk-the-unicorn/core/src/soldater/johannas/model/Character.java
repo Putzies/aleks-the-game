@@ -30,8 +30,8 @@ public abstract class Character implements Entity{
         this();
         this.x = x;
         this.y = y;
-        this.midX = x + getWidth()  / 2 ;
-        this.midY = y + getHeight()  / 2 ;
+        this.midX = x + getWidth() / 2;
+        this.midY = y + getHeight() / 2;
         this.soundVolume = 1f;
 
     }
