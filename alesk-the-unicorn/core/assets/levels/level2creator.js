@@ -26,6 +26,11 @@ function createBlocks() {
             X: i * 50, Y: 0
         });
     }
+    for (let i = 103; i < 300; i++) {
+        blocks.push({
+            X: i * 50, Y: 0
+        });
+    }
 
     // Create some platforms
     for (let i = 7; i < 15; i++) {
@@ -58,7 +63,7 @@ function createBlocks() {
 }
 
 function createALotOfDisgustingSpiders() {
-    for (let i = 100; i < 110; i++) {
+    for (let i = 300; i < 1000; i++) {
         enemies.push({
             x: i * 10,
             y: 100,
@@ -76,7 +81,27 @@ function createPickups() {
         });
     }
 
-    for (let i = -500; i < -100; i += 80) {
+    energyDrinks.push({
+        x: 2500,
+        y: 100,
+    });
+
+    energyDrinks.push({
+        x: 2400,
+        y: 100,
+    });
+
+    energyDrinks.push({
+        x: 2300,
+        y: 100,
+    });
+
+    energyDrinks.push({
+        x: 2600,
+        y: 100,
+    });
+
+    for (let i = -1500; i < -100; i += 40) {
         energyDrinks.push({
             x: i,
             y: 120
