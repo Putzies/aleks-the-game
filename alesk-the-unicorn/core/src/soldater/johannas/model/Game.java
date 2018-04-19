@@ -20,12 +20,10 @@ public class Game implements Entity {
     private Level level;
 
     private List<Entity> entities;
-    private List<Drawable> drawables;
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
 
     public Game() {
-        drawables = new ArrayList<>();
         entities = new ArrayList<>();
         characters = new ArrayList<>();
         hangingEnemies = new ArrayList<>();
@@ -34,6 +32,9 @@ public class Game implements Entity {
     public boolean startGame(String levelName) {
         level = new Parser().loadLevel(levelName);
         characters.addAll(level.enemies);
+
+        entities.addAll(characters);
+        entities.addAll(level.pickups);
         characters.add(level.player);
 
         level.blocks.stream().filter(b -> b.getHangingEnemy() != null).forEach(b -> hangingEnemies.add(b.getHangingEnemy()));
@@ -42,8 +43,7 @@ public class Game implements Entity {
     }
 
     public List<Drawable> getDrawables() {
-        List<Drawable> allObjects = new ArrayList<Drawable>();
-        allObjects.addAll(drawables);
+        List<Drawable> allObjects = new ArrayList<>();
         allObjects.addAll(entities);
         allObjects.addAll(level.blocks);
         allObjects.addAll(level.enemies);
@@ -52,26 +52,17 @@ public class Game implements Entity {
         return allObjects;
     }
 
-    // Helper method for generating a list of all the pickups
-    public List<Pickup> getPickups(){
-        List<Pickup> pickups = new ArrayList<>();
-
-        pickups.addAll(level.pickups);
-        return pickups;
-    }
-
-
     public Movable getPlayer() {
         return level.player;
     }
 
-    // Needed for manipulating the state
-    public Player getPlayer1(){return level.player;}
     @Override
     public void update(double dTime) {
-        for (Character character : characters) {
-            character.update(dTime);
+        for (Entity entity : entities) {
+            entity.update(dTime);
         }
+
+        level.player.update(dTime);
 
         collideCharacters();
         collidePickups();
@@ -114,7 +105,7 @@ public class Game implements Entity {
 
     // Collision code for pickups, sets a flag which triggers the said effect on the proper entity.
     private  void collidePickups(){
-        for (Pickup d : this.getPickups()){
+        for (Pickup d : level.pickups){
 
                 boolean withinX = getPlayer().getX() + getPlayer().getWidth() > d.getX() &&
                         getPlayer().getX() < d.getX() + d.getWidth();
@@ -128,11 +119,11 @@ public class Game implements Entity {
                         System.out.println(d.getName());
 
                         //Trigger the Wings flag, put a timer task for 4 seconds
-                        this.getPlayer1().setPickup(Player.WINGS, true);
+                        level.player.setPickup(Player.WINGS, true);
                         Timer.Task t = new Timer.Task() {
                             @Override
                             public void run() {
-                                getPlayer1().setPickup(Player.WINGS, false);
+                                level.player.setPickup(Player.WINGS, false);
                             }
                         };
                         Timer.schedule(t,4);
