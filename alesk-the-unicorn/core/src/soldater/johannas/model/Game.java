@@ -195,12 +195,12 @@ public class Game implements Entity, DrawableGame {
 
                 // Either we are facing Right or we are facing Left
                 if (player.getDirection() == Drawable.RIGHT) {
-                    player.yVel = 10;
-                    player.xVel = -10;
+                    player.yVel = 300;
+                    player.xVel = -300;
 
                 } else {
-                    player.yVel = 10;
-                    player.xVel = 10;
+                    player.yVel = 300;
+                    player.xVel = 300;
                 }
             }
         }
