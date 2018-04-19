@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawableGame;
 import soldater.johannas.model.HangingEnemy;
+import soldater.johannas.model.Player;
 
 
 import java.awt.*;
@@ -36,6 +37,7 @@ public class Renderer {
     private Map<String, Texture> textures;
 
     private int playerFrame = 0;
+
 
     private DrawableGame game;
     private RainbowEmitter rainbowEmitter;
@@ -72,6 +74,8 @@ public class Renderer {
         drawRainbow();
         drawPlayer();
         drawDrawables();
+        drawGUI();
+
         batch.end();
         shapeRenderer.end();
 
@@ -88,6 +92,8 @@ public class Renderer {
         textures.put(game.getPlayer().getName(), new Texture(game.getPlayer().getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
+        textures.put("horn", new Texture("horn.png"));
+
         for (Drawable drawable : game.getDrawables()) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
@@ -203,6 +209,20 @@ public class Renderer {
 
             shapeRenderer.line(x, startY, x, y);
         }
+    }
+
+    private void drawGUI() {
+        int width = textures.get("horn").getWidth()/4;
+        int height = textures.get("horn").getHeight();
+        batch.draw(textures.get("horn"),
+                20,
+                Gdx.graphics.getHeight()-height-20,
+                (game.getPlayer().getLife()-1)*width,
+                0,
+                width,
+                height
+        );
+
     }
 
     private void incrementFrames() {
