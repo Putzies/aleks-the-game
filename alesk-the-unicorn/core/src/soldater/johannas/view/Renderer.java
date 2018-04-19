@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import soldater.johannas.model.Drawable;
+import soldater.johannas.model.DrawableGame;
 import soldater.johannas.model.HangingEnemy;
 
 
@@ -36,30 +37,28 @@ public class Renderer {
 
     private int playerFrame = 0;
 
-    private Drawable player;
+    private DrawableGame game;
     private RainbowEmitter rainbowEmitter;
-    private List<? extends Drawable> drawables;
-    private List<HangingEnemy> hangingEnemies;
 
     private int playerX;
     private int playerY;
 
-    public Renderer(Drawable player, List<Drawable> drawables, List<HangingEnemy> hangingEnemies) {
-        this.drawables = drawables;
-        this.player = player;
-        this.hangingEnemies = hangingEnemies;
-        rainbowEmitter = new RainbowEmitter();
+    public Renderer(DrawableGame game) {
+        this.game = game;
 
+        rainbowEmitter = new RainbowEmitter();
 
         batch = new SpriteBatch();
         loadTextures();
         shapeRenderer = new ShapeRenderer();
 
-        playerX = Gdx.graphics.getWidth() / 2 - player.getWidth() / 2;
-        playerY = Gdx.graphics.getHeight() / 2 - player.getHeight() / 2;
+        playerX = Gdx.graphics.getWidth() / 2 - game.getPlayer().getWidth() / 2;
+        playerY = Gdx.graphics.getHeight() / 2 - game.getPlayer().getHeight() / 2;
     }
 
     public void render() {
+        Drawable player = game.getPlayer();
+
         Gdx.gl.glClearColor(1, 0.8039f, 0.6667f, 1 + (float)(player.getY()));
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -86,10 +85,10 @@ public class Renderer {
 
     private void loadTextures() {
         textures = new HashMap<String, Texture>();
-        textures.put(player.getName(), new Texture(player.getName() + ".png"));
+        textures.put(game.getPlayer().getName(), new Texture(game.getPlayer().getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
-        for (Drawable drawable : drawables) {
+        for (Drawable drawable : game.getDrawables()) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
         }
     }
@@ -102,6 +101,7 @@ public class Renderer {
 
     private void drawBackgrounds() {
         Texture background = textures.get("background");
+        Drawable player = game.getPlayer();
 
         int addFstBackground = ((int)(player.getX() * 0.25) / background.getWidth()) % 2;
         int addSndBackground = (((int)(player.getX() * 0.25) + background.getWidth()) / background.getWidth()) % 2;
@@ -139,11 +139,14 @@ public class Renderer {
 
 
     private void drawRainbow() {
+        Drawable player = game.getPlayer();
+
         rainbowEmitter.update(1, player.getX()+player.getWidth()/2, player.getY(), (player.getState() == FALLING || player.getState() == JUMPING));
         rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY());
     }
 
     private void drawPlayer() {
+        Drawable player = game.getPlayer();
         batch.draw(
                 textures.get("player"),
                 playerX,
@@ -167,16 +170,16 @@ public class Renderer {
     }
 
     private void drawDrawables() {
+        Drawable player = game.getPlayer();
 
-        for (Drawable drawable : drawables) {
+        for (Drawable drawable : game.getDrawables()) {
             if (textures.get(drawable.getName()).getWidth() == drawable.getWidth()) {
                 batch.draw(
                         textures.get(drawable.getName()),
                         (int)(drawable.getX() - player.getX() + playerX),
                         (int)(drawable.getY() - player.getY() + playerY)
                 );
-            }
-            else {
+            } else {
                 batch.draw(
                         textures.get(drawable.getName()),
                         (int)(drawable.getX() - player.getX() + playerX),
@@ -192,7 +195,8 @@ public class Renderer {
     }
 
     private void drawShapes() {
-        for(HangingEnemy hangingE : hangingEnemies) {
+        Drawable player = game.getPlayer();
+        for(HangingEnemy hangingE : game.getHangingEnemies()) {
             float x = (float) (hangingE.getX() - player.getX() + playerX + hangingE.getWidth()/2);
             float y = (float) (hangingE.getY() - player.getY() + playerY + hangingE.getHeight() -5);
             float startY = (float) (hangingE.getStartY() - player.getY() + playerY + hangingE.getHeight());

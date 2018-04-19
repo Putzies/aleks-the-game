@@ -25,7 +25,7 @@ public class GameController implements Screen {
 		game = new soldater.johannas.model.Game();
 		game.startGame(level);
 
-		renderer = new Renderer(game.getPlayer(), game.getDrawables(), game.getHangingEnemies());
+		renderer = new Renderer(game);
 
 		controllers = new ArrayList<>();
 		controllers.add(new PlayerController(game.getPlayer()));

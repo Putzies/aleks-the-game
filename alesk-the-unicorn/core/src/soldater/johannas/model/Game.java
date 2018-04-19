@@ -1,7 +1,5 @@
 package soldater.johannas.model;
 
-import com.badlogic.gdx.physics.box2d.Box2D;
-import com.badlogic.gdx.physics.box2d.utils.Box2DBuild;
 import com.badlogic.gdx.utils.Timer;
 import soldater.johannas.model.level.Block;
 import soldater.johannas.model.level.Level;
@@ -15,9 +13,8 @@ import soldater.johannas.model.level.Platform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimerTask;
 
-public class Game implements Entity {
+public class Game implements Entity, DrawableGame {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 600;
 
@@ -64,9 +61,9 @@ public class Game implements Entity {
         return level != null;
     }
 
+    @Override
     public List<Drawable> getDrawables() {
         List<Drawable> allObjects = new ArrayList<>();
-        allObjects.addAll(entities);
         allObjects.addAll(level.blocks);
         allObjects.addAll(level.enemies);
         allObjects.addAll(hangingEnemies);
@@ -74,7 +71,8 @@ public class Game implements Entity {
         return allObjects;
     }
 
-    public Movable getPlayer() {
+    @Override
+    public Player getPlayer() {
         return level.player;
     }
 
@@ -137,6 +135,8 @@ public class Game implements Entity {
             boolean withinX = isWithinX(getPlayer(),pickup);
             boolean withinY = isWithinY(getPlayer(),pickup);
 
+            boolean remove = true;
+
             // Detecting a collision is simple
             // TODO Remove the pickup from the list
             if (withinX && withinY) {
@@ -163,10 +163,15 @@ public class Game implements Entity {
 
                     // Trigger the Energydrink flag, put a timer task for 4 seconds
                     level.player.setPickup(Player.ENERGYDRINK, true);
-                    iterator.remove();
 
                     // Schedule the disabling of the powerup sometime soon.
                     Timer.schedule(generateTask(Player.ENERGYDRINK, false), 4);
+                } else {
+                    remove = false;
+                }
+
+                if (remove) {
+                    iterator.remove();
                 }
             }
         }
@@ -266,6 +271,7 @@ public class Game implements Entity {
         return level.enemies;
     }
 
+    @Override
     public List<HangingEnemy> getHangingEnemies() {
         return hangingEnemies;
     }
