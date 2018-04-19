@@ -1,24 +1,17 @@
 package soldater.johannas.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Plane;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawableGame;
 import soldater.johannas.model.HangingEnemy;
-import soldater.johannas.model.Player;
 
 
-import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static soldater.johannas.model.Player.FALLING;
@@ -34,6 +27,8 @@ public class Renderer {
 
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
+    private BitmapFont font;
+
     private Map<String, Texture> textures;
 
     private int playerFrame = 0;
@@ -51,6 +46,9 @@ public class Renderer {
         rainbowEmitter = new RainbowEmitter();
 
         batch = new SpriteBatch();
+
+        font = new BitmapFont();
+
         loadTextures();
         shapeRenderer = new ShapeRenderer();
 
@@ -212,6 +210,11 @@ public class Renderer {
     }
 
     private void drawGUI() {
+        font.draw(batch,
+                game.getTakenLunchBoxes() + " / " + game.getTotalLunchBoxes(),
+                Gdx.graphics.getWidth()-40,
+                Gdx.graphics.getHeight()-20);
+
         int width = textures.get("horn").getWidth()/4;
         int height = textures.get("horn").getHeight();
         batch.draw(textures.get("horn"),

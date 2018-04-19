@@ -18,6 +18,9 @@ public class Level {
     private final List<EnergyDrink>energyDrinks;
     private final List<Baguette> baguettes;
 
+    public int totalLunchboxes;
+    public int takenLunchboxes;
+
     public Level(Player player, List<Block> blocks, List<WalkingEnemy> enemies,
                                 List<Lunchbox> lunchboxes, List<Score> scores,List<Wings> wings,
                                 List<Baguette> baguettes,List<EnergyDrink>energyDrinks) {
@@ -29,14 +32,21 @@ public class Level {
         this.wings = wings;
         this.energyDrinks = energyDrinks;
         this.baguettes = baguettes;
+        totalLunchboxes = lunchboxes.size();
+        takenLunchboxes = 0;
     }
 
     void addPickups() {
         pickups = new ArrayList<>();
         pickups.addAll(lunchboxes);
+        totalLunchboxes = lunchboxes.size();
         pickups.addAll(energyDrinks);
         pickups.addAll(baguettes);
         pickups.addAll(wings);
+    }
+
+    public void incrementLunchBoxes() {
+        takenLunchboxes++;
     }
 
 }
