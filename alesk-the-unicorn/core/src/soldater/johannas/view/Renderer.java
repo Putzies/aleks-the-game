@@ -217,7 +217,7 @@ public class Renderer {
         batch.draw(textures.get("horn"),
                 20,
                 Gdx.graphics.getHeight()-height-20,
-                (player.getLife()-1)*width,
+                (game.getPlayer().getLife()-1)*width,
                 0,
                 width,
                 height

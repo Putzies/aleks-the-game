@@ -23,6 +23,9 @@ public abstract class Character implements Entity{
     // Boolean for disabling arrow key movement while being knockbacked.
     protected boolean knockbacked = false;
 
+    // Boolean for disabling damage in short time intervals
+    protected boolean damaged = false;
+
     // Mid points, used for calculating sound distance.
     // TODO use midpoints for collisions
     protected double midX,midY;
@@ -117,5 +120,7 @@ public abstract class Character implements Entity{
 
     // Method for getting the value of knockbacked.
     public boolean isKnockbacked(){return knockbacked;}
+
+    public boolean isDamaged(){return damaged;}
 
 }

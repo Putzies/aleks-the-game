@@ -62,9 +62,12 @@ public class Player extends Character implements Movable {
             }
         }
 
-        if(this.isOnGround()){ this.xVel = 0; knockbacked = false; }
-
         super.update(dTime);
+
+        if(this.isOnGround()){
+            this.xVel = 0;
+            knockbacked = false;
+        }
     }
 
     @Override
