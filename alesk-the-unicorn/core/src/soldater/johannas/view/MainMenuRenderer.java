@@ -2,7 +2,6 @@ package soldater.johannas.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.MainMenu;
@@ -20,7 +19,7 @@ public class MainMenuRenderer extends ScreenRenderer {
     private SpriteBatch batch;
 
     private Texture textBackground;
-    private List<Texture> items = new ArrayList<>();
+    private List<MenuItem> items = new ArrayList<>();
 
     private int selectItem = 0;
 
@@ -54,20 +53,19 @@ public class MainMenuRenderer extends ScreenRenderer {
     private void loadTextures() {
         textBackground = new Texture("menu/mainMenuBackground.png");
 
-        items.add(new Texture("menu/startGame.png"));
-        items.add(new Texture("menu/quitGame.png"));
+        items.add(new MenuItem("menu/startGame.png"));
+        items.add(new MenuItem("menu/quitGame.png"));
     }
 
     private void renderItems() {
         for (int i = 0; i < items.size(); i++) {
-            Texture item = items.get(i);
+            MenuItem item = items.get(i);
 
             if (i == selectItem) {
                 renderSelected();
             } else {
-                batch.draw(
-                        item,
-                        Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2,
+                item.draw(
+                        batch, Gdx.graphics.getWidth() / 2,
                         START_Y - (item.getHeight() + MARGIN) * i
                 );
             }
@@ -75,16 +73,16 @@ public class MainMenuRenderer extends ScreenRenderer {
     }
 
     private void renderSelected() {
-        Texture item = items.get(selectItem);
+        MenuItem item = items.get(selectItem);
 
         int offsetX = (int)(Math.sin(((double) frame / N_FRAMES) * (Math.PI * 2)) * 3);
         int offsetY = (int)(Math.cos(((double) frame / N_FRAMES) * (Math.PI * 2)) * 5);
 
-        batch.draw(
-                item,
-                Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2 + offsetX,
+        item.draw(
+                batch,
+                Gdx.graphics.getWidth() / 2 + offsetX,
                 START_Y - (item.getHeight() + MARGIN) * selectItem + offsetY
-        );
+                );
     }
 
     private void checkInput() {

@@ -3,6 +3,7 @@ package soldater.johannas.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,10 +12,13 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.LevelSelection;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LevelSelectRenderer extends ScreenRenderer {
-    private int START_Y = Gdx.graphics.getHeight() / 3;
+    private int START_Y = Gdx.graphics.getHeight() * 3 / 4;
     private final int MARGIN = 40;
 
     private LevelSelection levelSelection;
@@ -23,17 +27,25 @@ public class LevelSelectRenderer extends ScreenRenderer {
 
     private Texture textBackground;
     private List<LevelInfo> levels;
+    private List<MenuItem> items;
     private int selectItem = 0;
-
-    private GlyphLayout layout = new GlyphLayout();
 
     public LevelSelectRenderer(LevelSelection levelSelection, List<LevelInfo> levels) {
         this.levelSelection = levelSelection;
         batch = new SpriteBatch();
         font = new BitmapFont();
-        this.levels = levels;
 
-        layout.setText(font, "Hello");
+        this.levels = levels;
+        items = new ArrayList<>();
+
+        for (LevelInfo levelInfo : levels) {
+            items.add(new MenuItem(
+                    levelInfo.getName().replace("_", " "),
+                    2,
+                    MenuItem.Alignment.LEFT,
+                    new Color(247.0f / 255, 235.0f / 255, 108.0f / 255, 255)
+            ));
+        }
 
         loadTextures();
     }
@@ -84,14 +96,10 @@ public class LevelSelectRenderer extends ScreenRenderer {
             if (i == selectItem) {
                 renderSelected();
             } else {
-                String levelName = levels.get(i).getName().replace("_", " ");
-                layout.setText(font, levelName);
-
-                font.draw(
+                items.get(i).draw(
                         batch,
-                        levelName,
-                        Gdx.graphics.getWidth() / 2 - layout.width / 2,
-                        START_Y - (layout.height + MARGIN) * i
+                        100,
+                        START_Y - (items.get(i).getHeight() + MARGIN) * i
                 );
             }
         }
@@ -101,14 +109,10 @@ public class LevelSelectRenderer extends ScreenRenderer {
         int offsetX = (int)(Math.sin(((double) frame / N_FRAMES) * (Math.PI * 2)) * 3);
         int offsetY = (int)(Math.cos(((double) frame / N_FRAMES) * (Math.PI * 2)) * 5);
 
-        String levelName = levels.get(selectItem).getName().replace("_", " ");
-        layout.setText(font, levelName);
-
-        font.draw(
+        items.get(selectItem).draw(
                 batch,
-                levelName,
-                Gdx.graphics.getWidth() / 2 - layout.width / 2 + offsetX,
-                START_Y - (layout.height + MARGIN) * selectItem + offsetY
+                100 + offsetX,
+                START_Y - (items.get(selectItem).getHeight() + MARGIN) * selectItem + offsetY
         );
     }
 }
