@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.LevelSelection;
+import util.Colors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class LevelSelectRenderer extends ScreenRenderer {
                     levelInfo.getName().replace("_", " "),
                     2,
                     MenuItem.Alignment.LEFT,
-                    new Color(247.0f / 255, 235.0f / 255, 108.0f / 255, 255)
+                    Colors.MENU_COLOR
             ));
         }
 

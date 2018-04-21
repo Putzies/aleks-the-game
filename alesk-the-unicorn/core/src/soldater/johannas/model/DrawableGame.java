@@ -1,5 +1,7 @@
 package soldater.johannas.model;
 
+import util.Timer;
+
 import java.util.List;
 
 public interface DrawableGame {
@@ -8,4 +10,5 @@ public interface DrawableGame {
     List<HangingEnemy> getHangingEnemies();
     int getTakenLunchBoxes();
     int getTotalLunchBoxes();
+    Timer getTimer();
 }

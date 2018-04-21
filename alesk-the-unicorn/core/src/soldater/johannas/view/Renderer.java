@@ -1,14 +1,18 @@
 package soldater.johannas.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Align;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawableGame;
 import soldater.johannas.model.HangingEnemy;
+import util.Colors;
 
 
 import java.util.HashMap;
@@ -28,6 +32,7 @@ public class Renderer {
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
     private BitmapFont font;
+    private GlyphLayout layout;
 
     private Map<String, Texture> textures;
 
@@ -48,6 +53,8 @@ public class Renderer {
         batch = new SpriteBatch();
 
         font = new BitmapFont();
+        font.getData().setScale(2);
+        layout = new GlyphLayout(font, "", Colors.MENU_COLOR, 0, Align.center, true);
 
         loadTextures();
         shapeRenderer = new ShapeRenderer();
@@ -86,7 +93,7 @@ public class Renderer {
     }
 
     private void loadTextures() {
-        textures = new HashMap<String, Texture>();
+        textures = new HashMap<>();
         textures.put(game.getPlayer().getName(), new Texture(game.getPlayer().getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
@@ -210,22 +217,22 @@ public class Renderer {
     }
 
     private void drawGUI() {
-        font.draw(batch,
-                game.getTakenLunchBoxes() + " / " + game.getTotalLunchBoxes(),
-                Gdx.graphics.getWidth()-40,
-                Gdx.graphics.getHeight()-20);
+        int y = Gdx.graphics.getHeight() * 19 / 20;
+        layout.setText(font, game.getTimer().getFormattedTime());
+        font.draw(batch, layout, Gdx.graphics.getWidth() / 2 - layout.width / 2, y);
+        layout.setText(font,game.getTakenLunchBoxes() + " / " + game.getTotalLunchBoxes());
+        font.draw(batch, layout, Gdx.graphics.getWidth() - 80, y);
 
         int width = textures.get("horn").getWidth()/4;
         int height = textures.get("horn").getHeight();
         batch.draw(textures.get("horn"),
                 20,
-                Gdx.graphics.getHeight()-height-20,
+                y - height,
                 (game.getPlayer().getLife()-1)*width,
                 0,
                 width,
                 height
         );
-
     }
 
     private void incrementFrames() {

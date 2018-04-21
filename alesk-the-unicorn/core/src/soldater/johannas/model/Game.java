@@ -21,17 +21,18 @@ public class Game implements Entity, DrawableGame {
 
     private Level level;
 
+    private util.Timer timer = new util.Timer();
+
     private List<Entity> entities;
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
 
-    private Player player;
     private Platform platform;
 
 
     // Task object used for disabling a pickup effect after a set time.
-    TimerTask t;
-    Timer timer = new Timer();
+    private TimerTask t;
+    private Timer taskTimer = new Timer();
 
     public Game() {
         entities = new ArrayList<>();
@@ -91,6 +92,8 @@ public class Game implements Entity, DrawableGame {
 
     @Override
     public void update(double dTime) {
+        timer.update((float)dTime);
+
         for (Entity entity : entities) {
             entity.update(dTime);
         }
@@ -103,6 +106,11 @@ public class Game implements Entity, DrawableGame {
         collideTerrain();
         collideCharacters(dTime);
         collidePickups();
+    }
+
+    @Override
+    public util.Timer getTimer() {
+        return timer;
     }
 
     @Override
@@ -154,11 +162,11 @@ public class Game implements Entity, DrawableGame {
             if (withinX && withinY) {
                 if (pickup.getName().matches("wings")) {
 
-                    // Trigger the Wings flag, put a timer task for 4 seconds
+                    // Trigger the Wings flag, put a taskTimer task for 4 seconds
                     level.player.setPickup(Player.WINGS, true);
 
                     // Schedule the disabling of the powerup sometime soon.
-                    timer.schedule(generateTask(Player.WINGS, false), 4000);
+                    taskTimer.schedule(generateTask(Player.WINGS, false), 4000);
 
                 } else if (pickup.getName().matches("lunchbox")) {
                     level.incrementLunchBoxes();
@@ -166,19 +174,19 @@ public class Game implements Entity, DrawableGame {
 
                 } else if (pickup.getName().matches("baguette")) {
 
-                    // Trigger the Baguette flag, put a timer task for 4 seconds
+                    // Trigger the Baguette flag, put a taskTimer task for 4 seconds
                     level.player.setPickup(Player.BAGUETTE, true);
 
                     // Schedule the disabling of the powerup sometime soon.
-                    timer.schedule(generateTask(Player.BAGUETTE, false), 4000);
+                    taskTimer.schedule(generateTask(Player.BAGUETTE, false), 4000);
 
                 } else if (pickup.getName().matches("energydrink")) {
 
-                    // Trigger the Energydrink flag, put a timer task for 4 seconds
+                    // Trigger the Energydrink flag, put a taskTimer task for 4 seconds
                     level.player.setPickup(Player.ENERGYDRINK, true);
 
                     // Schedule the disabling of the powerup sometime soon.
-                    timer.schedule(generateTask(Player.ENERGYDRINK, false), 4000);
+                    taskTimer.schedule(generateTask(Player.ENERGYDRINK, false), 4000);
                 } else {
                     remove = false;
                 }
@@ -228,7 +236,7 @@ public class Game implements Entity, DrawableGame {
                         player.damaged = false;
                     }
                 };
-                timer.schedule(t, (int)(dTime*10000));
+                taskTimer.schedule(t, (int)(dTime*10000));
             }
         }
 

@@ -44,6 +44,16 @@ public class GameScreen extends ScreenRenderer {
 		}
 		renderer.render();
 
+		if (game.getTakenLunchBoxes() == game.getTotalLunchBoxes()) {
+			System.out.println("You won! Your time: " + game.getTimer().getFormattedTime());
+			gameMenu.exitLevel();
+		}
+
+		if (game.getPlayer().getLife() == 0) {
+			System.out.println("You lost! You didn't eat all the lunchboxes!");
+			gameMenu.exitLevel();
+		}
+
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			gameMenu.exitLevel();
 		}
