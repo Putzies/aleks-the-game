@@ -138,7 +138,6 @@ public class Game implements Entity, DrawableGame {
             boolean remove = true;
 
             // Detecting a collision is simple
-            // TODO Remove the pickup from the list
             if (withinX && withinY) {
                 if (pickup.getName().matches("wings")) {
 

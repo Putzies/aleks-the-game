@@ -2,6 +2,7 @@ package soldater.johannas;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import soldater.johannas.control.GameController;
 import soldater.johannas.control.menu.GameMenu;
@@ -17,15 +18,12 @@ import java.util.List;
 
 public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, GameMenu {
 
-    private MainMenuRenderer mainMenu;
-    private LevelSelectRenderer levelSelectRenderer;
-    private GameController gameController;
+	private Screen screen;
 
 	@Override
 	public void create() {
-        mainMenu = new MainMenuRenderer(this);
-        levelSelectRenderer = new LevelSelectRenderer(this, loadLevels());
-        this.setScreen(mainMenu);
+        screen = new MainMenuRenderer(this);
+        this.setScreen(screen);
 	}
 
 	@Override
@@ -35,21 +33,23 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 
 	@Override
 	public void startLevel(String level) {
-		gameController = new GameController(this, level);
-		setScreen(gameController);
-		levelSelectRenderer.dispose();
+		screen.dispose();
+	    screen = new GameController(this, level);
+		setScreen(screen);
 	}
 
 	@Override
 	public void goBack() {
-		levelSelectRenderer.dispose();
-		setScreen(mainMenu);
+	    screen.dispose();
+	    screen = new MainMenuRenderer(this);
+	    setScreen(screen);
 	}
 
 	@Override
 	public boolean startGame() {
-	    mainMenu.dispose();
-        this.setScreen(levelSelectRenderer);
+	    screen.dispose();
+	    screen = new LevelSelectRenderer(this, loadLevels());
+	    setScreen(screen);
         return true;
 	}
 
@@ -60,7 +60,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 
 	@Override
 	public void quitGame() {
-	    mainMenu.dispose();
+	    screen.dispose();
         Gdx.app.exit();
 	}
 
@@ -80,7 +80,8 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 
 	@Override
 	public void exitLevel() {
-		gameController.dispose();
-		setScreen(levelSelectRenderer);
+		screen.dispose();
+		screen = new LevelSelectRenderer(this, loadLevels());
+		setScreen(screen);
 	}
 }
