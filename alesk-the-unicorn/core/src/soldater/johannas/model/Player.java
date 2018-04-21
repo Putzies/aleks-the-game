@@ -23,8 +23,10 @@ public class Player extends Character implements Movable {
     private final boolean[] pickups = {false,false,false};
 
 
+
     public Player() {
         super();
+        life = 4;
     }
 
     @Override
@@ -60,9 +62,12 @@ public class Player extends Character implements Movable {
             }
         }
 
-        if(this.isOnGround()){ this.xVel = 0; knockbacked = false; }
-
         super.update(dTime);
+
+        if(this.isOnGround()){
+            this.xVel = 0;
+            knockbacked = false;
+        }
     }
 
     @Override

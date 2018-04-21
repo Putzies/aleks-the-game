@@ -1,6 +1,6 @@
 package soldater.johannas.model;
 
-import com.badlogic.gdx.utils.Timer;
+import java.util.Timer;
 import soldater.johannas.model.level.Block;
 import soldater.johannas.model.level.Level;
 import soldater.johannas.model.level.Parser;
@@ -13,6 +13,7 @@ import soldater.johannas.model.level.Platform;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TimerTask;
 
 public class Game implements Entity, DrawableGame {
     public static final int WIDTH = 1000;
@@ -29,7 +30,8 @@ public class Game implements Entity, DrawableGame {
 
 
     // Task object used for disabling a pickup effect after a set time.
-    Timer.Task t;
+    TimerTask t;
+    Timer timer = new Timer();
 
     public Game() {
         entities = new ArrayList<>();
@@ -72,6 +74,17 @@ public class Game implements Entity, DrawableGame {
     }
 
     @Override
+    public int getTakenLunchBoxes(){
+        return level.takenLunchboxes;
+    };
+
+    @Override
+    public int getTotalLunchBoxes() {
+        return level.totalLunchboxes;
+    }
+
+
+    @Override
     public Player getPlayer() {
         return level.player;
     }
@@ -88,7 +101,7 @@ public class Game implements Entity, DrawableGame {
 
         // Ordering here is important. Characters before Terrain will cause bugs.
         collideTerrain();
-        collideCharacters();
+        collideCharacters(dTime);
         collidePickups();
     }
 
@@ -145,9 +158,10 @@ public class Game implements Entity, DrawableGame {
                     level.player.setPickup(Player.WINGS, true);
 
                     // Schedule the disabling of the powerup sometime soon.
-                    Timer.schedule(generateTask(Player.WINGS, false), 4);
+                    timer.schedule(generateTask(Player.WINGS, false), 4000);
 
                 } else if (pickup.getName().matches("lunchbox")) {
+                    level.incrementLunchBoxes();
                     // TODO Define behavior for picking up a luncbhox.
 
                 } else if (pickup.getName().matches("baguette")) {
@@ -156,7 +170,7 @@ public class Game implements Entity, DrawableGame {
                     level.player.setPickup(Player.BAGUETTE, true);
 
                     // Schedule the disabling of the powerup sometime soon.
-                    Timer.schedule(generateTask(Player.BAGUETTE, false), 4);
+                    timer.schedule(generateTask(Player.BAGUETTE, false), 4000);
 
                 } else if (pickup.getName().matches("energydrink")) {
 
@@ -164,7 +178,7 @@ public class Game implements Entity, DrawableGame {
                     level.player.setPickup(Player.ENERGYDRINK, true);
 
                     // Schedule the disabling of the powerup sometime soon.
-                    Timer.schedule(generateTask(Player.ENERGYDRINK, false), 4);
+                    timer.schedule(generateTask(Player.ENERGYDRINK, false), 4000);
                 } else {
                     remove = false;
                 }
@@ -178,7 +192,7 @@ public class Game implements Entity, DrawableGame {
 
     // Collision code for Player versus some Character.
     // Future expansion: Collide against hanging spiders, which for some reason are not in characters.
-    private void collideCharacters() {
+    private void collideCharacters(double dTime) {
         // We will constantly be using player. So lets store it for the time being.
         Player player = level.player;
 
@@ -190,7 +204,6 @@ public class Game implements Entity, DrawableGame {
 
             // Check if player and some character are colliding.
             if (withinX && withinY) {
-                player.knockbacked = true;
 
                 // Either we are facing Right or we are facing Left
                 if (player.getDirection() == Drawable.RIGHT) {
@@ -201,6 +214,21 @@ public class Game implements Entity, DrawableGame {
                     player.yVel = 300;
                     player.xVel = 300;
                 }
+
+                if(!player.isDamaged()) {
+                    player.decrementLife();
+                }
+
+                player.knockbacked = true;
+                player.damaged = true;
+
+                t = new TimerTask(){
+                    @Override
+                    public void run() {
+                        player.damaged = false;
+                    }
+                };
+                timer.schedule(t, (int)(dTime*10000));
             }
         }
 
@@ -276,8 +304,8 @@ public class Game implements Entity, DrawableGame {
     }
 
     // Generate the appropriate Task given an n and the truth value.
-    private Timer.Task generateTask(int n, boolean val) {
-        Timer.Task task = new Timer.Task() {
+    private TimerTask generateTask(int n, boolean val) {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 level.player.setPickup(n, val);
