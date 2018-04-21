@@ -13,7 +13,7 @@ import soldater.johannas.control.menu.LevelSelection;
 
 import java.util.List;
 
-public class LevelSelectRenderer implements Screen {
+public class LevelSelectRenderer extends ScreenRenderer {
     private int START_Y = Gdx.graphics.getHeight() / 3;
     private final int MARGIN = 40;
 
@@ -27,10 +27,6 @@ public class LevelSelectRenderer implements Screen {
 
     private GlyphLayout layout = new GlyphLayout();
 
-    private final int N_FRAMES = 10;
-    private int frame;
-    private float frameCounter = 0;
-
     public LevelSelectRenderer(LevelSelection levelSelection, List<LevelInfo> levels) {
         this.levelSelection = levelSelection;
         batch = new SpriteBatch();
@@ -43,16 +39,8 @@ public class LevelSelectRenderer implements Screen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        incrementFrames(delta);
+        super.render(delta);
         checkInput();
 
         batch.begin();
@@ -70,42 +58,8 @@ public class LevelSelectRenderer implements Screen {
         batch.end();
     }
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
     private void loadTextures() {
         textBackground = new Texture("menu/selectLevelBackground.png");
-    }
-
-    private void incrementFrames(float delta) {
-        frameCounter += delta;
-
-        if (frameCounter > 0.03) {
-            frame = (frame + 1) % N_FRAMES;
-            frameCounter = 0;
-        }
     }
 
     private void checkInput() {

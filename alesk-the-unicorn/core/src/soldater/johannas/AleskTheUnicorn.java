@@ -4,7 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
-import soldater.johannas.control.GameController;
+import soldater.johannas.control.GameScreen;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.control.menu.MainMenu;
@@ -34,7 +34,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 	@Override
 	public void startLevel(String level) {
 		screen.dispose();
-	    screen = new GameController(this, level);
+	    screen = new GameScreen(this, level);
 		setScreen(screen);
 	}
 

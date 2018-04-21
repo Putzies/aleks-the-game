@@ -5,11 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.view.Renderer;
+import soldater.johannas.view.ScreenRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameController implements Screen {
+public class GameScreen extends ScreenRenderer {
 
 	private final GameMenu gameMenu;
 	private Renderer renderer;
@@ -17,7 +18,7 @@ public class GameController implements Screen {
 
 	private List<Controller> controllers;
 
-	public GameController(GameMenu levelSection, String level) {
+	public GameScreen(GameMenu levelSection, String level) {
 		this.gameMenu = levelSection;
 
 		System.out.println(level);
@@ -46,31 +47,6 @@ public class GameController implements Screen {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
 			gameMenu.exitLevel();
 		}
-	}
-
-	@Override
-	public void show() {
-
-	}
-
-	@Override
-	public void resize(int width, int height) {
-
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void hide() {
-
 	}
 
 	@Override

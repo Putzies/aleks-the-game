@@ -2,17 +2,15 @@ package soldater.johannas.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.MainMenu;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainMenuRenderer implements Screen {
+public class MainMenuRenderer extends ScreenRenderer {
 
     private final int ITEM_WIDTH = 225;
     private int START_Y = Gdx.graphics.getHeight() / 3;
@@ -26,10 +24,6 @@ public class MainMenuRenderer implements Screen {
 
     private int selectItem = 0;
 
-    private final int N_FRAMES = 10;
-    private int frame;
-    private float frameCounter = 0;
-
     public MainMenuRenderer(MainMenu menu) {
         this.mainMenu = menu;
         batch = new SpriteBatch();
@@ -37,19 +31,10 @@ public class MainMenuRenderer implements Screen {
         loadTextures();
     }
 
-
-    @Override
-    public void show() {
-
-    }
-
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0.2f, 0.5f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        super.render(delta);
         checkInput();
-        incrementFrames(delta);
 
         batch.begin();
 
@@ -64,31 +49,6 @@ public class MainMenuRenderer implements Screen {
         renderItems();
 
         batch.end();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 
     private void loadTextures() {
@@ -125,15 +85,6 @@ public class MainMenuRenderer implements Screen {
                 Gdx.graphics.getWidth() / 2 - ITEM_WIDTH / 2 + offsetX,
                 START_Y - (item.getHeight() + MARGIN) * selectItem + offsetY
         );
-    }
-
-    private void incrementFrames(float delta) {
-        frameCounter += delta;
-
-        if (frameCounter > 0.03) {
-            frame = (frame + 1) % N_FRAMES;
-            frameCounter = 0;
-        }
     }
 
     private void checkInput() {
