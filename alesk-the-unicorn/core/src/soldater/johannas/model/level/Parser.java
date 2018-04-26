@@ -16,7 +16,7 @@ public class Parser {
         try {
             String content = new String(Files.readAllBytes(Paths.get(BASE_PATH + name)));
             Level level =  gson.fromJson(content, Level.class);
-            level.addPickups();
+            level.construct();
             return level;
         } catch (IOException e) {
             e.printStackTrace();

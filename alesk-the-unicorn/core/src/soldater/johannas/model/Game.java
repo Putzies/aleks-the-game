@@ -1,12 +1,10 @@
 package soldater.johannas.model;
 
 import java.util.Timer;
-import soldater.johannas.model.level.Block;
+
 import soldater.johannas.model.level.Level;
 import soldater.johannas.model.level.Parser;
 
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import soldater.johannas.model.level.Platform;
 
 
@@ -27,8 +25,6 @@ public class Game implements Entity, DrawableGame {
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
 
-    private Platform platform;
-
 
     // Task object used for disabling a pickup effect after a set time.
     private TimerTask t;
@@ -42,24 +38,18 @@ public class Game implements Entity, DrawableGame {
 
     public boolean startGame(String levelName) {
         level = new Parser().loadLevel(levelName);
+
         characters.addAll(level.enemies);
 
         entities.addAll(characters);
         entities.addAll(level.pickups);
         characters.add(level.player);
 
-        level.blocks.stream().filter(b -> b.getHangingEnemy() != null).forEach(b -> hangingEnemies.add(b.getHangingEnemy()));
-
-        // Testing platform
-        List<Block> quickList = new ArrayList<>();
-
-        for (Block b : level.blocks) {
-            if (b.getX() >= 0 && b.getY() + b.getHeight() <= 50) {
-                quickList.add(b);
-
-            }
-        }
-        platform = new Platform(0, 0, quickList, 1, 1 * quickList.size());
+        level.platforms
+                .stream()
+                .filter(p -> p.getHangingEnemies() != null && p.getHangingEnemies().size() > 0)
+                .forEach(p -> hangingEnemies.addAll(p.getHangingEnemies())
+            );
 
         return level != null;
     }
@@ -67,7 +57,7 @@ public class Game implements Entity, DrawableGame {
     @Override
     public List<Drawable> getDrawables() {
         List<Drawable> allObjects = new ArrayList<>();
-        allObjects.addAll(level.blocks);
+        level.platforms.forEach(p -> allObjects.addAll(p.getBlocks()));
         allObjects.addAll(level.enemies);
         allObjects.addAll(hangingEnemies);
         allObjects.addAll(level.pickups);
@@ -265,37 +255,37 @@ public class Game implements Entity, DrawableGame {
         for (Character character : characters) {
             character.resetCollisions();
 
-            for (Block block : level.blocks) {
+            for (Platform platform : level.platforms) {
                 // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
-                boolean withinX = isWithinX(character,block);
-                boolean withinY = isWithinY(character,block);
+                boolean withinX = isWithinX(character,platform);
+                boolean withinY = isWithinY(character,platform);
 
                 // DOWN
                 if (withinX &&
-                        character.getY() + character.getHeight() > block.getY() + block.getHeight() &&
-                        character.getY() < block.getY() + block.getHeight()) {
-                    character.setCollision(Character.DOWN, true, block.getY() + block.getHeight() - 1);
+                        character.getY() + character.getHeight() > platform.getY() + platform.getHeight() &&
+                        character.getY() < platform.getY() + platform.getHeight()) {
+                    character.setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
                 }
 
                 // TOP
                 if (withinX &&
-                        character.getY() < block.getY() &&
-                        character.getY() + character.getHeight() > block.getY()) {
-                    character.setCollision(Character.UP, true, block.getY() - character.getHeight());
+                        character.getY() < platform.getY() &&
+                        character.getY() + character.getHeight() > platform.getY()) {
+                    character.setCollision(Character.UP, true, platform.getY() - character.getHeight());
                 }
 
                 // RIGHT
                 if (withinY &&
-                        character.getX() < block.getX() &&
-                        character.getX() + character.getWidth() > block.getX()) {
-                    character.setCollision(Character.RIGHT, true, block.getX() - character.getWidth());
+                        character.getX() < platform.getX() &&
+                        character.getX() + character.getWidth() > platform.getX()) {
+                    character.setCollision(Character.RIGHT, true, platform.getX() - character.getWidth());
                 }
 
                 // LEFT
                 if (withinY &&
-                        character.getX() + character.getWidth() > block.getX() + block.getWidth() &&
-                        character.getX() < block.getX() + block.getWidth()) {
-                    character.setCollision(Character.LEFT, true, block.getX());
+                        character.getX() + character.getWidth() > platform.getX() + platform.getWidth() &&
+                        character.getX() < platform.getX() + platform.getWidth()) {
+                    character.setCollision(Character.LEFT, true, platform.getX());
                 }
             }
 
@@ -342,22 +332,19 @@ public class Game implements Entity, DrawableGame {
         return withinY;
     }
 
-    //Just testing, generates a bounding box for either player or plattform
-    private BoundingBox generateConnected(int n) {
-        Vector3 min;
-        Vector3 max;
-        if (n == 0) {
-            min = new Vector3((float) platform.getX(), (float) platform.getY(), 0);
-            max = new Vector3((float) platform.getX() + platform.getWidth(), (float) platform.getY() + platform.getHeight(), 0);
+    //TODO: Make less ugly <3
+    private boolean isWithinX(Drawable affector, Platform affected) {
+        boolean withinX = affector.getX() + affector.getWidth() > affected.getX() &&
+                affector.getX() < affected.getX() + affected.getWidth();
 
-        } else {
-            min = new Vector3((float) level.player.getX(), (float) level.player.getY(), 0);
-            max = new Vector3((float) level.player.getX() + level.player.getWidth(), (float) level.player.getY() + level.player.getHeight(), 0);
+        return withinX;
+    }
 
-        }
-        BoundingBox bBox2 = new BoundingBox(min, max);
+    private boolean isWithinY(Drawable affector, Platform affected) {
+        boolean withinY = affector.getY() + affector.getHeight() > affected.getY() &&
+                affector.getY() + 1 < affected.getY() + affected.getHeight();
 
-        return bBox2;
+        return withinY;
     }
 
     // Ugly, semi-hard coded version.
