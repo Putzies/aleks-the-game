@@ -84,4 +84,14 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 		screen = new LevelSelectRenderer(this, loadLevels());
 		setScreen(screen);
 	}
+
+	@Override
+    public void pause() {
+	    screen.pause();
+    }
+
+    @Override
+    public void resume() {
+	    screen.resume();
+    }
 }
