@@ -1,72 +1,67 @@
 package soldater.johannas.model.level;
 
-import soldater.johannas.model.Drawable;
+import soldater.johannas.model.HangingEnemy;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Platform implements Drawable{
-    private final int WIDTH;
-    private final int HEIGHT;
+public class Platform{
+    public static final int VERTICAL = 0;
+    public static final int HORIZONTAL = 1;
 
-    private final int X,Y;
+    private int WIDTH;
+    private int HEIGHT;
 
-    // For safety reasons, dont make the platforms larger than 10-15 blocks each.
-    private final List<Block> BLOCKS;
+    private int length;
+    private int dir;
 
-    public Platform(int x, int y, List<Block>blocks){
-        X = x;
-        Y = y;
-        this.BLOCKS = blocks;
+    private int X,Y;
 
-        WIDTH  = blocks.size()*Block.WIDTH;
-        HEIGHT = Block.HEIGHT;
+    private List<HangingEnemy> hangingEnemies;
+
+    // For safety reasons, dont make the platforms larger than 10-15 platforms each.
+    private List<Block> blocks;
+
+    public void construct() {
+        blocks = new ArrayList<>();
+
+        if (dir == VERTICAL) {
+            for (int i = 0; i < length * Block.WIDTH; i += Block.WIDTH) {
+                blocks.add(new Block(X + i, Y));
+            }
+
+            WIDTH = Block.WIDTH * blocks.size();
+            HEIGHT = Block.HEIGHT;
+        } else {
+            for (int i = 0; i < length * Block.HEIGHT; i += Block.HEIGHT) {
+                blocks.add(new Block(X, Y + i));
+            }
+            WIDTH = Block.WIDTH;
+            HEIGHT = Block.HEIGHT * blocks.size();
+        }
     }
-    public Platform(int x, int y, List<Block>blocks, int vertical, int horizontal) {
-        X = x;
-        Y = y;
 
-        WIDTH  = horizontal * Block.WIDTH;
-        HEIGHT = vertical   * Block.HEIGHT;
-
-        this.BLOCKS = blocks;
-    }
-
-    @Override
     public double getX() {
         return X;
     }
 
-    @Override
     public double getY() {
         return Y;
     }
 
-    @Override
     public int getWidth() {
         return WIDTH;
     }
 
-    @Override
     public int getHeight() {
         return HEIGHT;
     }
 
-    @Override
-    public int getDirection() {
-        return 0;
-    }
-
-    @Override
-    public int getState() {
-        return 0;
-    }
-
-    @Override
-    public String getName() {
-        return "platform";
+    public List<HangingEnemy> getHangingEnemies() {
+        return hangingEnemies;
     }
 
     public List<Block>getBlocks(){
-        return BLOCKS;
+        return blocks;
     }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
-    public final List<Block> blocks;
+    public final List<Platform> platforms;
     public final Player player;
     public final List<WalkingEnemy> enemies;
     public final List<Score> scores;
@@ -21,11 +21,11 @@ public class Level {
     public int totalLunchboxes;
     public int takenLunchboxes;
 
-    public Level(Player player, List<Block> blocks, List<WalkingEnemy> enemies,
-                                List<Lunchbox> lunchboxes, List<Score> scores,List<Wings> wings,
-                                List<Baguette> baguettes,List<EnergyDrink>energyDrinks) {
+    public Level(Player player, List<Platform> platforms, List<WalkingEnemy> enemies,
+                 List<Lunchbox> lunchboxes, List<Score> scores, List<Wings> wings,
+                 List<Baguette> baguettes, List<EnergyDrink>energyDrinks) {
         this.player = player;
-        this.blocks = blocks;
+        this.platforms = platforms;
         this.enemies = enemies;
         this.lunchboxes = lunchboxes;
         this.scores = scores;
@@ -36,7 +36,12 @@ public class Level {
         takenLunchboxes = 0;
     }
 
-    void addPickups() {
+    public void construct() {
+        addPickups();
+        platforms.forEach(Platform::construct);
+    }
+
+    private void addPickups() {
         pickups = new ArrayList<>();
         pickups.addAll(lunchboxes);
         totalLunchboxes = lunchboxes.size();
