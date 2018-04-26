@@ -51,6 +51,18 @@ public class Game implements Entity, DrawableGame {
                 .forEach(p -> hangingEnemies.addAll(p.getHangingEnemies())
             );
 
+        level.lavaPlatforms
+                .stream()
+                .filter(p -> p.getHangingEnemies() != null && p.getHangingEnemies().size() > 0)
+                .forEach(p -> hangingEnemies.addAll(p.getHangingEnemies())
+                );
+
+        level.spikePlatforms
+                .stream()
+                .filter(p -> p.getHangingEnemies() != null && p.getHangingEnemies().size() > 0)
+                .forEach(p -> hangingEnemies.addAll(p.getHangingEnemies())
+                );
+
         return level != null;
     }
 
@@ -58,6 +70,8 @@ public class Game implements Entity, DrawableGame {
     public List<Drawable> getDrawables() {
         List<Drawable> allObjects = new ArrayList<>();
         level.platforms.forEach(p -> allObjects.addAll(p.getBlocks()));
+        level.lavaPlatforms.forEach(p -> allObjects.addAll(p.getBlocks()));
+        level.spikePlatforms.forEach(p -> allObjects.addAll(p.getBlocks()));
         allObjects.addAll(level.enemies);
         allObjects.addAll(hangingEnemies);
         allObjects.addAll(level.pickups);

@@ -1,4 +1,6 @@
 let platforms = [];
+let lavaPlatforms = [];
+let spikePlatforms = [];
 
 let name = process.argv[2];
 
@@ -40,6 +42,23 @@ function createBlocks() {
         hangingEnemies: [],
     });
 
+    // Create lava
+    lavaPlatforms.push({
+        X: 1740,
+        Y: 500,
+        dir: 0,
+        length: 5,
+        hangingEnemies: [],
+    });
+
+   //Create spikes
+   spikePlatforms.push({
+        X: -1770,
+        Y: 500,
+        dir: 0,
+        length: 5,
+        hangingEnemies: [],
+    });
 
 
     let hangingEnemies = [];
@@ -89,6 +108,8 @@ createPickups();
 
 const level = {
     platforms,
+    lavaPlatforms,
+    spikePlatforms,
     enemies,
     player,
     lunchboxes,
