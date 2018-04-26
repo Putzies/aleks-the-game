@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 
 public class Block implements Drawable {
 
-    public static final int WIDTH = 50;
-    public static final int HEIGHT = 50;
+    public static final int WIDTH = 54;
+    public static final int HEIGHT = 51;
 
     private HangingEnemy hangingEnemy;
 
