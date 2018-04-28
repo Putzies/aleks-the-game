@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Level {
     public final List<Platform> platforms;
+    public final List<GrassPlatform> grassPlatforms;
     public final List<LavaPlatform> lavaPlatforms;
     public final List<SpikePlatform> spikePlatforms;
     public final Player player;
@@ -24,14 +25,18 @@ public class Level {
     public int takenLunchboxes;
 
     public Level(Player player,
-                 List<Platform> platforms, List<LavaPlatform> lavaPlatforms, List<SpikePlatform> spikePlatforms,
+                 List<GrassPlatform> grassPlatforms, List<LavaPlatform> lavaPlatforms, List<SpikePlatform> spikePlatforms,
                  List<WalkingEnemy> enemies,
                  List<Lunchbox> lunchboxes, List<Score> scores, List<Wings> wings,
                  List<Baguette> baguettes, List<EnergyDrink>energyDrinks) {
         this.player = player;
-        this.platforms = platforms;
+        this.grassPlatforms = grassPlatforms;
         this.lavaPlatforms = lavaPlatforms;
         this.spikePlatforms = spikePlatforms;
+        this.platforms = new ArrayList<>();
+        platforms.addAll(grassPlatforms);
+        platforms.addAll(spikePlatforms);
+        platforms.addAll(lavaPlatforms);
         this.enemies = enemies;
         this.lunchboxes = lunchboxes;
         this.scores = scores;
@@ -44,9 +49,12 @@ public class Level {
 
     public void construct() {
         addPickups();
-        platforms.forEach(Platform::construct);
+        grassPlatforms.forEach(Platform::construct);
         spikePlatforms.forEach(SpikePlatform::construct);
         lavaPlatforms.forEach(LavaPlatform::construct);
+        platforms.addAll(lavaPlatforms);
+        platforms.addAll(spikePlatforms);
+        platforms.addAll(grassPlatforms);
     }
 
     private void addPickups() {

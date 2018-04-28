@@ -1,4 +1,5 @@
 let platforms = [];
+let grassPlatforms = [];
 let lavaPlatforms = [];
 let spikePlatforms = [];
 
@@ -34,7 +35,7 @@ const player = {
 function createBlocks() {
 
     // Create ground
-    platforms.push({
+    grassPlatforms.push({
         X: -5000,
         Y: 0,
         dir: 0,
@@ -42,10 +43,19 @@ function createBlocks() {
         hangingEnemies: [],
     });
 
+    // Create another platform
+    grassPlatforms.push({
+        X: -2000,
+        Y: 200,
+        dir: 0,
+        length: 5,
+        hangingEnemies: [],
+    });
+
     // Create lava
     lavaPlatforms.push({
         X: 1740,
-        Y: 500,
+        Y: 400,
         dir: 0,
         length: 5,
         hangingEnemies: [],
@@ -54,7 +64,7 @@ function createBlocks() {
    //Create spikes
    spikePlatforms.push({
         X: -1770,
-        Y: 500,
+        Y: 400,
         dir: 0,
         length: 5,
         hangingEnemies: [],
@@ -72,7 +82,7 @@ function createBlocks() {
     }
 
     // Create some blocks with hanging spiders
-    platforms.push({
+    grassPlatforms.push({
         X: -1500,
         Y: 500,
         dir: 0,
@@ -108,6 +118,7 @@ createPickups();
 
 const level = {
     platforms,
+    grassPlatforms,
     lavaPlatforms,
     spikePlatforms,
     enemies,

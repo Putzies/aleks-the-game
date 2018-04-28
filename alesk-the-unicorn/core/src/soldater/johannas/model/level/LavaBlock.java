@@ -7,6 +7,10 @@ public class LavaBlock extends Block {
         super(x, y);
     }
 
+
+    public boolean isHarmful() {
+        return true;
+    }
     @Override
     public String getName() {
         return "lavaBlock";

@@ -9,18 +9,23 @@ public class LavaPlatform extends Platform{
         blocks = new ArrayList<>();
 
         if (dir == VERTICAL) {
-            for (int i = 0; i < length * Block.WIDTH; i += Block.WIDTH) {
+            for (int i = 0; i < length * GrassBlock.WIDTH; i += GrassBlock.WIDTH) {
                 blocks.add(new LavaBlock(X + i, Y));
             }
 
-            WIDTH = Block.WIDTH * blocks.size();
-            HEIGHT = Block.HEIGHT;
+            WIDTH = GrassBlock.WIDTH * blocks.size();
+            HEIGHT = GrassBlock.HEIGHT;
         } else {
-            for (int i = 0; i < length * Block.HEIGHT; i += Block.HEIGHT) {
+            for (int i = 0; i < length * GrassBlock.HEIGHT; i += GrassBlock.HEIGHT) {
                 blocks.add(new LavaBlock(X, Y + i));
             }
-            WIDTH = Block.WIDTH;
-            HEIGHT = Block.HEIGHT * blocks.size();
+            WIDTH = GrassBlock.WIDTH;
+            HEIGHT = GrassBlock.HEIGHT * blocks.size();
         }
+    }
+
+    @Override
+    public boolean isHarmful() {
+        return true;
     }
 }
