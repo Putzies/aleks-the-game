@@ -2,10 +2,7 @@ package soldater.johannas.model;
 
 import java.util.Timer;
 
-import soldater.johannas.model.level.Level;
-import soldater.johannas.model.level.Parser;
-
-import soldater.johannas.model.level.Platform;
+import soldater.johannas.model.level.*;
 
 
 import java.util.ArrayList;
@@ -93,7 +90,7 @@ public class Game implements Entity, DrawableGame {
         calculateNewSoundVolumes();
 
         // Ordering here is important. Characters before Terrain will cause bugs.
-        collideTerrain();
+        collideTerrain(dTime);
         collideCharacters(dTime);
         collidePickups();
     }
@@ -187,7 +184,7 @@ public class Game implements Entity, DrawableGame {
             }
         }
     }
-
+    
     // Collision code for Player versus some Character.
     // Future expansion: Collide against hanging spiders, which for some reason are not in characters.
     private void collideCharacters(double dTime) {
@@ -196,43 +193,18 @@ public class Game implements Entity, DrawableGame {
 
         for (Character character : characters) {
             if (character == player) { continue; }
-
             boolean withinX = isWithinX(player, character);
             boolean withinY = isWithinY(player, character);
 
             // Check if player and some character are colliding.
             if (withinX && withinY) {
-
-                // Either we are facing Right or we are facing Left
-                if (player.getDirection() == Drawable.RIGHT) {
-                    player.yVel = 300;
-                    player.xVel = -300;
-
-                } else {
-                    player.yVel = 300;
-                    player.xVel = 300;
-                }
-
-                if(!player.isDamaged()) {
-                    player.decrementLife();
-                }
-
-                player.knockbacked = true;
-                player.damaged = true;
-
-                t = new TimerTask(){
-                    @Override
-                    public void run() {
-                        player.damaged = false;
-                    }
-                };
-                taskTimer.schedule(t, (int)(dTime*10000));
+                collideHarmful(player, dTime);
             }
         }
 
     }
 
-    private void collideTerrain(){
+    private void collideTerrain(double dTime){
 /*
         getPlayer1().resetCollisions();
         // On each collision, generate two specific bounding boxes. 0 for platform, 1 for player
@@ -264,7 +236,11 @@ public class Game implements Entity, DrawableGame {
                 if (withinX &&
                         character.getY() + character.getHeight() > platform.getY() + platform.getHeight() &&
                         character.getY() < platform.getY() + platform.getHeight()) {
-                    character.setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
+                    if(platform.isHarmful()) {
+                        collideHarmful(level.player, dTime);
+                    } else {
+                        character.setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
+                    }
                 }
 
                 // TOP
@@ -290,6 +266,35 @@ public class Game implements Entity, DrawableGame {
             }
 
         }
+    }
+
+    // Consequences of colliding with harmful objects
+    private void collideHarmful(Player player, double dTime) {
+        // Either we are facing Right or we are facing Left
+        if (player.getDirection() == Drawable.RIGHT) {
+            player.yVel = 300;
+            player.xVel = -300;
+
+        } else {
+            player.yVel = 300;
+            player.xVel = 300;
+        }
+
+        if(!player.isDamaged()) {
+            player.decrementLife();
+        }
+
+        player.knockbacked = true;
+        player.damaged = true;
+
+        // Set timer to not take damage again immediately
+        t = new TimerTask(){
+            @Override
+            public void run() {
+                player.damaged = false;
+            }
+        };
+        taskTimer.schedule(t, (int)(dTime*10000));
     }
 
     public List<WalkingEnemy> getWalkingEnemies() {
