@@ -24,4 +24,14 @@ public class Lunchbox extends Pickup {
         // TODO get the lunchbox spritename
         return "lunchbox";
     }
+
+    @Override
+    public void doIt(Player player){
+    }
+
+    /*
+    @Override
+    public void doIt(Game game){
+    }
+     */
 }

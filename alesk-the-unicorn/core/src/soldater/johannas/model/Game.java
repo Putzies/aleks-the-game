@@ -135,7 +135,7 @@ public class Game implements Entity, DrawableGame {
         return "world";
     }
 
-    // Collision code for pickups, sets a flag which triggers the said effect on the proper entity.
+    // Version 2: Checks for a collision and triggers the response.
     private void collidePickups() {
         for (Iterator<Pickup> iterator = level.pickups.iterator(); iterator.hasNext();) {
             Pickup pickup = iterator.next();
@@ -147,40 +147,14 @@ public class Game implements Entity, DrawableGame {
 
             // Detecting a collision is simple
             if (withinX && withinY) {
-                if (pickup.getName().matches("wings")) {
+                pickup.doIt(getPlayer());
 
-                    // Trigger the Wings flag, put a taskTimer task for 4 seconds
-                    level.player.setPickup(Player.WINGS, true);
+            } else {
+                remove = false;
+            }
 
-                    // Schedule the disabling of the powerup sometime soon.
-                    taskTimer.schedule(generateTask(Player.WINGS, false), 4000);
-
-                } else if (pickup.getName().matches("lunchbox")) {
-                    level.incrementLunchBoxes();
-                    // TODO Define behavior for picking up a luncbhox.
-
-                } else if (pickup.getName().matches("baguette")) {
-
-                    // Trigger the Baguette flag, put a taskTimer task for 4 seconds
-                    level.player.setPickup(Player.BAGUETTE, true);
-
-                    // Schedule the disabling of the powerup sometime soon.
-                    taskTimer.schedule(generateTask(Player.BAGUETTE, false), 4000);
-
-                } else if (pickup.getName().matches("energydrink")) {
-
-                    // Trigger the Energydrink flag, put a taskTimer task for 4 seconds
-                    level.player.setPickup(Player.ENERGYDRINK, true);
-
-                    // Schedule the disabling of the powerup sometime soon.
-                    taskTimer.schedule(generateTask(Player.ENERGYDRINK, false), 4000);
-                } else {
-                    remove = false;
-                }
-
-                if (remove) {
-                    iterator.remove();
-                }
+            if (remove) {
+                iterator.remove();
             }
         }
     }
@@ -205,25 +179,45 @@ public class Game implements Entity, DrawableGame {
     }
 
     private void collideTerrain(double dTime){
-/*
-        getPlayer1().resetCollisions();
-        // On each collision, generate two specific bounding boxes. 0 for platform, 1 for player
-            /* TODO, Either move bounding box to character ("I know where i can collide with something") or
-               TODO  Let the game know and create all the bounding boxes ("The world knows when something collides")
+            AABB playerBox;
+            AABB other;
 
-        BoundingBox bBox = generateConnected(0);
-        BoundingBox pBox = generateConnected(1);
+            // Just loop through everything now. Creating a new other for each item to collide against and check for intersect.
+            for (Character character : characters) {
+                character.resetCollisions();
 
-        if (pBox.intersects(bBox)){
-            // DOWN
-            if (getPlayer1().getY() + getPlayer1().getHeight() > platform.getY() + platform.getHeight() &&
-                    getPlayer1().getY() < platform.getY() + platform.getHeight()) {
-                getPlayer1().setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
+                playerBox = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());
+
+                for (Platform platform: level.platforms) {
+                    other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
+
+                    if (playerBox.intersects(other)) {
+
+                        if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
+                                playerBox.getY() < other.getY() + other.getHeight()) {
+                            if(platform.isHarmful()) {
+                                collideHarmful(level.player, dTime);
+                            } else {
+                                character.setCollision(Character.DOWN, true, other.getY() + other.getHeight() - 1);
+                            }
+
+                        } else if (playerBox.y < other.y && playerBox.y + playerBox.HEIGHT > other.y) {
+                            character.setCollision(Character.UP, true, other.y - playerBox.getHeight());
+
+                        } else if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX()) {
+                            character.setCollision(Character.RIGHT, true, other.getX() - playerBox.getWidth());
+
+                        } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
+                                playerBox.getX() < other.getX() + other.getWidth()) {
+                            character.setCollision(Character.LEFT, true, other.getX());
+                        } else {
+                            System.out.println("Intersect but against what?");
+                        }
+                    }
+                }
             }
-            // TODO expand here with else if for every other case possible. Not IF, because we can only have one point of impact.
 
-        }
-        */
+        /*
         for (Character character : characters) {
             character.resetCollisions();
 
@@ -265,7 +259,7 @@ public class Game implements Entity, DrawableGame {
                 }
             }
 
-        }
+        }*/
     }
 
     // Consequences of colliding with harmful objects
@@ -356,6 +350,7 @@ public class Game implements Entity, DrawableGame {
     private void calculateNewSoundVolumes(){
         for (Character character : characters) {
             if (character instanceof WalkingEnemy) {
+
                 //TODO Refactor, should the controller hold this logic or should world (World enforces how far we can hear).
                 double newVolume = Math.sqrt((level.player.midX - character.getMidX()) * (level.player.midX - character.getMidX())) +
                         Math.sqrt((level.player.midY - character.getMidY()) * (level.player.midY - character.getMidY()));

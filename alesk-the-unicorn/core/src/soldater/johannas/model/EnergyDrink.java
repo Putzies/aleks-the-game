@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class EnergyDrink extends Pickup {
 
     // TODO Remember to double check the actual size of the EnergyDrink!
@@ -20,5 +23,20 @@ public class EnergyDrink extends Pickup {
     public String getName() {
         // TODO get the lunchbox spritename
         return "energydrink";
+    }
+
+    @Override
+    public void doIt(Player player){
+        this.taskTimer = new Timer();
+        player.setPickup(Player.ENERGYDRINK,true);
+
+        this.t = new TimerTask() {
+            @Override
+            public void run() {
+                player.setPickup(Player.ENERGYDRINK,false);
+            }
+        };
+
+        taskTimer.schedule(t, 4000);
     }
 }

@@ -1,6 +1,8 @@
 package soldater.johannas.model;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class Pickup implements Drawable, Entity {
     private final int UP = 1;
@@ -12,6 +14,10 @@ public abstract class Pickup implements Drawable, Entity {
     private double x,y;
     private double yVel = 0;
     private int dir = DOWN;
+
+    // Task object used for disabling a pickup effect after a set time.
+    protected TimerTask t;
+    protected Timer taskTimer;
 
     public Pickup(){
         BOUNCING_SPEED += new Random().nextDouble() * 2;
@@ -52,4 +58,11 @@ public abstract class Pickup implements Drawable, Entity {
             dir = -dir;
         }
     }
+
+    // Abstract method doing something on the Player
+    public abstract void doIt(Player player);
+
+    // Abstract method doing something on the world?.
+    // Solves the lunchbox problem, adds further structure for adding other items. (Door keys etc).
+    // public abstract void doIt(Game game);
 }

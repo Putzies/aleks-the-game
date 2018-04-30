@@ -150,6 +150,7 @@ public class Player extends Character implements Movable {
 
     }
 
+
     public boolean getPickup(int pickup){
         return this.pickups[pickup];
     }
