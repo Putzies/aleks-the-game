@@ -2,6 +2,7 @@ package soldater.johannas.view.modal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,7 @@ public abstract class ModalMenu extends AnimatedMenu {
     protected int selectedItem = 0;
 
     private List<MenuItem> items;
+    private MenuItem title;
     private Texture background;
     private int margin = 0;
     int modalX, modalY;
@@ -39,6 +41,10 @@ public abstract class ModalMenu extends AnimatedMenu {
         batch.draw(background, modalX, modalY);
 
         renderItems(batch);
+    }
+
+    protected void setTitle(String text) {
+        title = new MenuItem(text, 2f, Color.WHITE);
     }
 
     protected void setItems(List<MenuItem> items) {
@@ -74,6 +80,8 @@ public abstract class ModalMenu extends AnimatedMenu {
     private void renderItems(SpriteBatch batch) {
         int x = margin;
 
+        title.draw(batch, Gdx.graphics.getWidth() / 2, modalY + background.getHeight() * 9 / 10);
+
         for (int i = 0; i < items.size(); i++) {
             MenuItem item = items.get(i);
 
@@ -87,7 +95,7 @@ public abstract class ModalMenu extends AnimatedMenu {
 
             item.draw(
                     batch, x + offsetX + modalX,
-                    (background.getHeight() / 2) - (item.getHeight() / 2) + offsetY + modalY
+                    (background.getHeight() / 2) - (item.getHeight() * 2 / 3) + offsetY + modalY
             );
             x += item.getWidth() + margin;
         }

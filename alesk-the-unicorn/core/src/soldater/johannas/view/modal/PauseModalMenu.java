@@ -34,5 +34,6 @@ public class PauseModalMenu extends ModalMenu {
         items.add(new MenuItem("menu/replay.png", MenuItem.Alignment.LEFT));
         items.add(new MenuItem("menu/exit.png", MenuItem.Alignment.LEFT));
         setItems(items);
+        setTitle("Paused");
     }
 }
