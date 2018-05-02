@@ -1,11 +1,9 @@
 package soldater.johannas.control;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import soldater.johannas.control.menu.GameMenu;
-import soldater.johannas.view.Renderer;
+import soldater.johannas.view.GameRenderer;
 import soldater.johannas.view.ScreenRenderer;
+import soldater.johannas.view.UIRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +11,13 @@ import java.util.List;
 public class GameScreen extends ScreenRenderer {
 
 	private final GameMenu gameMenu;
-	private Renderer renderer;
+	private GameRenderer gameRenderer;
+	private UIRenderer uiRenderer;
 	private soldater.johannas.model.Game game;
 
 	private List<Controller> controllers;
+
+	private boolean paused = false;
 
 	public GameScreen(GameMenu levelSection, String level) {
 		this.gameMenu = levelSection;
@@ -26,7 +27,8 @@ public class GameScreen extends ScreenRenderer {
 		game = new soldater.johannas.model.Game();
 		game.startGame(level);
 
-		renderer = new Renderer(game);
+		gameRenderer = new GameRenderer(game);
+		uiRenderer = new UIRenderer(game, gameMenu);
 
 		controllers = new ArrayList<>();
 		controllers.add(new PlayerController(game.getPlayer()));
@@ -35,32 +37,33 @@ public class GameScreen extends ScreenRenderer {
 
 	}
 
+	@Override
+    public void pause() {
+        paused = true;
+    }
+
+    @Override
+    public void resume() {
+	    paused = false;
+	    uiRenderer.resume();
+    }
 
 	@Override
 	public void render (float delta) {
-		game.update(delta);
-		for (Controller c : controllers) {
-			c.update();
-		}
-		renderer.render();
 
-		if (game.getTakenLunchBoxes() == game.getTotalLunchBoxes()) {
-			System.out.println("You won! Your time: " + game.getTimer().getFormattedTime());
-			gameMenu.exitLevel();
-		}
+	    if (!paused) {
+            game.update(delta);
+            for (Controller c : controllers) {
+                c.update();
+            }
+            gameRenderer.render();
+        }
 
-		if (game.getPlayer().getLife() == 0) {
-			System.out.println("You lost! You didn't eat all the lunchboxes!");
-			gameMenu.exitLevel();
-		}
-
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-			gameMenu.exitLevel();
-		}
+		uiRenderer.render(delta);
 	}
 
 	@Override
 	public void dispose () {
-		renderer.dispose();
+		gameRenderer.dispose();
 	}
 }

@@ -4,12 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
-public abstract class ScreenRenderer implements Screen {
-
-    protected final int N_FRAMES = 10;
-    protected int frame;
-    protected float frameCounter = 0;
-
+public abstract class ScreenRenderer extends AnimatedMenu implements Screen {
 
     @Override
     public void show() {
@@ -47,14 +42,5 @@ public abstract class ScreenRenderer implements Screen {
     @Override
     public void dispose() {
 
-    }
-
-    private void incrementFrames(float delta) {
-        frameCounter += delta;
-
-        if (frameCounter > 0.03) {
-            frame = (frame + 1) % N_FRAMES;
-            frameCounter = 0;
-        }
     }
 }

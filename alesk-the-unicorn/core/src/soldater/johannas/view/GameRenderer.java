@@ -21,7 +21,7 @@ import java.util.Map;
 import static soldater.johannas.model.Player.FALLING;
 import static soldater.johannas.model.Player.JUMPING;
 
-public class Renderer {
+public class GameRenderer {
 
     public final int NUM_FRAMES = 6;
     public final int FRAME_FREQ = 3;
@@ -31,8 +31,6 @@ public class Renderer {
 
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
-    private BitmapFont font;
-    private GlyphLayout layout;
 
     private Map<String, Texture> textures;
 
@@ -45,16 +43,12 @@ public class Renderer {
     private int playerX;
     private int playerY;
 
-    public Renderer(DrawableGame game) {
+    public GameRenderer(DrawableGame game) {
         this.game = game;
 
         rainbowEmitter = new RainbowEmitter();
 
         batch = new SpriteBatch();
-
-        font = new BitmapFont();
-        font.getData().setScale(2);
-        layout = new GlyphLayout(font, "", Colors.MENU_COLOR, 0, Align.center, true);
 
         loadTextures();
         shapeRenderer = new ShapeRenderer();
@@ -79,7 +73,6 @@ public class Renderer {
         drawRainbow();
         drawPlayer();
         drawDrawables();
-        drawGUI();
 
         batch.end();
         shapeRenderer.end();
@@ -97,7 +90,6 @@ public class Renderer {
         textures.put(game.getPlayer().getName(), new Texture(game.getPlayer().getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
-        textures.put("horn", new Texture("horn.png"));
 
         for (Drawable drawable : game.getDrawables()) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
@@ -214,25 +206,6 @@ public class Renderer {
 
             shapeRenderer.line(x, startY, x, y);
         }
-    }
-
-    private void drawGUI() {
-        int y = Gdx.graphics.getHeight() * 19 / 20;
-        layout.setText(font, game.getTimer().getFormattedTime());
-        font.draw(batch, layout, Gdx.graphics.getWidth() / 2 - layout.width / 2, y);
-        layout.setText(font,game.getTakenLunchBoxes() + " / " + game.getTotalLunchBoxes());
-        font.draw(batch, layout, Gdx.graphics.getWidth() - 80, y);
-
-        int width = textures.get("horn").getWidth()/4;
-        int height = textures.get("horn").getHeight();
-        batch.draw(textures.get("horn"),
-                20,
-                y - height,
-                (game.getPlayer().getLife()-1)*width,
-                0,
-                width,
-                height
-        );
     }
 
     private void incrementFrames() {
