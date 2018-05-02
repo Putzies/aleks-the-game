@@ -43,8 +43,8 @@ public abstract class ModalMenu extends AnimatedMenu {
         renderItems(batch);
     }
 
-    protected void setTitle(String text) {
-        title = new MenuItem(text, 2f, Color.WHITE);
+    protected void setTitle(MenuItem title) {
+        this.title = title;
     }
 
     protected void setItems(List<MenuItem> items) {
@@ -80,7 +80,7 @@ public abstract class ModalMenu extends AnimatedMenu {
     private void renderItems(SpriteBatch batch) {
         int x = margin;
 
-        title.draw(batch, Gdx.graphics.getWidth() / 2, modalY + background.getHeight() * 9 / 10);
+        title.draw(batch, Gdx.graphics.getWidth() / 2, modalY + background.getHeight() * 15 / 20);
 
         for (int i = 0; i < items.size(); i++) {
             MenuItem item = items.get(i);

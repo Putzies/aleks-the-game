@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.model.DrawableGame;
+import soldater.johannas.view.modal.LostModalMenu;
 import soldater.johannas.view.modal.ModalMenu;
 import soldater.johannas.view.modal.PauseModalMenu;
 import util.Colors;
@@ -91,9 +92,9 @@ public class UIRenderer {
             gameMenu.exitLevel();
         }
 
-        if (game.getPlayer().getLife() == 0) {
-            System.out.println("You lost! You didn't eat all the lunchboxes!");
-            gameMenu.exitLevel();
+        if (game.getPlayer().getLife() == 0 && modalMenu == null) {
+            gameMenu.pause();
+            modalMenu = new LostModalMenu(gameMenu);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){

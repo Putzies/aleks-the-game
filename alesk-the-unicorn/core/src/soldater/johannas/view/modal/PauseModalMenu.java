@@ -1,7 +1,5 @@
 package soldater.johannas.view.modal;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.view.MenuItem;
 
@@ -34,6 +32,6 @@ public class PauseModalMenu extends ModalMenu {
         items.add(new MenuItem("menu/replay.png", MenuItem.Alignment.LEFT));
         items.add(new MenuItem("menu/exit.png", MenuItem.Alignment.LEFT));
         setItems(items);
-        setTitle("Paused");
+        setTitle(new MenuItem("menu/paused.png"));
     }
 }
