@@ -16,6 +16,9 @@ public class WonModalMenu extends ModalMenu {
     @Override
     protected void enter() {
         switch (selectedItem) {
+            case 1:
+                gameMenu.replay();
+                break;
             case 2:
                 gameMenu.exitLevel();
                 break;

@@ -19,6 +19,8 @@ import java.util.List;
 public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, GameMenu {
 
 	private Screen screen;
+	private String lastLevel;
+	private String nextLevel = "";
 
 	@Override
 	public void create() {
@@ -33,6 +35,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 
 	@Override
 	public void startLevel(String level) {
+	    lastLevel = level;
 		screen.dispose();
 	    screen = new GameScreen(this, level);
 		setScreen(screen);
@@ -94,4 +97,9 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
     public void resume() {
 	    screen.resume();
     }
+
+	@Override
+	public void replay() {
+		startLevel(lastLevel);
+	}
 }

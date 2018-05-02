@@ -20,6 +20,9 @@ public class PauseModalMenu extends ModalMenu {
             case 0:
                 gameMenu.resume();
                 break;
+            case 1:
+                gameMenu.replay();
+                break;
             case 2:
                 gameMenu.exitLevel();
                 break;

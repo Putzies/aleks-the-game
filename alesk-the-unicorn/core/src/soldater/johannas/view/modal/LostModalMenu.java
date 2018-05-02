@@ -17,6 +17,9 @@ public class LostModalMenu extends ModalMenu {
     @Override
     protected void enter() {
         switch (selectedItem) {
+            case 0:
+                gameMenu.replay();
+                break;
             case 1:
                 gameMenu.exitLevel();
                 break;

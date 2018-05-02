@@ -4,4 +4,5 @@ public interface GameMenu {
     void exitLevel();
     void pause();
     void resume();
+    void replay();
 }
