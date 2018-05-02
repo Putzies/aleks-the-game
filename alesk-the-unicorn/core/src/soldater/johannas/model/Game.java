@@ -147,6 +147,9 @@ public class Game implements Entity, DrawableGame {
 
             // Detecting a collision is simple
             if (withinX && withinY) {
+                if (pickup instanceof Lunchbox){
+                    level.takenLunchboxes += 1;
+                }
                 pickup.doIt(getPlayer());
 
             } else {
@@ -175,6 +178,16 @@ public class Game implements Entity, DrawableGame {
                 collideHarmful(player, dTime);
             }
         }
+        for (Character character : hangingEnemies){
+            if (character == player) { continue; }
+            boolean withinX = isWithinX(player, character);
+            boolean withinY = isWithinY(player, character);
+
+            // Check if player and some character are colliding.
+            if (withinX && withinY) {
+                collideHarmful(player, dTime);
+            }
+        }
 
     }
 
@@ -192,10 +205,9 @@ public class Game implements Entity, DrawableGame {
                     other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
 
                     if (playerBox.intersects(other)) {
-
                         if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight()) {
-                            if(platform.isHarmful()) {
+                            if (platform.isHarmful()) {
                                 collideHarmful(level.player, dTime);
                             } else {
                                 character.setCollision(Character.DOWN, true, other.getY() + other.getHeight() - 1);
