@@ -1,5 +1,7 @@
 package soldater.johannas.control;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.view.GameRenderer;
 import soldater.johannas.view.ScreenRenderer;
@@ -16,6 +18,13 @@ public class GameScreen extends ScreenRenderer {
 	private soldater.johannas.model.Game game;
 
 	private List<Controller> controllers;
+
+	// TODO: Move this to an audio controller!
+    private Sound eatSound  = Gdx.audio.newSound(Gdx.files.internal("sounds/eat.wav"));
+    private Sound dmgSound = Gdx.audio.newSound(Gdx.files.internal("sounds/damage.wav"));
+    private Sound dieSound = Gdx.audio.newSound(Gdx.files.internal("sounds/died.wav"));
+	private int lastTakenLunchBoxes = 0;
+	private int lastHealth = 4;
 
 	private boolean paused = false;
 
@@ -57,6 +66,20 @@ public class GameScreen extends ScreenRenderer {
                 c.update();
             }
             gameRenderer.render();
+        }
+
+        if (game.getTakenLunchBoxes() > lastTakenLunchBoxes) {
+	        lastTakenLunchBoxes = game.getTakenLunchBoxes();
+            eatSound.play();
+        }
+
+        if (game.getPlayer().getLife() < lastHealth) {
+	        lastHealth = game.getPlayer().getLife();
+	        dmgSound.play();
+        }
+
+        if (game.getPlayer().getLife() == 0) {
+            dieSound.play();
         }
 
 		uiRenderer.render(delta);

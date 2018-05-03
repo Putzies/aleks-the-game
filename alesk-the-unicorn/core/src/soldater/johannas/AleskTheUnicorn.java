@@ -3,6 +3,7 @@ package soldater.johannas;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import soldater.johannas.control.GameScreen;
 import soldater.johannas.control.menu.GameMenu;
@@ -20,11 +21,14 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 
 	private Screen screen;
 	private String lastLevel;
+    private Sound mainTheme;
 
 	@Override
 	public void create() {
         screen = new MainMenuRenderer(this);
         this.setScreen(screen);
+        mainTheme = Gdx.audio.newSound(Gdx.files.internal("sounds/Alesk Theme 2.wav"));
+        mainTheme.loop(0.5f);
 	}
 
 	@Override
@@ -38,6 +42,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 		screen.dispose();
 	    screen = new GameScreen(this, level);
 		setScreen(screen);
+		mainTheme.stop();
 	}
 
 	@Override
@@ -85,6 +90,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 		screen.dispose();
 		screen = new LevelSelectRenderer(this, loadLevels());
 		setScreen(screen);
+        mainTheme.loop(0.5f);
 	}
 
 	@Override

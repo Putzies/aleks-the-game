@@ -22,7 +22,7 @@ public class PlayerController implements Controller{
      * In case of error, the main problem seems to be sampling in the .wav file being wrong.
      *
      */
-    Sound jmpSound  = Gdx.audio.newSound(Gdx.files.internal("sounds/jump_07.wav"));
+    private Sound jmpSound  = Gdx.audio.newSound(Gdx.files.internal("sounds/jump_07.wav"));
 
     // Example of invalid .wav sampling
     // Sound jmpSound2 = Gdx.audio.newSound(Gdx.files.internal("mb_jump.wav"));
