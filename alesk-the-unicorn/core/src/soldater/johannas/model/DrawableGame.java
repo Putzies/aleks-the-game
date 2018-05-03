@@ -1,6 +1,7 @@
 package soldater.johannas.model;
 
-import util.Timer;
+import soldater.johannas.model.level.HangingEnemy;
+import soldater.johannas.util.Timer;
 
 import java.util.List;
 

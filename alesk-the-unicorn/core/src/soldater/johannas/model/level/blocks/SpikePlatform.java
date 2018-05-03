@@ -1,4 +1,4 @@
-package soldater.johannas.model.level;
+package soldater.johannas.model.level.blocks;
 
 import java.util.ArrayList;
 

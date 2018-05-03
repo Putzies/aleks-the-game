@@ -12,7 +12,7 @@ import soldater.johannas.model.DrawableGame;
 import soldater.johannas.view.modal.LostModalMenu;
 import soldater.johannas.view.modal.ModalMenu;
 import soldater.johannas.view.modal.PauseModalMenu;
-import util.Colors;
+import soldater.johannas.util.Colors;
 
 public class UIRenderer {
 

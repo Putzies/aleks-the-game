@@ -1,4 +1,6 @@
-package soldater.johannas.model;
+package soldater.johannas.model.level.pickups;
+
+import soldater.johannas.model.level.Player;
 
 public class Lunchbox extends Pickup {
     // TODO Remember to double check the actual size of the Lunchboxes!

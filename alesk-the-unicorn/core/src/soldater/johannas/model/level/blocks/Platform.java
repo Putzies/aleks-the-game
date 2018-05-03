@@ -1,7 +1,7 @@
-package soldater.johannas.model.level;
+package soldater.johannas.model.level.blocks;
 
-import soldater.johannas.model.Drawable;
-import soldater.johannas.model.HangingEnemy;
+import soldater.johannas.model.level.HangingEnemy;
+import soldater.johannas.model.level.blocks.Block;
 
 import java.util.List;
 

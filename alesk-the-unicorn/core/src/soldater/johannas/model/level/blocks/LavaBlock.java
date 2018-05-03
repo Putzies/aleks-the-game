@@ -1,4 +1,4 @@
-package soldater.johannas.model.level;
+package soldater.johannas.model.level.blocks;
 
 public class LavaBlock extends Block {
 

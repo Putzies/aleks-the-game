@@ -1,4 +1,4 @@
-package util;
+package soldater.johannas.util;
 
 public class Timer {
     private int millis = 0;

@@ -1,4 +1,4 @@
-package util;
+package soldater.johannas.util;
 
 import com.badlogic.gdx.graphics.Color;
 

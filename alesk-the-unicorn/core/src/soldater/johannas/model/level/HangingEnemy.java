@@ -1,6 +1,7 @@
-package soldater.johannas.model;
+package soldater.johannas.model.level;
 
 import com.badlogic.gdx.math.Vector3;
+import soldater.johannas.model.Character;
 
 public class HangingEnemy extends Character {
     public static final int WIDTH = 93;

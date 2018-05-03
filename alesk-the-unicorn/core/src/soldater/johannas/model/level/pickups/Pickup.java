@@ -1,4 +1,8 @@
-package soldater.johannas.model;
+package soldater.johannas.model.level.pickups;
+
+import soldater.johannas.model.Drawable;
+import soldater.johannas.model.Entity;
+import soldater.johannas.model.level.Player;
 
 import java.util.Random;
 import java.util.Timer;

@@ -1,6 +1,6 @@
 package soldater.johannas.control;
 
-import soldater.johannas.model.HangingEnemy;
+import soldater.johannas.model.level.HangingEnemy;
 
 import java.util.Random;
 

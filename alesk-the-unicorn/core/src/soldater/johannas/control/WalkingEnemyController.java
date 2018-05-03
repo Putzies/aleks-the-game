@@ -2,7 +2,7 @@ package soldater.johannas.control;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import soldater.johannas.model.WalkingEnemy;
+import soldater.johannas.model.level.WalkingEnemy;
 
 import java.util.Random;
 

@@ -1,6 +1,11 @@
 package soldater.johannas.model.level;
 
 import soldater.johannas.model.*;
+import soldater.johannas.model.level.blocks.GrassPlatform;
+import soldater.johannas.model.level.blocks.LavaPlatform;
+import soldater.johannas.model.level.blocks.Platform;
+import soldater.johannas.model.level.blocks.SpikePlatform;
+import soldater.johannas.model.level.pickups.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,8 @@
-package soldater.johannas.model;
+package soldater.johannas.model.level;
+
+import soldater.johannas.model.Character;
+import soldater.johannas.model.Drawable;
+import soldater.johannas.model.Movable;
 
 public class Player extends Character implements Movable {
 

@@ -1,25 +1,20 @@
 package soldater.johannas.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.utils.Align;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawableGame;
-import soldater.johannas.model.HangingEnemy;
-import util.Colors;
+import soldater.johannas.model.level.HangingEnemy;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static soldater.johannas.model.Player.FALLING;
-import static soldater.johannas.model.Player.JUMPING;
+import static soldater.johannas.model.level.Player.FALLING;
+import static soldater.johannas.model.level.Player.JUMPING;
 
 public class GameRenderer {
 

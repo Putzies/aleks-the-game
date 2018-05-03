@@ -1,4 +1,6 @@
-package soldater.johannas.model;
+package soldater.johannas.model.level.pickups;
+
+import soldater.johannas.model.level.Player;
 
 import java.util.Timer;
 import java.util.TimerTask;

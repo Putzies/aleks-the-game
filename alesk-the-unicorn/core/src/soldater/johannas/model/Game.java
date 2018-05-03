@@ -3,6 +3,9 @@ package soldater.johannas.model;
 import java.util.Timer;
 
 import soldater.johannas.model.level.*;
+import soldater.johannas.model.level.blocks.Platform;
+import soldater.johannas.model.level.pickups.Lunchbox;
+import soldater.johannas.model.level.pickups.Pickup;
 
 
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ public class Game implements Entity, DrawableGame {
 
     private Level level;
 
-    private util.Timer timer = new util.Timer();
+    private soldater.johannas.util.Timer timer = new soldater.johannas.util.Timer();
 
     private List<Entity> entities;
     private List<Character> characters;
@@ -97,7 +100,7 @@ public class Game implements Entity, DrawableGame {
     }
 
     @Override
-    public util.Timer getTimer() {
+    public soldater.johannas.util.Timer getTimer() {
         return timer;
     }
 

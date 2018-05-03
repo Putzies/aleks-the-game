@@ -1,7 +1,10 @@
-package soldater.johannas.model;
+package soldater.johannas.model.level;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import soldater.johannas.model.Character;
+import soldater.johannas.model.Drawable;
+import soldater.johannas.model.Movable;
 
 public class WalkingEnemy extends Character implements Movable {
     public static final int WIDTH = 93;
