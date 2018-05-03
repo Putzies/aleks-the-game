@@ -86,10 +86,10 @@ public class Player extends Character implements Movable {
     public void left () {
         if (!knockbacked) {
             if (!collisions[Character.LEFT]) {
-                x -= 10;
+                xVel = -600;
 
                 if (pickups[ENERGYDRINK]) {
-                    x -= 15;
+                    xVel = -1500;
                 }
             }
             direction = Drawable.LEFT;
@@ -104,10 +104,10 @@ public class Player extends Character implements Movable {
     public void right() {
         if (!knockbacked) {
             if (!collisions[Character.RIGHT]) {
-                x += 10;
+                xVel = 600;
 
                 if (pickups[ENERGYDRINK]) {
-                    x += 15;
+                    xVel = 1500;
                 }
             }
             direction = Drawable.RIGHT;
