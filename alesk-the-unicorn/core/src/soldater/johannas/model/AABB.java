@@ -48,7 +48,7 @@ public class AABB {
 
     // Check for intersection in Y-Axis
     private boolean isWithinY(AABB other) {
-        boolean withinY = this.y + this.HEIGHT> other.y &&
+        boolean withinY = this.y + this.HEIGHT > other.y &&
                 this.y + 1 < other.y + other.HEIGHT;
 
         return withinY;
