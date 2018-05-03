@@ -20,7 +20,6 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 
 	private Screen screen;
 	private String lastLevel;
-	private String nextLevel = "";
 
 	@Override
 	public void create() {
@@ -101,5 +100,24 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 	@Override
 	public void replay() {
 		startLevel(lastLevel);
+	}
+
+	@Override
+	public void nextLevel() {
+	    String nextLevel = "";
+
+	    // Find next level
+	    List<LevelInfo> allLevels = loadLevels();
+	    for (int i = 0; i < allLevels.size() - 1; i++) {
+	        if (allLevels.get(i).getFileName().equals(lastLevel)) {
+	            nextLevel = allLevels.get(i + 1).getFileName();
+            }
+        }
+
+		if (nextLevel.isEmpty()) {
+			exitLevel();
+		} else {
+		    startLevel(nextLevel);
+        }
 	}
 }

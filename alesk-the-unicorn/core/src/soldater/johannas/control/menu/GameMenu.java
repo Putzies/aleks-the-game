@@ -5,4 +5,5 @@ public interface GameMenu {
     void pause();
     void resume();
     void replay();
+    void nextLevel();
 }
