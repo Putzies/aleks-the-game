@@ -180,7 +180,7 @@ public class Game implements Entity, DrawableGame {
 
             // Check if player and some character are colliding.
             if (withinX && withinY) {
-                player.knockback();
+                player.damage();
             }
         }
         for (Character character : hangingEnemies){
@@ -190,7 +190,7 @@ public class Game implements Entity, DrawableGame {
 
             // Check if player and some character are colliding.
             if (withinX && withinY) {
-                player.knockback();
+                player.damageInverted();
             }
         }
 
@@ -225,7 +225,7 @@ public class Game implements Entity, DrawableGame {
                          else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight()) {
                             if (platform.isHarmful()) {
-                                character.knockback();
+                                character.damage();
                             } else {
                                 character.setCollision(Character.DOWN,  other.getY() + other.getHeight() - 2);
                             }

@@ -114,20 +114,20 @@ public abstract class Character implements Entity{
         return life;
     }
 
-    public void decrementLife() {
-        life--;
+    public void damage() {
+        damage(false);
     }
 
+    public void damageInverted() {
+        damage(true);
+    }
 
-    // Method for getting the value of knockbacked.
-    public boolean isKnockbacked(){return knockbacked;}
-
-    public void knockback() {
+    private void damage(boolean inverted) {
         xVel = 300 * -direction;
-        yVel = 300;
+        yVel = 300 * (inverted ? -1 : 1);
 
-        if(!isDamaged()) {
-            decrementLife();
+        if(!damaged) {
+            life--;
         }
 
         knockbacked = true;
@@ -142,7 +142,4 @@ public abstract class Character implements Entity{
         };
         new Timer().schedule(t, 1000);
     }
-
-    public boolean isDamaged(){return damaged;}
-
 }

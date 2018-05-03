@@ -75,8 +75,8 @@ public class Player extends Character implements Movable {
     }
 
     @Override
-    public void setCollision(int collision, boolean value, double correction) {
-        super.setCollision(collision, value, correction);
+    public void setCollision(int collision, double correction) {
+        super.setCollision(collision, correction);
         if (collision == DOWN) {
             state = STANDING;
         }
@@ -84,7 +84,7 @@ public class Player extends Character implements Movable {
 
     @Override
     public void left () {
-        if (!isKnockbacked()) {
+        if (!knockbacked) {
             if (!collisions[Character.LEFT]) {
                 x -= 10;
 
@@ -102,7 +102,7 @@ public class Player extends Character implements Movable {
 
     @Override
     public void right() {
-        if (!isKnockbacked()) {
+        if (!knockbacked) {
             if (!collisions[Character.RIGHT]) {
                 x += 10;
 
