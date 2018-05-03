@@ -94,8 +94,8 @@ public class Game implements Entity, DrawableGame {
         calculateNewSoundVolumes();
 
         // Ordering here is important. Characters before Terrain will cause bugs.
-        collideTerrain(dTime);
-        collideCharacters(dTime);
+        collideTerrain();
+        collideCharacters();
         collidePickups();
     }
 
@@ -169,7 +169,7 @@ public class Game implements Entity, DrawableGame {
     
     // Collision code for Player versus some Character.
     // Future expansion: Collide against hanging spiders, which for some reason are not in characters.
-    private void collideCharacters(double dTime) {
+    private void collideCharacters() {
         // We will constantly be using player. So lets store it for the time being.
         Player player = level.player;
 
@@ -180,7 +180,7 @@ public class Game implements Entity, DrawableGame {
 
             // Check if player and some character are colliding.
             if (withinX && withinY) {
-                collideHarmful(player, dTime);
+                player.knockback();
             }
         }
         for (Character character : hangingEnemies){
@@ -190,13 +190,13 @@ public class Game implements Entity, DrawableGame {
 
             // Check if player and some character are colliding.
             if (withinX && withinY) {
-                collideHarmful(player, dTime);
+                player.knockback();
             }
         }
 
     }
 
-    private void collideTerrain(double dTime){
+    private void collideTerrain(){
             AABB playerBox;
             AABB other;
 
@@ -213,26 +213,26 @@ public class Game implements Entity, DrawableGame {
 
                         // Check Right side
                         if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX()) {
-                            character.setCollision(Character.RIGHT, true, other.getX() - playerBox.getWidth());
+                            character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth());
 
                         // Check Left side
                         } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
                                 playerBox.getX() < other.getX() + other.getWidth()) {
-                            character.setCollision(Character.LEFT, true, other.getX());
+                            character.setCollision(Character.LEFT,  other.getX());
                         }
 
                         // Check Down, and check if the platform is harmful.
                          else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight()) {
                             if (platform.isHarmful()) {
-                                collideHarmful(level.player, dTime);
+                                character.knockback();
                             } else {
-                                character.setCollision(Character.DOWN, true, other.getY() + other.getHeight() - 1);
+                                character.setCollision(Character.DOWN,  other.getY() + other.getHeight() - 2);
                             }
 
                          // Check Up
                         } else if (playerBox.y < other.y && playerBox.y + playerBox.HEIGHT > other.y) {
-                            character.setCollision(Character.UP, true, other.y - playerBox.getHeight());
+                            character.setCollision(Character.UP,  other.y - playerBox.getHeight());
 
 
                         // Bottom case that should never be reached in an Axis-Aligned setting.
@@ -286,35 +286,6 @@ public class Game implements Entity, DrawableGame {
             }
 
         }*/
-    }
-
-    // Consequences of colliding with harmful objects
-    private void collideHarmful(Player player, double dTime) {
-        // Either we are facing Right or we are facing Left
-        if (player.getDirection() == Drawable.RIGHT) {
-            player.yVel = 300;
-            player.xVel = -300;
-
-        } else {
-            player.yVel = 300;
-            player.xVel = 300;
-        }
-
-        if(!player.isDamaged()) {
-            player.decrementLife();
-        }
-
-        player.knockbacked = true;
-        player.damaged = true;
-
-        // Set timer to not take damage again immediately
-        t = new TimerTask(){
-            @Override
-            public void run() {
-                player.damaged = false;
-            }
-        };
-        taskTimer.schedule(t, (int)(dTime*10000));
     }
 
     public List<WalkingEnemy> getWalkingEnemies() {

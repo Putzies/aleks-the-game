@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public abstract class Character implements Entity{
     public static final int UP = 0;
     public static final int RIGHT = 1;
@@ -56,17 +59,15 @@ public abstract class Character implements Entity{
         }
     }
 
-    public void setCollision(int location, boolean value, double correction) {
-        collisions[location] = value;
+    public void setCollision(int location, double correction) {
+        collisions[location] = true;
 
-        if(value) {
-            if (location == UP || location == DOWN) {
-                y = correction;
-                yVel = 0;
-            } else {
-                x = correction;
-                xVel = 0;
-            }
+        if (location == UP || location == DOWN) {
+            y = correction;
+            yVel = 0;
+        } else {
+            x = correction;
+            xVel = 0;
         }
     }
 
@@ -120,6 +121,27 @@ public abstract class Character implements Entity{
 
     // Method for getting the value of knockbacked.
     public boolean isKnockbacked(){return knockbacked;}
+
+    public void knockback() {
+        xVel = 300 * -direction;
+        yVel = 300;
+
+        if(!isDamaged()) {
+            decrementLife();
+        }
+
+        knockbacked = true;
+        damaged = true;
+
+        // Set timer to not take damage again immediately
+        TimerTask t = new TimerTask(){
+            @Override
+            public void run() {
+                damaged = false;
+            }
+        };
+        new Timer().schedule(t, 1000);
+    }
 
     public boolean isDamaged(){return damaged;}
 

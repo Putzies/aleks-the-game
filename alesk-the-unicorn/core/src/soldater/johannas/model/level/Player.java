@@ -68,7 +68,7 @@ public class Player extends Character implements Movable {
 
         super.update(dTime);
 
-        if(this.isOnGround()){
+        if(isOnGround()){
             this.xVel = 0;
             knockbacked = false;
         }
@@ -85,7 +85,7 @@ public class Player extends Character implements Movable {
     @Override
     public void left () {
         if (!isKnockbacked()) {
-            if (!collisions[super.LEFT]) {
+            if (!collisions[Character.LEFT]) {
                 x -= 10;
 
                 if (pickups[ENERGYDRINK]) {
@@ -103,7 +103,7 @@ public class Player extends Character implements Movable {
     @Override
     public void right() {
         if (!isKnockbacked()) {
-            if (!collisions[super.RIGHT]) {
+            if (!collisions[Character.RIGHT]) {
                 x += 10;
 
                 if (pickups[ENERGYDRINK]) {
@@ -123,6 +123,8 @@ public class Player extends Character implements Movable {
         // If we have wings triggered, then we can jump indefinitiely
         if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
             yVel = 1000;
+        } else {
+            System.out.println("aowdiawd");
         }
         if (state != FALLING) {
             state = JUMPING;
