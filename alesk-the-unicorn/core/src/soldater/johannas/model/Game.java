@@ -33,6 +33,7 @@ public class Game implements Entity, DrawableGame {
         hangingEnemies = new ArrayList<>();
     }
 
+
     public boolean startGame(String levelName) {
         level = new Parser().loadLevel(levelName);
 
@@ -150,6 +151,7 @@ public class Game implements Entity, DrawableGame {
                 if (pickup instanceof Lunchbox){
                     level.takenLunchboxes += 1;
                 }
+
                 pickup.doIt(getPlayer());
 
             } else {
@@ -205,7 +207,19 @@ public class Game implements Entity, DrawableGame {
                     other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
 
                     if (playerBox.intersects(other)) {
-                        if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
+
+                        // Check Right side
+                        if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX()) {
+                            character.setCollision(Character.RIGHT, true, other.getX() - playerBox.getWidth());
+
+                        // Check Left side
+                        } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
+                                playerBox.getX() < other.getX() + other.getWidth()) {
+                            character.setCollision(Character.LEFT, true, other.getX());
+                        }
+
+                        // Check Down, and check if the platform is harmful.
+                         else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight()) {
                             if (platform.isHarmful()) {
                                 collideHarmful(level.player, dTime);
@@ -213,15 +227,12 @@ public class Game implements Entity, DrawableGame {
                                 character.setCollision(Character.DOWN, true, other.getY() + other.getHeight() - 1);
                             }
 
+                         // Check Up
                         } else if (playerBox.y < other.y && playerBox.y + playerBox.HEIGHT > other.y) {
                             character.setCollision(Character.UP, true, other.y - playerBox.getHeight());
 
-                        } else if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX()) {
-                            character.setCollision(Character.RIGHT, true, other.getX() - playerBox.getWidth());
 
-                        } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
-                                playerBox.getX() < other.getX() + other.getWidth()) {
-                            character.setCollision(Character.LEFT, true, other.getX());
+                        // Bottom case that should never be reached in an Axis-Aligned setting.
                         } else {
                             System.out.println("Intersect but against what?");
                         }
