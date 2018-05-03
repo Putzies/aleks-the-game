@@ -136,6 +136,8 @@ public class Player extends Character implements Movable {
         if (state != JUMPING) {
             state = STANDING;
         }
+
+        xVel = 0;
     }
 
     public void setPickup(int pickup, boolean value){

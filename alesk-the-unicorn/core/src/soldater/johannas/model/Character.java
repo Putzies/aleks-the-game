@@ -51,6 +51,10 @@ public abstract class Character implements Entity{
     public void update(double dTime) {
         x += xVel * dTime;
         y += yVel * dTime;
+
+        if (y < -3000) {
+            life = 0;
+        }
     }
 
     public void resetCollisions() {
