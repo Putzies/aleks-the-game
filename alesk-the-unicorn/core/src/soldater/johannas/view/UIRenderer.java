@@ -13,6 +13,7 @@ import soldater.johannas.view.modal.LostModalMenu;
 import soldater.johannas.view.modal.ModalMenu;
 import soldater.johannas.view.modal.PauseModalMenu;
 import soldater.johannas.util.Colors;
+import soldater.johannas.view.modal.WonModalMenu;
 
 public class UIRenderer {
 
@@ -87,9 +88,9 @@ public class UIRenderer {
     }
 
     private void checkInput() {
-        if (game.getTakenLunchBoxes() == game.getTotalLunchBoxes()) {
-            System.out.println("You won! Your time: " + game.getTimer().getFormattedTime());
-            gameMenu.exitLevel();
+        if (game.getTakenLunchBoxes() == game.getTotalLunchBoxes() && modalMenu == null) {
+            gameMenu.pause();
+            modalMenu = new WonModalMenu(gameMenu);
         }
 
         if (game.getPlayer().getLife() == 0 && modalMenu == null) {

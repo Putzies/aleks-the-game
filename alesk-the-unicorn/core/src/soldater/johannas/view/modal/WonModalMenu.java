@@ -27,7 +27,7 @@ public class WonModalMenu extends ModalMenu {
 
     private void addItems() {
         List<MenuItem> items = new ArrayList<>();
-        items.add(new MenuItem("menu/next.png", MenuItem.Alignment.LEFT));
+        items.add(new MenuItem("menu/nextLevel.png", MenuItem.Alignment.LEFT));
         items.add(new MenuItem("menu/replay.png", MenuItem.Alignment.LEFT));
         items.add(new MenuItem("menu/exit.png", MenuItem.Alignment.LEFT));
         setItems(items);
