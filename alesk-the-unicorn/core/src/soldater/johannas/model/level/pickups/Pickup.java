@@ -66,7 +66,11 @@ public abstract class Pickup implements Drawable, Entity {
     // Abstract method doing something on the Player
     public abstract void doIt(Player player);
 
+
+    // Only solution seems to be to implement two interfaces, one for level, other for player and simply have a list of each.
+    // Or Simply let the pickup list hold two lists, so for rendering we concat both, but for gameplay we go through each.
+
     // Abstract method doing something on the world?.
     // Solves the lunchbox problem, adds further structure for adding other items. (Door keys etc).
-    // public abstract void doIt(Game game);
+    // public abstract void doIt(Level level);
 }

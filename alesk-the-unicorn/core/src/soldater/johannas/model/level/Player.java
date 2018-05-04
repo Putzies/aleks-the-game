@@ -120,15 +120,19 @@ public class Player extends Character implements Movable {
 
     @Override
     public void jump() {
-        // If we have wings triggered, then we can jump indefinitiely
-        if (!collisions[UP] && collisions[DOWN] || this.pickups[WINGS]) {
-            yVel = 1000;
-        } else {
-            System.out.println("aowdiawd");
-        }
-        if (state != FALLING) {
+        // CHANGED here. First check the state, if we are in a falling or jumping state already, we cannot jump. UNLESS
+        // Wings.
+        if (state != FALLING && state != JUMPING || this.pickups[WINGS]) {
             state = JUMPING;
+
+            // There are actually TWO cases where we can trigger jumping, this because of resetCollision().
+            if (!collisions[UP] && collisions[DOWN] || !collisions[UP] && !collisions[DOWN]) {
+                yVel = 1000;
+            } else {
+                System.out.println("The state was  " + collisions[UP] + " : " + collisions[DOWN]);
+            }
         }
+
     }
 
     @Override

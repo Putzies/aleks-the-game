@@ -213,26 +213,28 @@ public class Game implements Entity, DrawableGame {
 
                         // Check Right side
                         if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX() && character.xVel > 0) {
-                            character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth());
+                            character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth() - 1);
 
                         // Check Left side
                         } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
                                 playerBox.getX() < other.getX() + other.getWidth() && character.xVel < 0) {
-                            character.setCollision(Character.LEFT,  other.getX() + other.getWidth());
+                            character.setCollision(Character.LEFT,  other.getX() + other.getWidth() + 1);
                         }
 
                         // Check Down, and check if the platform is harmful.
-                         if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
+
+                         else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight() && character.yVel < 0) {
-                            if (platform.isHarmful()) {
-                                character.damage();
-                            } else {
-                                character.setCollision(Character.DOWN,  other.getY() + other.getHeight() - 2);
-                            }
+                                if (platform.isHarmful()) {
+                                    character.damage();
+                                } else {
+                                        character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
+
+                                }
 
                          // Check Up
                         } else if (playerBox.y < other.y && playerBox.y + playerBox.HEIGHT > other.y && character.yVel > 0) {
-                            character.setCollision(Character.UP,  other.y - playerBox.getHeight());
+                            character.setCollision(Character.UP,  other.y - playerBox.getHeight() - 1);
 
 
                         // Bottom case that should never be reached in an Axis-Aligned setting.
@@ -243,49 +245,6 @@ public class Game implements Entity, DrawableGame {
                 }
             }
 
-        /*
-        for (Character character : characters) {
-            character.resetCollisions();
-
-            for (Platform platform : level.platforms) {
-                // Checks if any point at all is intersecting, if not then we can ignore the rest of the statements
-                boolean withinX = isWithinX(character,platform);
-                boolean withinY = isWithinY(character,platform);
-
-                // DOWN
-                if (withinX &&
-                        character.getY() + character.getHeight() > platform.getY() + platform.getHeight() &&
-                        character.getY() < platform.getY() + platform.getHeight()) {
-                    if(platform.isHarmful()) {
-                        collideHarmful(level.player, dTime);
-                    } else {
-                        character.setCollision(Character.DOWN, true, platform.getY() + platform.getHeight() - 1);
-                    }
-                }
-
-                // TOP
-                if (withinX &&
-                        character.getY() < platform.getY() &&
-                        character.getY() + character.getHeight() > platform.getY()) {
-                    character.setCollision(Character.UP, true, platform.getY() - character.getHeight());
-                }
-
-                // RIGHT
-                if (withinY &&
-                        character.getX() < platform.getX() &&
-                        character.getX() + character.getWidth() > platform.getX()) {
-                    character.setCollision(Character.RIGHT, true, platform.getX() - character.getWidth());
-                }
-
-                // LEFT
-                if (withinY &&
-                        character.getX() + character.getWidth() > platform.getX() + platform.getWidth() &&
-                        character.getX() < platform.getX() + platform.getWidth()) {
-                    character.setCollision(Character.LEFT, true, platform.getX());
-                }
-            }
-
-        }*/
     }
 
     public List<WalkingEnemy> getWalkingEnemies() {
