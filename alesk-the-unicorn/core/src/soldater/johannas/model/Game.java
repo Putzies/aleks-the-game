@@ -211,34 +211,33 @@ public class Game implements Entity, DrawableGame {
 
                     if (playerBox.intersects(other)) {
 
-                        // Check Right side
-                        if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX() && character.xVel > 0) {
-                            character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth() - 1);
-
-                        // Check Left side
-                        } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
-                                playerBox.getX() < other.getX() + other.getWidth() && character.xVel < 0) {
-                            character.setCollision(Character.LEFT,  other.getX() + other.getWidth() + 1);
-                        }
 
                         // Check Down, and check if the platform is harmful.
 
-                         else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
+                         if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight() && character.yVel < 0) {
                                 if (platform.isHarmful()) {
                                     character.damage();
                                 } else {
                                         character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
-
                                 }
 
                          // Check Up
                         } else if (playerBox.y < other.y && playerBox.y + playerBox.HEIGHT > other.y && character.yVel > 0) {
                             character.setCollision(Character.UP,  other.y - playerBox.getHeight() - 1);
 
-
                         // Bottom case that should never be reached in an Axis-Aligned setting.
-                        } else {
+                        }       // Check Right side
+                        else if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX() && character.xVel > 0) {
+                            character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth() - 1);
+
+                            // Check Left side
+                        } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
+                                playerBox.getX() < other.getX() + other.getWidth() && character.xVel < 0) {
+                            character.setCollision(Character.LEFT,  other.getX() + other.getWidth() + 1);
+                        }
+
+                        else {
                             System.out.println("Intersect but against what?");
                         }
                     }
