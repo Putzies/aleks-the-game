@@ -126,10 +126,11 @@ public class Player extends Character implements Movable {
             state = JUMPING;
 
             // There are actually TWO cases where we can trigger jumping, this because of resetCollision().
-            if (!collisions[UP] && collisions[DOWN] || !collisions[UP] && !collisions[DOWN]) {
-                yVel = 1000;
-            } else {
-                System.out.println("The state was  " + collisions[UP] + " : " + collisions[DOWN]);
+            // The second case is what was being triggered
+                if (!collisions[UP] && collisions[DOWN] || !collisions[UP] && !collisions[DOWN]) {
+                    yVel = 1000;
+                } else {
+                    //    System.out.println("The state was  " + collisions[UP] + " : " + collisions[DOWN]);
             }
         }
 

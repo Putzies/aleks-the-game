@@ -210,16 +210,30 @@ public class Game implements Entity, DrawableGame {
                     other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
 
                     if (playerBox.intersects(other)) {
-
-
+                        System.out.println(getPlayer().getY() + " " + (other.getHeight()+other.getY()));
                         // Check Down, and check if the platform is harmful.
+                        if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth()
+                                && playerBox.getX() < other.getX() + other.getWidth()
+                                && character.xVel < 0) {
 
-                         if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
+                                /* This is probably the greatest hack i've done to date.
+                                 * We mix collision detection types for the left/right cases into "look-ahead" type
+                                 * So instead of just checking left right we also check whether what we collide into is
+                                 * on the same level as us, which means that we should be able to freely run over
+                                 */
+                                if(Math.abs(playerBox.getY() - (other.getY()+ other.getHeight()-1)) < 1 && Math.abs(playerBox.getY()- (other.getY()+ other.getHeight()-1)) > 0){
+                                    character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
+                                } else {
+                                    character.setCollision(Character.LEFT, other.getX() + other.getWidth() + 1);
+                                }
+
+                        } else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight() && character.yVel < 0) {
+
                                 if (platform.isHarmful()) {
                                     character.damage();
                                 } else {
-                                        character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
+                                    character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
                                 }
 
                          // Check Up
@@ -228,17 +242,17 @@ public class Game implements Entity, DrawableGame {
 
                         // Bottom case that should never be reached in an Axis-Aligned setting.
                         }       // Check Right side
-                        else if (playerBox.getX() < other.getX() && playerBox.getX() + playerBox.getWidth() > other.getX() && character.xVel > 0) {
-                            character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth() - 1);
+                        else if (playerBox.getX() < other.getX() &&
+                                 playerBox.getX() + playerBox.getWidth() > other.getX() &&
+                                 character.xVel > 0) {
+                            if(Math.abs(playerBox.getY() - (other.getY()+ other.getHeight()-1)) < 1 && Math.abs(playerBox.getY()- (other.getY()+ other.getHeight()-1)) > 0){
+                                character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
+                            } else {
+                                character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth() - 1);
+                            }
+
 
                             // Check Left side
-                        } else if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() &&
-                                playerBox.getX() < other.getX() + other.getWidth() && character.xVel < 0) {
-                            character.setCollision(Character.LEFT,  other.getX() + other.getWidth() + 1);
-                        }
-
-                        else {
-                            System.out.println("Intersect but against what?");
                         }
                     }
                 }
