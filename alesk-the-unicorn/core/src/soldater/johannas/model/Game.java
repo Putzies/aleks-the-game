@@ -29,8 +29,8 @@ public class Game implements Entity, DrawableGame {
 
 
     // Task object used for disabling a pickup effect after a set time.
-    private TimerTask t;
-    private Timer taskTimer = new Timer();
+    //private TimerTask t;
+    //private Timer taskTimer = new Timer();
 
     public Game() {
         entities = new ArrayList<>();
@@ -222,39 +222,35 @@ public class Game implements Entity, DrawableGame {
             for (Character character : characters) {
                 character.resetCollisions();
 
-                playerBox = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());
+                playerBox = new AABB(character.getX(), character.getY() + 1, character.getWidth(), character.getHeight());
 
                 for (Platform platform: level.platforms) {
                     other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
 
                     if (playerBox.intersects(other)) {
                         if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth()
+                                // Checked in intersects, unnecessary?
                                 && playerBox.getX() < other.getX() + other.getWidth()
                                 && character.xVel < 0) {
-
-                                /* This is probably the greatest hack i've done to date.
-                                 * We mix collision detection types for the left/right cases into "look-ahead" type
-                                 * So instead of just checking left right we also check whether what we collide into is
-                                 * on the same level as us, which means that we should be able to freely run over
-                                 */
-                                if(Math.abs(playerBox.getY() - (other.getY()+ other.getHeight()-1)) < 1 && Math.abs(playerBox.getY()- (other.getY()+ other.getHeight()-1)) > 0){
-                                    character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
-                                } else {
-                                    character.setCollision(Character.LEFT, other.getX() + other.getWidth() + 1);
-                                }
+                            if(playerBox.lookaheadY(other)){
+                                character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
+                            } else {
+                                character.setCollision(Character.LEFT, other.getX() + other.getWidth() + 1);
+                            }
 
                         } else if (playerBox.getX() < other.getX() &&
+                                // Unnecessary since we check this already in intersects?
                                 playerBox.getX() + playerBox.getWidth() > other.getX() &&
                                 character.xVel > 0) {
-                            if (Math.abs(playerBox.getY() - (other.getY() + other.getHeight() - 1)) < 1 && Math.abs(playerBox.getY() - (other.getY() + other.getHeight() - 1)) > 0) {
+                            if (playerBox.lookaheadY(other)) {
                                 character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
                             } else {
                                 character.setCollision(Character.RIGHT, other.getX() - playerBox.getWidth() - 1);
                             }
                         }
 
-
                         else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
+                                // This case is checked in intersect, unnecessary?
                                 playerBox.getY() < other.getY() + other.getHeight() && character.yVel < 0) {
 
                                 if (platform.isHarmful()) {
@@ -263,7 +259,9 @@ public class Game implements Entity, DrawableGame {
                                     character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
                                 }
 
-                        } else if (playerBox.y < other.y && playerBox.y + playerBox.HEIGHT > other.y && character.yVel > 0) {
+                        } else if (playerBox.y < other.y &&
+                                // Same thing here, checked in intersect?
+                                playerBox.y + playerBox.HEIGHT > other.y && character.yVel > 0) {
                             character.setCollision(Character.UP,  other.y - playerBox.getHeight() - 1);
 
                         }
@@ -284,7 +282,7 @@ public class Game implements Entity, DrawableGame {
     }
 
     // Generate the appropriate Task given an n and the truth value.
-    private TimerTask generateTask(int n, boolean val) {
+    /*private TimerTask generateTask(int n, boolean val) {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -293,7 +291,7 @@ public class Game implements Entity, DrawableGame {
         };
 
         return task;
-    }
+    }*/
 
     /* Ugly for now as we are checking against the drawable interface.
      * Affector for the drawable that is moving
@@ -356,4 +354,5 @@ public class Game implements Entity, DrawableGame {
             }
         }
     }
+
 }
