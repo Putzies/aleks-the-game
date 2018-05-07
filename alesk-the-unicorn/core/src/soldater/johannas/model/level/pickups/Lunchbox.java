@@ -1,8 +1,9 @@
 package soldater.johannas.model.level.pickups;
 
+import soldater.johannas.model.level.Level;
 import soldater.johannas.model.level.Player;
 
-public class Lunchbox extends Pickup {
+public class Lunchbox extends Pickup implements LevelPickup {
     // TODO Remember to double check the actual size of the Lunchboxes!
     public static final int WIDTH = 69;
     public static final int HEIGHT = 87;
@@ -27,13 +28,8 @@ public class Lunchbox extends Pickup {
         return "lunchbox";
     }
 
-    @Override
-    public void doIt(Player player){
+    public void doIt(Level level){
+     level.takenLunchboxes ++;
     }
 
-    /*
-    @Override
-    public void doIt(Game game){
-    }
-     */
 }

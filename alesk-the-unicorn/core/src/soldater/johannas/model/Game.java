@@ -4,8 +4,10 @@ import java.util.Timer;
 
 import soldater.johannas.model.level.*;
 import soldater.johannas.model.level.blocks.Platform;
+import soldater.johannas.model.level.pickups.LevelPickup;
 import soldater.johannas.model.level.pickups.Lunchbox;
 import soldater.johannas.model.level.pickups.Pickup;
+import soldater.johannas.model.level.pickups.PlayerPickup;
 
 
 import java.util.ArrayList;
@@ -141,21 +143,29 @@ public class Game implements Entity, DrawableGame {
 
     // Version 2: Checks for a collision and triggers the response.
     private void collidePickups() {
+        // Future code cleanup.
+        AABB playerBox = new AABB(getPlayer().getX(), getPlayer().getY(), getPlayer().getWidth(), getPlayer().getHeight());
+        AABB other;
+
         for (Iterator<Pickup> iterator = level.pickups.iterator(); iterator.hasNext();) {
             Pickup pickup = iterator.next();
 
-            boolean withinX = isWithinX(getPlayer(),pickup);
-            boolean withinY = isWithinY(getPlayer(),pickup);
+            other = new AABB(pickup.getX(), pickup.getY(), pickup.getWidth(), pickup.getHeight());
+
+            //boolean withinX = isWithinX(getPlayer(),pickup);
+            //boolean withinY = isWithinY(getPlayer(),pickup);
 
             boolean remove = true;
 
-            // Detecting a collision is simple
-            if (withinX && withinY) {
-                if (pickup instanceof Lunchbox){
-                    level.takenLunchboxes += 1;
+            // This is the best solution i could come up with for now.
+            // Still uses pickup at its core so we loop over that list, but we use instance of to do something specific.
+            if (playerBox.intersects(other)) {
+                if (pickup instanceof LevelPickup){
+                    ((LevelPickup) pickup).doIt(level);
                 }
-
-                pickup.doIt(getPlayer());
+                if (pickup instanceof PlayerPickup){
+                    ((PlayerPickup) pickup).doIt(getPlayer());
+                }
 
             } else {
                 remove = false;
@@ -166,30 +176,38 @@ public class Game implements Entity, DrawableGame {
             }
         }
     }
-    
+
     // Collision code for Player versus some Character.
     // Future expansion: Collide against hanging spiders, which for some reason are not in characters.
     private void collideCharacters() {
         // We will constantly be using player. So lets store it for the time being.
         Player player = level.player;
 
+        AABB playerBox = new AABB(getPlayer().getX(), getPlayer().getY(), getPlayer().getWidth(), getPlayer().getHeight());
+        AABB other;
+
         for (Character character : characters) {
             if (character == player) { continue; }
-            boolean withinX = isWithinX(player, character);
-            boolean withinY = isWithinY(player, character);
+            other = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
+
+            //boolean withinX = isWithinX(player, character);
+            //boolean withinY = isWithinY(player, character);
 
             // Check if player and some character are colliding.
-            if (withinX && withinY) {
+            if (playerBox.intersects(other)) {
                 player.damage();
             }
         }
         for (Character character : hangingEnemies){
-            if (character == player) { continue; }
-            boolean withinX = isWithinX(player, character);
-            boolean withinY = isWithinY(player, character);
+            // hanging enemies doesnt hold player so unnecessary check.
+            //if (character == player) { continue; }
 
+            //boolean withinX = isWithinX(player, character);
+            //boolean withinY = isWithinY(player, character);
+
+            other = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
             // Check if player and some character are colliding.
-            if (withinX && withinY) {
+            if (playerBox.intersects(other)) {
                 player.damageInverted();
             }
         }
@@ -197,8 +215,8 @@ public class Game implements Entity, DrawableGame {
     }
 
     private void collideTerrain(){
-            AABB playerBox;
-            AABB other;
+            AABB playerBox; // Not really the "playerbox" here but lets use it.
+            AABB other;     // Preferably platformBox but lets use this for now. (Easier to reason about improvements with same names everywhere).
 
             // Just loop through everything now. Creating a new other for each item to collide against and check for intersect.
             for (Character character : characters) {
@@ -210,8 +228,6 @@ public class Game implements Entity, DrawableGame {
                     other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
 
                     if (playerBox.intersects(other)) {
-                        System.out.println(getPlayer().getY() + " " + (other.getHeight()+other.getY()));
-                        // Check Down, and check if the platform is harmful.
                         if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth()
                                 && playerBox.getX() < other.getX() + other.getWidth()
                                 && character.xVel < 0) {
@@ -227,7 +243,18 @@ public class Game implements Entity, DrawableGame {
                                     character.setCollision(Character.LEFT, other.getX() + other.getWidth() + 1);
                                 }
 
-                        } else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
+                        } else if (playerBox.getX() < other.getX() &&
+                                playerBox.getX() + playerBox.getWidth() > other.getX() &&
+                                character.xVel > 0) {
+                            if (Math.abs(playerBox.getY() - (other.getY() + other.getHeight() - 1)) < 1 && Math.abs(playerBox.getY() - (other.getY() + other.getHeight() - 1)) > 0) {
+                                character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
+                            } else {
+                                character.setCollision(Character.RIGHT, other.getX() - playerBox.getWidth() - 1);
+                            }
+                        }
+
+
+                        else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
                                 playerBox.getY() < other.getY() + other.getHeight() && character.yVel < 0) {
 
                                 if (platform.isHarmful()) {
@@ -236,25 +263,12 @@ public class Game implements Entity, DrawableGame {
                                     character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
                                 }
 
-                         // Check Up
                         } else if (playerBox.y < other.y && playerBox.y + playerBox.HEIGHT > other.y && character.yVel > 0) {
                             character.setCollision(Character.UP,  other.y - playerBox.getHeight() - 1);
 
-                        // Bottom case that should never be reached in an Axis-Aligned setting.
-                        }       // Check Right side
-                        else if (playerBox.getX() < other.getX() &&
-                                 playerBox.getX() + playerBox.getWidth() > other.getX() &&
-                                 character.xVel > 0) {
-                            if(Math.abs(playerBox.getY() - (other.getY()+ other.getHeight()-1)) < 1 && Math.abs(playerBox.getY()- (other.getY()+ other.getHeight()-1)) > 0){
-                                character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
-                            } else {
-                                character.setCollision(Character.RIGHT,  other.getX() - playerBox.getWidth() - 1);
-                            }
-
-
-                            // Check Left side
                         }
                     }
+
                 }
             }
 
@@ -284,7 +298,7 @@ public class Game implements Entity, DrawableGame {
     /* Ugly for now as we are checking against the drawable interface.
      * Affector for the drawable that is moving
      * Affected for the drawable that we might collide against
-     */
+
 
     private boolean isWithinX(Drawable affector, Drawable affected) {
         boolean withinX = affector.getX() + affector.getWidth() > affected.getX() &&
@@ -314,6 +328,7 @@ public class Game implements Entity, DrawableGame {
 
         return withinY;
     }
+    */
 
     // Ugly, semi-hard coded version.
     private void calculateNewSoundVolumes(){

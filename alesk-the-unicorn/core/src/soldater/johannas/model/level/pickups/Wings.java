@@ -6,7 +6,7 @@ import soldater.johannas.model.level.pickups.Pickup;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Wings extends Pickup {
+public class Wings extends Pickup implements PlayerPickup {
 
     // TODO Remember to double check the actual size of the Wings!
     public static final int WIDTH = 75;
@@ -28,7 +28,6 @@ public class Wings extends Pickup {
         return "wings";
     }
 
-    @Override
     public void doIt(Player player){
         this.taskTimer = new Timer();
         player.setPickup(Player.WINGS,true);

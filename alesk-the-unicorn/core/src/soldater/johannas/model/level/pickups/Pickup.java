@@ -64,7 +64,7 @@ public abstract class Pickup implements Drawable, Entity {
     }
 
     // Abstract method doing something on the Player
-    public abstract void doIt(Player player);
+    //public abstract void doIt(Player player);
 
 
     // Only solution seems to be to implement two interfaces, one for level, other for player and simply have a list of each.
