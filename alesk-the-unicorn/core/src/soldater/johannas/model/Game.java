@@ -93,8 +93,6 @@ public class Game implements Entity, DrawableGame {
 
         level.player.update(dTime);
 
-        calculateNewSoundVolumes();
-
         // Ordering here is important. Characters before Terrain will cause bugs.
         collideTerrain();
         collideCharacters();
@@ -327,32 +325,5 @@ public class Game implements Entity, DrawableGame {
         return withinY;
     }
     */
-
-    // Ugly, semi-hard coded version.
-    private void calculateNewSoundVolumes(){
-        for (Character character : characters) {
-            if (character instanceof WalkingEnemy) {
-
-                //TODO Refactor, should the controller hold this logic or should world (World enforces how far we can hear).
-                double newVolume = Math.sqrt((level.player.midX - character.getMidX()) * (level.player.midX - character.getMidX())) +
-                        Math.sqrt((level.player.midY - character.getMidY()) * (level.player.midY - character.getMidY()));
-
-                if (level.player.max_dist > newVolume) {
-                    character.setSoundVolume(1f);
-                } else {
-                    float f = 1;
-                    newVolume = newVolume - level.player.max_dist;
-                    for (; newVolume > 0; newVolume -= 100) {
-                        f -= 0.1;
-                        if (f <= 0) {
-                            f = 0;
-                            break;
-                        }
-                    }
-                    character.setSoundVolume(f);
-                }
-            }
-        }
-    }
 
 }

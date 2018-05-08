@@ -17,9 +17,6 @@ public abstract class Character implements Entity{
     protected double xVel, yVel;
     protected int life;
 
-    // Float for controlling the sound volume if something is far away.
-    protected float soundVolume = 1f;
-
     // The maximum interaction distance, used for sound and collision
     protected double max_dist = 800;
 
@@ -39,8 +36,6 @@ public abstract class Character implements Entity{
         this.y = y;
         this.midX = x + getWidth() / 2;
         this.midY = y + getHeight() / 2;
-        this.soundVolume = 1f;
-
     }
 
     public Character() {
@@ -96,10 +91,6 @@ public abstract class Character implements Entity{
     public int getDirection() {
         return direction;
     }
-
-    public float getSoundVolume(){ return soundVolume; }
-
-    public void setSoundVolume(float f){soundVolume = f;}
 
     public boolean isOnGround() {
         return collisions[DOWN];
