@@ -25,18 +25,25 @@ public class SoundController {
         }
     }
 
+    public void reset() {
+        lastHealth = 4;
+        lastTakenLunchBoxes = 0;
+    }
+
     public void update(Game game) {
         if (game.getTakenLunchBoxes() > lastTakenLunchBoxes) {
             lastTakenLunchBoxes = game.getTakenLunchBoxes();
             eat.play(1, 1f, 0);
         }
 
-        if (game.getPlayer().getLife() < lastHealth) {
+        int life = game.getPlayer().getLife();
+
+        if (life < lastHealth && life > 0) {
             lastHealth = game.getPlayer().getLife();
             damage.play(1, 1.0f, 0);
         }
 
-        if (game.getPlayer().getLife() == 0) {
+        if (life == 0) {
             die.play();
         }
     }

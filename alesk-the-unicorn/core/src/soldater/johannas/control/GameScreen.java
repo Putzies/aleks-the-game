@@ -23,6 +23,7 @@ public class GameScreen extends ScreenRenderer {
 	public GameScreen(GameMenu levelSection, String level, SoundController soundController) {
 		this.gameMenu = levelSection;
 		this.soundController = soundController;
+		soundController.reset();
 
 		System.out.println(level);
 		// Initialize the world!
