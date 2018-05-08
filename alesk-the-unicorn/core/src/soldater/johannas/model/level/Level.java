@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
-    public final List<Platform> platforms;
+    public List<Platform> platforms;
     public final List<GrassPlatform> grassPlatforms;
     public final List<LavaPlatform> lavaPlatforms;
     public final List<SpikePlatform> spikePlatforms;
@@ -54,6 +54,7 @@ public class Level {
 
     public void construct() {
         addPickups();
+        platforms = new ArrayList<>();
         grassPlatforms.forEach(Platform::construct);
         spikePlatforms.forEach(SpikePlatform::construct);
         lavaPlatforms.forEach(LavaPlatform::construct);

@@ -37,6 +37,11 @@ public class AABB {
         return isWithinX(other) && isWithinY(other);
     }
 
+    // Not the smartest of functions but saves space.
+    public boolean lookaheadY(AABB box2){
+        return Math.abs(this.getY() - (box2.getY() + box2.getHeight()-1)) < 1 &&
+                Math.abs(this.getY() - (box2.getY() + box2.getHeight()-1)) > 0;
+    }
 
     // Check for intersection in X-Axis
     private boolean isWithinX(AABB other) {
@@ -49,9 +54,10 @@ public class AABB {
     // Check for intersection in Y-Axis
     private boolean isWithinY(AABB other) {
         boolean withinY = this.y + this.HEIGHT > other.y &&
-                this.y + 1 < other.y + other.HEIGHT;
+                this.y  < other.y + other.HEIGHT;
 
         return withinY;
     }
+
 
 }

@@ -6,7 +6,7 @@ import soldater.johannas.model.level.pickups.Pickup;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EnergyDrink extends Pickup {
+public class EnergyDrink extends Pickup implements PlayerPickup {
 
     // TODO Remember to double check the actual size of the EnergyDrink!
     public static final int WIDTH = 27;
@@ -28,7 +28,6 @@ public class EnergyDrink extends Pickup {
         return "energydrink";
     }
 
-    @Override
     public void doIt(Player player){
         this.taskTimer = new Timer();
         player.setPickup(Player.ENERGYDRINK,true);

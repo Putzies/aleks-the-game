@@ -1,31 +1,21 @@
 package soldater.johannas.control;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import soldater.johannas.model.Movable;
 
 public class PlayerController implements Controller{
     private Movable player;
+    private SoundController soundController;
 
     private boolean rightPressed = false;
     private boolean leftPressed = false;
     private boolean spacePressed = false;
 
-    public PlayerController(Movable player) {
+    public PlayerController(Movable player, SoundController soundController) {
         this.player = player;
+        this.soundController = soundController;
     }
-
-
-    /* Create a new Sound which uses the input .wav or .mp3 file
-     * In case of error, the main problem seems to be sampling in the .wav file being wrong.
-     *
-     */
-    private Sound jmpSound  = Gdx.audio.newSound(Gdx.files.internal("sounds/jump_07.wav"));
-
-    // Example of invalid .wav sampling
-    // Sound jmpSound2 = Gdx.audio.newSound(Gdx.files.internal("mb_jump.wav"));
 
     public void update() {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -48,8 +38,7 @@ public class PlayerController implements Controller{
             player.jump();
             spacePressed = true;
 
-            // Using the sound is just one line of code, i.e calling it to play.
-            jmpSound.play();
+            soundController.jump();
 
         } else if (spacePressed && player.getYvel() == 0) {
             player.stop();
