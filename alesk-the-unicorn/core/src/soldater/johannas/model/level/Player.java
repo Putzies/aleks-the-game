@@ -120,7 +120,7 @@ public class Player extends Character implements Movable {
 
     @Override
     public void jump() {
-        // CHANGED here. First check the state, if we are in a falling or jumping state already, we cannot jump. UNLESS
+        // CHANGED here. First check the state, if we are in a falling or jumping state already, we cannot enemyJump. UNLESS
         // Wings.
         if (state != FALLING && state != JUMPING || this.pickups[WINGS]) {
             state = JUMPING;
