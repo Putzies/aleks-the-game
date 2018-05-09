@@ -14,7 +14,7 @@ if(!name) {
     return;
 }
 
-function createPlatformTier1(){
+function createPlatforms(){
   // P1
   grassPlatforms.push({
     X: 0,
@@ -107,7 +107,7 @@ function createPlatformTier1(){
 
 }
 
-function createLunchBoxTier1(){
+function createLunchBoxes(){
   //Left to right filling of the first tier.
   lunchboxes.push({
     x: 12*BLOCKWIDTH,
@@ -198,9 +198,39 @@ function createLunchBoxTier1(){
     y: 2 * BLOCKHEIGHT
   });
 
+  lunchboxes.push({
+    x: 105 * BLOCKWIDTH,
+    y: 2 * BLOCKHEIGHT
+  });
+
+  lunchboxes.push({
+    x: 105 * BLOCKWIDTH,
+    y: 4 * BLOCKHEIGHT
+  });
+
+  lunchboxes.push({
+    x: 105 * BLOCKWIDTH,
+    y: 6 * BLOCKHEIGHT
+  });
+
+  lunchboxes.push({
+    x: 106 * BLOCKWIDTH,
+    y: 8 * BLOCKHEIGHT
+  });
+
+  lunchboxes.push({
+    x: 107 * BLOCKWIDTH,
+    y: 6 * BLOCKHEIGHT
+  });
+
+  lunchboxes.push({
+    x: 110 * BLOCKWIDTH,
+    y: 5 * BLOCKHEIGHT
+  });
+
 }
 
-function createEnemiesTier1(){
+function createEnemies(){
 
   enemies.push({
     x: 43*BLOCKWIDTH,
@@ -223,18 +253,31 @@ function createEnemiesTier1(){
     rightBound: 91*BLOCKWIDTH
   });
 }
-function createPlatformTier2(){
 
+
+
+createPlatforms();
+createEnemies();
+createLunchBoxes();
+
+const player = {
+    x: 2*BLOCKWIDTH,
+    y: 1*BLOCKHEIGHT + 1,
+};
+
+const levelMetadata = {
+    name,
+    highScores: []
 }
 
-function createPlatformTier3(){
-
-}
-
-
-createPlatformTier1();
-createEnemiesTier1();
-createLunchBoxTier1();
+const level = {
+    platforms,
+    grassPlatforms,
+    lavaPlatforms,
+    spikePlatforms,
+    enemies,createPlatforms();
+createEnemies();
+createLunchBoxes();
 
 const player = {
     x: 2*BLOCKWIDTH,
@@ -252,6 +295,20 @@ const level = {
     lavaPlatforms,
     spikePlatforms,
     enemies,
+    player,
+    lunchboxes,
+    wings: [],
+    energyDrinks: [],
+    baguettes: [],
+};
+
+
+const fileName = name.replace(/ /g, '_').toLowerCase();
+
+var fs = require('fs');
+fs.writeFile(fileName + '.json', JSON.stringify(level), 'utf8', () => {console.log('Done writing level.')});
+fs.writeFile(fileName + '.meta.json', JSON.stringify(levelMetadata, 'utf8', () => {console.log('Done writing file metadata')}));
+
     player,
     lunchboxes,
     wings: [],
