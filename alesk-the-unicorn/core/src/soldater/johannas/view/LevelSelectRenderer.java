@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelSelectRenderer extends ScreenRenderer {
-    private int START_Y = Gdx.graphics.getHeight() * 3 / 4;
-    private final int MARGIN = 40;
+    private final int SELECTED_LEVEL_Y = Gdx.graphics.getHeight() / 2;
+    private final int SELECTED_LEVEL_X = 400;
+
+    private final int MARGIN = 20;
 
     private LevelSelection levelSelection;
     private SpriteBatch batch;
@@ -35,8 +37,8 @@ public class LevelSelectRenderer extends ScreenRenderer {
         for (LevelInfo levelInfo : levels) {
             items.add(new MenuItem(
                     levelInfo.getName().replace("_", " "),
-                    2,
-                    MenuItem.Alignment.LEFT,
+                    3,
+                    MenuItem.Alignment.CENTER,
                     Colors.MENU_COLOR
             ));
         }
@@ -86,17 +88,25 @@ public class LevelSelectRenderer extends ScreenRenderer {
     }
 
     private void renderLevels() {
-        for (int i = 0; i < levels.size(); i++) {
-            if (i == selectItem) {
-                renderSelected();
-            } else {
-                items.get(i).draw(
-                        batch,
-                        100,
-                        START_Y - (items.get(i).getHeight() + MARGIN) * i
-                );
-            }
-        }
+
+        int next = selectItem - 1 < 0 ? items.size() - 1 : selectItem - 1;
+        int prev = selectItem + 1 == items.size() ? 0 : selectItem + 1;
+
+        renderSelected();
+
+        items.get(prev).draw(
+                batch,
+                SELECTED_LEVEL_X,
+                SELECTED_LEVEL_Y - items.get(selectItem).getHeight() - MARGIN,
+                2
+        );
+
+        items.get(next).draw(
+                batch,
+                SELECTED_LEVEL_X,
+                SELECTED_LEVEL_Y + items.get(selectItem).getHeight() + MARGIN,
+                2
+        );
     }
 
     private void renderSelected() {
@@ -105,8 +115,8 @@ public class LevelSelectRenderer extends ScreenRenderer {
 
         items.get(selectItem).draw(
                 batch,
-                100 + offsetX,
-                START_Y - (items.get(selectItem).getHeight() + MARGIN) * selectItem + offsetY
+                SELECTED_LEVEL_X + offsetX,
+                SELECTED_LEVEL_Y
         );
     }
 }

@@ -18,6 +18,7 @@ public class MenuItem {
     private GlyphLayout layout;
     private BitmapFont font;
     private final int width, height;
+    private float originalScale;
 
 
     private Alignment alignment;
@@ -31,6 +32,7 @@ public class MenuItem {
     public MenuItem(String text, float scale, Alignment alignment, Color color) {
         this.alignment = alignment;
         font = new BitmapFont();
+        originalScale = scale;
         font.getData().setScale(scale);
         layout = new GlyphLayout(font, text, color, 0, Align.bottomLeft, true);
         width = (int)layout.width;
@@ -49,18 +51,30 @@ public class MenuItem {
     }
 
     public void draw(Batch batch, int x, int y) {
+        draw(batch, x, y, originalScale);
+    }
+
+    public void draw(Batch batch, int x, int y, float scale) {
         if (texture == null) {
+
+            if (font.getData().scaleX != scale) {
+                font.getData().setScale(scale);
+            }
+
             if (alignment == Alignment.LEFT) {
                 font.draw(batch, layout, x, y);
             } else if (alignment == Alignment.CENTER) {
                 font.draw(batch, layout, x - width / 2, y);
             }
+
         } else {
+
             if (alignment == Alignment.LEFT) {
                 batch.draw(texture, x, y);
             } else if (alignment == Alignment.CENTER) {
                 batch.draw(texture, x - width / 2, y);
             }
+
         }
     }
 
