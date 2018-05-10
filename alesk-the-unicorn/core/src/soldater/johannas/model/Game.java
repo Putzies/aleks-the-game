@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Game implements Entity, DrawableGame {
+public class Game implements DrawableGame {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 600;
 
@@ -73,7 +73,6 @@ public class Game implements Entity, DrawableGame {
         return level.player;
     }
 
-    @Override
     public void update(double dTime) {
         timer.update((float)dTime);
 
@@ -92,41 +91,6 @@ public class Game implements Entity, DrawableGame {
     @Override
     public soldater.johannas.util.Timer getTimer() {
         return timer;
-    }
-
-    @Override
-    public double getX() {
-        return 0;
-    }
-
-    @Override
-    public double getY() {
-        return 0;
-    }
-
-    @Override
-    public int getWidth() {
-        return WIDTH;
-    }
-
-    @Override
-    public int getHeight() {
-        return HEIGHT;
-    }
-
-    @Override
-    public int getDirection() {
-        return 0;
-    }
-
-    @Override
-    public int getState() {
-        return 0;
-    }
-
-    @Override
-    public String getName() {
-        return "world";
     }
 
     // Version 2: Checks for a collision and triggers the response.
