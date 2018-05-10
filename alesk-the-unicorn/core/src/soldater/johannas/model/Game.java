@@ -1,19 +1,14 @@
 package soldater.johannas.model;
 
-import java.util.Timer;
-
 import soldater.johannas.model.level.*;
 import soldater.johannas.model.level.blocks.Platform;
 import soldater.johannas.model.level.pickups.LevelPickup;
-import soldater.johannas.model.level.pickups.Lunchbox;
 import soldater.johannas.model.level.pickups.Pickup;
 import soldater.johannas.model.level.pickups.PlayerPickup;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TimerTask;
 
 public class Game implements Entity, DrawableGame {
     public static final int WIDTH = 1000;
@@ -26,11 +21,6 @@ public class Game implements Entity, DrawableGame {
     private List<Entity> entities;
     private List<Character> characters;
     private List<HangingEnemy> hangingEnemies;
-
-
-    // Task object used for disabling a pickup effect after a set time.
-    //private TimerTask t;
-    //private Timer taskTimer = new Timer();
 
     public Game() {
         entities = new ArrayList<>();
@@ -150,9 +140,6 @@ public class Game implements Entity, DrawableGame {
 
             other = new AABB(pickup.getX(), pickup.getY(), pickup.getWidth(), pickup.getHeight());
 
-            //boolean withinX = isWithinX(getPlayer(),pickup);
-            //boolean withinY = isWithinY(getPlayer(),pickup);
-
             boolean remove = true;
 
             // This is the best solution i could come up with for now.
@@ -188,21 +175,12 @@ public class Game implements Entity, DrawableGame {
             if (character == player) { continue; }
             other = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
 
-            //boolean withinX = isWithinX(player, character);
-            //boolean withinY = isWithinY(player, character);
-
             // Check if player and some character are colliding.
             if (playerBox.intersects(other)) {
                 player.damage();
             }
         }
         for (Character character : hangingEnemies){
-            // hanging enemies doesnt hold player so unnecessary check.
-            //if (character == player) { continue; }
-
-            //boolean withinX = isWithinX(player, character);
-            //boolean withinY = isWithinY(player, character);
-
             other = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
             // Check if player and some character are colliding.
             if (playerBox.intersects(other)) {
@@ -226,20 +204,14 @@ public class Game implements Entity, DrawableGame {
                     other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
 
                     if (playerBox.intersects(other)) {
-                        if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth()
-                                // Checked in intersects, unnecessary?
-                                && playerBox.getX() < other.getX() + other.getWidth()
-                                && character.xVel < 0) {
+                        if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() && character.xVel < 0) {
                             if(playerBox.lookaheadY(other)){
                                 character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
                             } else {
                                 character.setCollision(Character.LEFT, other.getX() + other.getWidth() + 1);
                             }
 
-                        } else if (playerBox.getX() < other.getX() &&
-                                // Unnecessary since we check this already in intersects?
-                                playerBox.getX() + playerBox.getWidth() > other.getX() &&
-                                character.xVel > 0) {
+                        } else if (playerBox.getX() < other.getX() && character.xVel > 0) {
                             if (playerBox.lookaheadY(other)) {
                                 character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
                             } else {
@@ -247,27 +219,19 @@ public class Game implements Entity, DrawableGame {
                             }
                         }
 
-                        else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() &&
-                                // This case is checked in intersect, unnecessary?
-                                playerBox.getY() < other.getY() + other.getHeight() && character.yVel < 0) {
-
+                        else if (playerBox.getY() + playerBox.getHeight() > other.getY() + other.getHeight() && character.yVel < 0) {
                                 if (platform.isHarmful()) {
                                     character.damage();
                                 } else {
                                     character.setCollision(Character.DOWN, other.getY() + other.getHeight() - 1);
                                 }
 
-                        } else if (playerBox.y < other.y &&
-                                // Same thing here, checked in intersect?
-                                playerBox.y + playerBox.HEIGHT > other.y && character.yVel > 0) {
+                        } else if (playerBox.y < other.y && character.yVel > 0) {
                             character.setCollision(Character.UP,  other.y - playerBox.getHeight() - 1);
-
                         }
                     }
-
                 }
             }
-
     }
 
     public List<WalkingEnemy> getWalkingEnemies() {
@@ -278,52 +242,4 @@ public class Game implements Entity, DrawableGame {
     public List<HangingEnemy> getHangingEnemies() {
         return hangingEnemies;
     }
-
-    // Generate the appropriate Task given an n and the truth value.
-    /*private TimerTask generateTask(int n, boolean val) {
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                level.player.setPickup(n, val);
-            }
-        };
-
-        return task;
-    }*/
-
-    /* Ugly for now as we are checking against the drawable interface.
-     * Affector for the drawable that is moving
-     * Affected for the drawable that we might collide against
-
-
-    private boolean isWithinX(Drawable affector, Drawable affected) {
-        boolean withinX = affector.getX() + affector.getWidth() > affected.getX() &&
-                affector.getX() < affected.getX() + affected.getWidth();
-
-        return withinX;
-    }
-
-    private boolean isWithinY(Drawable affector, Drawable affected) {
-        boolean withinY = affector.getY() + affector.getHeight() > affected.getY() &&
-                affector.getY() + 1 < affected.getY() + affected.getHeight();
-
-        return withinY;
-    }
-
-    //TODO: Make less ugly <3
-    private boolean isWithinX(Drawable affector, Platform affected) {
-        boolean withinX = affector.getX() + affector.getWidth() > affected.getX() &&
-                affector.getX() < affected.getX() + affected.getWidth();
-
-        return withinX;
-    }
-
-    private boolean isWithinY(Drawable affector, Platform affected) {
-        boolean withinY = affector.getY() + affector.getHeight() > affected.getY() &&
-                affector.getY() + 1 < affected.getY() + affected.getHeight();
-
-        return withinY;
-    }
-    */
-
 }
