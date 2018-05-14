@@ -1,4 +1,4 @@
-package soldater.johannas.view;
+package soldater.johannas.view.menus;
 
 public class AnimatedMenu {
     protected final int N_FRAMES = 10;

@@ -1,19 +1,28 @@
-package soldater.johannas.view;
+package soldater.johannas.view.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.util.Colors;
+import soldater.johannas.view.Highscore;
+import soldater.johannas.view.LevelInfo;
+import soldater.johannas.view.ScreenRenderer;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LevelSelectRenderer extends ScreenRenderer {
     private final int SELECTED_LEVEL_Y = Gdx.graphics.getHeight() / 2;
-    private final int SELECTED_LEVEL_X = 400;
+    private final int SELECTED_LEVEL_X = 250;
+
+    private final int HIGHSCORES_X = Gdx.graphics.getWidth() * 2 / 3;
+    private final int HIGHSCORES_TOP_Y = Gdx.graphics.getHeight() * 1 / 4;
 
     private final int MARGIN = 20;
 
@@ -23,7 +32,8 @@ public class LevelSelectRenderer extends ScreenRenderer {
 
     private Texture textBackground;
     private List<LevelInfo> levels;
-    private List<MenuItem> items;
+    private List<MenuItem> levelItems;
+    private List<MenuItem> highscoreItems;
     private int selectItem = 0;
 
     public LevelSelectRenderer(LevelSelection levelSelection, List<LevelInfo> levels) {
@@ -32,13 +42,23 @@ public class LevelSelectRenderer extends ScreenRenderer {
         font = new BitmapFont();
 
         this.levels = levels;
-        items = new ArrayList<>();
+        levelItems = new ArrayList<>();
+        highscoreItems = new ArrayList<>();
 
         for (LevelInfo levelInfo : levels) {
-            items.add(new MenuItem(
+            levelItems.add(new MenuItem(
                     levelInfo.getName().replace("_", " "),
                     3,
                     MenuItem.Alignment.CENTER,
+                    Colors.MENU_COLOR
+            ));
+        }
+
+        for (int i = 0; i < 5; i++ ) {
+            highscoreItems.add(new MenuItem(
+                    "",
+                    1.5f,
+                    MenuItem.Alignment.LEFT,
                     Colors.MENU_COLOR
             ));
         }
@@ -62,6 +82,7 @@ public class LevelSelectRenderer extends ScreenRenderer {
         );
 
         renderLevels();
+        renderHighscores();
 
         batch.end();
     }
@@ -89,23 +110,25 @@ public class LevelSelectRenderer extends ScreenRenderer {
 
     private void renderLevels() {
 
-        int next = selectItem - 1 < 0 ? items.size() - 1 : selectItem - 1;
-        int prev = selectItem + 1 == items.size() ? 0 : selectItem + 1;
+        int next = selectItem - 1 < 0 ? levelItems.size() - 1 : selectItem - 1;
+        int prev = selectItem + 1 == levelItems.size() ? 0 : selectItem + 1;
 
         renderSelected();
 
-        items.get(prev).draw(
+        levelItems.get(prev).draw(
                 batch,
                 SELECTED_LEVEL_X,
-                SELECTED_LEVEL_Y - items.get(selectItem).getHeight() - MARGIN,
-                2
+                SELECTED_LEVEL_Y - levelItems.get(selectItem).getHeight() - MARGIN * 5 / 3,
+                2,
+                0.3f
         );
 
-        items.get(next).draw(
+        levelItems.get(next).draw(
                 batch,
                 SELECTED_LEVEL_X,
-                SELECTED_LEVEL_Y + items.get(selectItem).getHeight() + MARGIN,
-                2
+                SELECTED_LEVEL_Y + levelItems.get(selectItem).getHeight() + MARGIN,
+                2,
+                0.3f
         );
     }
 
@@ -113,10 +136,22 @@ public class LevelSelectRenderer extends ScreenRenderer {
         int offsetX = (int)(Math.sin(((double) frame / N_FRAMES) * (Math.PI * 2)) * 3);
         int offsetY = (int)(Math.cos(((double) frame / N_FRAMES) * (Math.PI * 2)) * 5);
 
-        items.get(selectItem).draw(
+        levelItems.get(selectItem).draw(
                 batch,
                 SELECTED_LEVEL_X + offsetX,
-                SELECTED_LEVEL_Y
+                SELECTED_LEVEL_Y + offsetY
         );
+    }
+
+    private void renderHighscores() {
+        List<Highscore> highscores = levels.get(selectItem).getHighscores()
+                .stream()
+                .sorted(Comparator.comparingInt(Highscore::getScore))
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < Math.min(highscores.size(), 5); i++) {
+            highscoreItems.get(i).setText(highscores.get(i).getFormattedText());
+            highscoreItems.get(i).draw(batch, HIGHSCORES_X, HIGHSCORES_TOP_Y - i * MARGIN);
+        }
     }
 }

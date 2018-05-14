@@ -1,7 +1,8 @@
-package soldater.johannas.model.level;
+package soldater.johannas.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import soldater.johannas.model.level.Level;
 
 import java.io.IOException;
 import java.nio.file.Files;

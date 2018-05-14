@@ -3,7 +3,6 @@ package soldater.johannas;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import soldater.johannas.control.GameScreen;
 import soldater.johannas.control.SoundController;
@@ -11,8 +10,8 @@ import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.control.menu.MainMenu;
 import soldater.johannas.view.LevelInfo;
-import soldater.johannas.view.LevelSelectRenderer;
-import soldater.johannas.view.MainMenuRenderer;
+import soldater.johannas.view.menus.LevelSelectRenderer;
+import soldater.johannas.view.menus.MainMenuRenderer;
 
 import java.util.ArrayList;
 import java.util.List;

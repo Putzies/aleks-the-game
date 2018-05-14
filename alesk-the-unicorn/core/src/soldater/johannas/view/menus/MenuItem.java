@@ -1,4 +1,4 @@
-package soldater.johannas.view;
+package soldater.johannas.view.menus;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +18,10 @@ public class MenuItem {
     private GlyphLayout layout;
     private BitmapFont font;
     private final int width, height;
+
     private float originalScale;
+    private String originalText;
+    private Color originalColor;
 
 
     private Alignment alignment;
@@ -32,7 +35,11 @@ public class MenuItem {
     public MenuItem(String text, float scale, Alignment alignment, Color color) {
         this.alignment = alignment;
         font = new BitmapFont();
+
         originalScale = scale;
+        originalText = text;
+        originalColor = color;
+
         font.getData().setScale(scale);
         layout = new GlyphLayout(font, text, color, 0, Align.bottomLeft, true);
         width = (int)layout.width;
@@ -51,20 +58,28 @@ public class MenuItem {
     }
 
     public void draw(Batch batch, int x, int y) {
-        draw(batch, x, y, originalScale);
+        draw(batch, x, y, originalScale, 1);
     }
 
-    public void draw(Batch batch, int x, int y, float scale) {
+    public void draw(Batch batch, int x, int y, float scale, float transparency) {
         if (texture == null) {
+
+            GlyphLayout layout = this.layout;
 
             if (font.getData().scaleX != scale) {
                 font.getData().setScale(scale);
             }
 
+            if (transparency < 1) {
+                Color tempColor = new Color(originalColor);
+                tempColor.a = transparency;
+                layout = new GlyphLayout(font, originalText, tempColor, 0, Align.bottomLeft, true);
+            }
+
             if (alignment == Alignment.LEFT) {
                 font.draw(batch, layout, x, y);
             } else if (alignment == Alignment.CENTER) {
-                font.draw(batch, layout, x - width / 2, y);
+                font.draw(batch, layout, x - layout.width / 2, y);
             }
 
         } else {
@@ -76,6 +91,10 @@ public class MenuItem {
             }
 
         }
+    }
+
+    public void setText(String text) {
+        layout = new GlyphLayout(font, text, originalColor, 0, Align.bottomLeft, true);
     }
 
     public int getWidth() {

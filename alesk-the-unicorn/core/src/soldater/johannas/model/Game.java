@@ -5,6 +5,7 @@ import soldater.johannas.model.level.blocks.Platform;
 import soldater.johannas.model.level.pickups.LevelPickup;
 import soldater.johannas.model.level.pickups.Pickup;
 import soldater.johannas.model.level.pickups.PlayerPickup;
+import soldater.johannas.util.Parser;
 
 import java.util.ArrayList;
 import java.util.Iterator;

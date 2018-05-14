@@ -14,12 +14,12 @@ public class LevelInfo {
         return name;
     }
 
-    public List<Integer> getHighScore() {
+    public List<Highscore> getHighscores() {
         return highScores;
     }
 
     private String name;
-    private List<Integer> highScores;
+    private List<Highscore> highScores;
     private String fileName;
 
 

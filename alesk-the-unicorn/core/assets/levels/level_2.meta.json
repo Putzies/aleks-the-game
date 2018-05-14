@@ -1,1 +1,7 @@
-{"name":"Level_2","highScores":[]}
+{"name":"Level_2","highScores":[{
+    "name": "Apa",
+    "score": 50000
+}, {
+    "name": "Koala",
+    "score": 100000
+}]}

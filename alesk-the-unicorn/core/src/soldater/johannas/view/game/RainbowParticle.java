@@ -1,4 +1,4 @@
-package soldater.johannas.view;
+package soldater.johannas.view.game;
 
 import java.util.Random;
 

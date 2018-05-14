@@ -3,6 +3,7 @@ package soldater.johannas.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import soldater.johannas.view.menus.AnimatedMenu;
 
 public abstract class ScreenRenderer extends AnimatedMenu implements Screen {
 
