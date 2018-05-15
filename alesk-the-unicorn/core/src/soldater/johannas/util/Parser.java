@@ -31,10 +31,10 @@ public class Parser {
         }
     }
 
-    public void saveHighscore(int score, String level) {
+    public void saveHighscore(int score, String level, String name) {
         try {
             LevelInfo levelInfo = loadLevelInfo(BASE_PATH + level + ".meta.json");
-            levelInfo.getHighscores().add(new Highscore(score, "Anonymous"));
+            levelInfo.getHighscores().add(new Highscore(score, name));
             String newMeta = gson.toJson(levelInfo);
             Files.write(Paths.get(BASE_PATH + level + ".meta.json"), newMeta.getBytes());
 
@@ -51,20 +51,30 @@ public class Parser {
 
         for(FileHandle file : internalFiles) {
             if(file.nameWithoutExtension().endsWith(".meta")) {
-                try {
-                    levels.add(loadLevelInfo(file.path()));
-                } catch (IOException e) {
-                    System.out.println("Unable to load file " + file.path());
-                    e.printStackTrace();
-                }
+                levels.add(loadLevelInfo(file.path()));
             }
         }
 
         return levels;
     }
 
-    private LevelInfo loadLevelInfo(String name) throws IOException{
-        String content = new String(Files.readAllBytes(Paths.get(name)));
+    public LevelInfo loadLevelInfo(String name) {
+        String content = null;
+
+        if (!name.endsWith(".meta.json")) {
+            name += ".meta.json";
+        }
+
+        if (!name.startsWith(BASE_PATH)) {
+            name = BASE_PATH + name;
+        }
+
+        try {
+            content = new String(Files.readAllBytes(Paths.get(name)));
+        } catch (IOException e) {
+            System.out.println("Unable to load " + name);
+            e.printStackTrace();
+        }
         return gson.fromJson(content, LevelInfo.class);
     }
 }

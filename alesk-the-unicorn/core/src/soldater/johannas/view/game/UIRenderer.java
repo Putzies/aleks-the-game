@@ -24,7 +24,6 @@ public class UIRenderer {
     private GameMenu gameMenu;
 
     private ModalMenu modalMenu;
-    private Parser parser;
 
     private SpriteBatch batch;
     private BitmapFont font;
@@ -41,7 +40,6 @@ public class UIRenderer {
         font.getData().setScale(2);
         layout = new GlyphLayout(font, "", Colors.MENU_COLOR, 0, Align.center, true);
         batch = new SpriteBatch();
-        parser = new Parser();
 
         loadTextures();
     }
@@ -93,8 +91,7 @@ public class UIRenderer {
     private void checkInput() {
         if (game.getTakenLunchBoxes() == game.getTotalLunchBoxes() && modalMenu == null) {
             gameMenu.pause();
-            modalMenu = new WonModalMenu(gameMenu);
-            parser.saveHighscore(game.getTimer().getMillis(), gameMenu.getLevelName());
+            modalMenu = new WonModalMenu(gameMenu, game.getTimer());
         }
 
         if (game.getPlayer().getLife() == 0 && modalMenu == null) {
