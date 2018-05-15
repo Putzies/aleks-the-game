@@ -12,11 +12,11 @@ public class Timer {
     }
 
     public static int getHundreds(int millis) {
-        return millis / 10;
+        return (millis / 10) % 100;
     }
 
     public static int getSeconds(int millis) {
-        return millis / 1000;
+        return (millis / 1000) % 60;
     }
 
     public static int getMinutes(int millis) {

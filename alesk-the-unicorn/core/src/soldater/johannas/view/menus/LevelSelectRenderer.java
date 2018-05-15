@@ -104,7 +104,7 @@ public class LevelSelectRenderer extends ScreenRenderer {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            levelSelection.startLevel(levels.get(selectItem).getFileName());
+            levelSelection.startLevel(levels.get(selectItem).getName());
         }
     }
 

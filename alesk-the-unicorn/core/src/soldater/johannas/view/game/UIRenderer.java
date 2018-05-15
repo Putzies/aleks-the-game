@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.model.DrawableGame;
+import soldater.johannas.util.Parser;
 import soldater.johannas.view.modal.LostModalMenu;
 import soldater.johannas.view.modal.ModalMenu;
 import soldater.johannas.view.modal.PauseModalMenu;
@@ -23,6 +24,7 @@ public class UIRenderer {
     private GameMenu gameMenu;
 
     private ModalMenu modalMenu;
+    private Parser parser;
 
     private SpriteBatch batch;
     private BitmapFont font;
@@ -39,6 +41,7 @@ public class UIRenderer {
         font.getData().setScale(2);
         layout = new GlyphLayout(font, "", Colors.MENU_COLOR, 0, Align.center, true);
         batch = new SpriteBatch();
+        parser = new Parser();
 
         loadTextures();
     }
@@ -91,6 +94,7 @@ public class UIRenderer {
         if (game.getTakenLunchBoxes() == game.getTotalLunchBoxes() && modalMenu == null) {
             gameMenu.pause();
             modalMenu = new WonModalMenu(gameMenu);
+            parser.saveHighscore(game.getTimer().getMillis(), gameMenu.getLevelName());
         }
 
         if (game.getPlayer().getLife() == 0 && modalMenu == null) {

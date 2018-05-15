@@ -1,7 +1,1 @@
-{"name":"Level_2","highScores":[{
-    "name": "Apa",
-    "score": 50000
-}, {
-    "name": "Koala",
-    "score": 100000
-}]}
+{"name":"Level_2","highScores":[{"score":50000,"name":"Apa"},{"score":100000,"name":"Koala"},{"score":23174,"name":"Anonymous"}]}
