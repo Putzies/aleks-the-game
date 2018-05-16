@@ -1,7 +1,8 @@
-package soldater.johannas.view;
+package soldater.johannas.view.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import soldater.johannas.view.game.RainbowParticle;
 
 import java.util.ArrayList;
 import java.util.Iterator;

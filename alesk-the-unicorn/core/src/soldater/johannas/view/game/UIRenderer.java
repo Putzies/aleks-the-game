@@ -1,4 +1,4 @@
-package soldater.johannas.view;
+package soldater.johannas.view.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.model.DrawableGame;
+import soldater.johannas.util.Parser;
 import soldater.johannas.view.modal.LostModalMenu;
 import soldater.johannas.view.modal.ModalMenu;
 import soldater.johannas.view.modal.PauseModalMenu;
@@ -90,7 +91,7 @@ public class UIRenderer {
     private void checkInput() {
         if (game.getTakenLunchBoxes() == game.getTotalLunchBoxes() && modalMenu == null) {
             gameMenu.pause();
-            modalMenu = new WonModalMenu(gameMenu);
+            modalMenu = new WonModalMenu(gameMenu, game.getTimer());
         }
 
         if (game.getPlayer().getLife() == 0 && modalMenu == null) {

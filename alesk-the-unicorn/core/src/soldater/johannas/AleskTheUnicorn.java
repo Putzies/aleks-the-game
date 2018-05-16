@@ -3,18 +3,16 @@ package soldater.johannas;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import soldater.johannas.control.GameScreen;
 import soldater.johannas.control.SoundController;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.control.menu.MainMenu;
+import soldater.johannas.util.Parser;
 import soldater.johannas.view.LevelInfo;
-import soldater.johannas.view.LevelSelectRenderer;
-import soldater.johannas.view.MainMenuRenderer;
+import soldater.johannas.view.menus.LevelSelectRenderer;
+import soldater.johannas.view.menus.MainMenuRenderer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,9 +21,14 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 	private Screen screen;
 	private String lastLevel;
     private SoundController soundController;
+    private Parser parser;
+    private List<LevelInfo> levels;
 
 	@Override
 	public void create() {
+	    parser = new Parser();
+		levels = parser.loadLevels();
+
         screen = new MainMenuRenderer(this);
         this.setScreen(screen);
         soundController = new SoundController();
@@ -56,7 +59,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 	@Override
 	public boolean startGame() {
 	    screen.dispose();
-	    screen = new LevelSelectRenderer(this, loadLevels());
+	    screen = new LevelSelectRenderer(this, levels);
 	    setScreen(screen);
         return true;
 	}
@@ -72,24 +75,11 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
         Gdx.app.exit();
 	}
 
-	private List<LevelInfo> loadLevels() {
-		List<LevelInfo> levels = new ArrayList<>();
-
-		FileHandle[] internalFiles = Gdx.files.local("levels/").list();
-
-		for(FileHandle file : internalFiles) {
-			if(file.nameWithoutExtension().endsWith(".meta")) {
-				levels.add(new LevelInfo(file));
-			}
-		}
-
-		return levels;
-	}
-
 	@Override
 	public void exitLevel() {
 		screen.dispose();
-		screen = new LevelSelectRenderer(this, loadLevels());
+		levels = parser.loadLevels();
+		screen = new LevelSelectRenderer(this, levels);
 		setScreen(screen);
         soundController.loopTheme();
 	}
@@ -114,10 +104,10 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 	    String nextLevel = "";
 
 	    // Find next level
-	    List<LevelInfo> allLevels = loadLevels();
+	    List<LevelInfo> allLevels = levels;
 	    for (int i = 0; i < allLevels.size() - 1; i++) {
-	        if (allLevels.get(i).getFileName().equals(lastLevel)) {
-	            nextLevel = allLevels.get(i + 1).getFileName();
+	        if (allLevels.get(i).getName().equals(lastLevel)) {
+	            nextLevel = allLevels.get(i + 1).getName();
             }
         }
 
@@ -127,4 +117,9 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 		    startLevel(nextLevel);
         }
 	}
+
+    @Override
+    public String getLevelName() {
+        return lastLevel;
+    }
 }

@@ -2,13 +2,12 @@ package soldater.johannas.view.modal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.GameMenu;
-import soldater.johannas.view.AnimatedMenu;
-import soldater.johannas.view.MenuItem;
+import soldater.johannas.view.menus.AnimatedMenu;
+import soldater.johannas.view.menus.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;

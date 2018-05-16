@@ -11,24 +11,24 @@ public class Timer {
         return millis;
     }
 
-    public int getHundreds() {
-        return millis / 10;
+    public static int getHundreds(int millis) {
+        return (millis / 10) % 100;
     }
 
-    public int getSeconds() {
-        return millis / 1000;
+    public static int getSeconds(int millis) {
+        return (millis / 1000) % 60;
     }
 
-    public int getMinutes() {
-        return getSeconds() / 60;
+    public static int getMinutes(int millis) {
+        return getSeconds(millis) / 60;
     }
 
-    public int getHours() {
-        return getMinutes() / 60;
+    public static int getHours(int millis) {
+        return getMinutes(millis) / 60;
     }
 
-    public String getFormattedTime() {
-        String str = getHours() + ":" + getMinutes() + ":" + getSeconds() + ":" + getHundreds();
+    public static String getFormattedTime(int millis) {
+        String str = getHours(millis) + ":" + getMinutes(millis) + ":" + getSeconds(millis) + ":" + getHundreds(millis);
         String[] split = str.split(":");
         for (int i = 0; i < split.length; i++) {
             if(split[i].length() == 1) {
@@ -37,5 +37,9 @@ public class Timer {
         }
 
         return String.join(":", split);
+    }
+
+    public String getFormattedTime() {
+        return getFormattedTime(millis);
     }
 }

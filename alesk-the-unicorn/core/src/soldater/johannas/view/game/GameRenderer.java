@@ -1,4 +1,4 @@
-package soldater.johannas.view;
+package soldater.johannas.view.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -76,7 +76,7 @@ public class GameRenderer {
     }
 
     public void dispose() {
-        batch.dispose();
+        //batch.dispose();
         disposeTextures();
     }
 

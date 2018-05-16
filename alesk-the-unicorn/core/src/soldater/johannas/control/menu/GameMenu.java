@@ -6,4 +6,5 @@ public interface GameMenu {
     void resume();
     void replay();
     void nextLevel();
+    String getLevelName();
 }
