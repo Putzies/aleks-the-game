@@ -18,31 +18,34 @@ public class PlayerController implements Controller{
     }
 
     public void update() {
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        spacePressed = Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.UP);
+        leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+
+
+
+        if (rightPressed) {
             player.right();
-            rightPressed = true;
-        } else if (rightPressed){
-            player.stop();
-            rightPressed = false;
+            System.out.println(rightPressed);
+        } else if (!rightPressed){
+
+            System.out.println(rightPressed);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (leftPressed) {
             player.left();
-            leftPressed = true;
-        } else if (leftPressed) {
-            player.stop();
-            leftPressed = false;
+        } else if (!leftPressed) {
+
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+        if (spacePressed) {
             player.jump();
-            spacePressed = true;
 
             soundController.jump();
 
-        } else if (spacePressed && player.getYvel() == 0) {
+        } else if (!spacePressed) {
             player.stop();
-            spacePressed = false;
+
         }
     }
 }
