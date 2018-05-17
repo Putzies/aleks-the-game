@@ -13,9 +13,18 @@ const player = {
     y: 1*BLOCKHEIGHT + 1,
 };
 
+let enemies = [];
+
 const levelMetadata = {
     name,
     highScores: []
+}
+
+for (let i = 0; i < 500; i += BLOCKWIDTH) {
+    enemies.push({
+        x: i + 1300,
+        y: 300
+    });
 }
 
 const level = {
@@ -27,20 +36,24 @@ const level = {
     }],
     lavaPlatforms: [],
     spikePlatforms: [],
-    enemies: [{
-        x: 400,
-        y: 300,
-        leftBound: 0,
-        rightBound: 500,
-    }],
+    enemies,
     player,
     lunchboxes: [{
+        x: 6000,
+        y: 100
+    }],
+    wings: [{
         x: 600,
         y: 100
     }],
-    wings: [],
-    energyDrinks: [],
-    baguettes: [],
+    energyDrinks: [{
+        x: 800,
+        y: 100,
+    }],
+    baguettes: [{
+        x: 1000,
+        y: 100
+    }],
 };
 
 
