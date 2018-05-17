@@ -13,7 +13,6 @@ import soldater.johannas.model.level.HangingEnemy;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import static soldater.johannas.model.level.Player.*;
 
 public class GameRenderer {
@@ -141,8 +140,13 @@ public class GameRenderer {
 
     private void drawRainbow() {
         DrawablePlayer player = game.getPlayer();
+        rainbowEmitter.update(
+                1,
+                player.getX()+player.getWidth()/2,
+                player.getY(),
+                (player.getState() == FALLING || player.getState() == JUMPING)
+        );
 
-        rainbowEmitter.update(1, player.getX()+player.getWidth()/2, player.getY(), (player.getState() == FALLING || player.getState() == JUMPING));
         rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY(), player.getPickupState() == FAST);
     }
 

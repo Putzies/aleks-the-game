@@ -56,7 +56,7 @@ public class LevelSelectRenderer extends ScreenRenderer {
 
         for (int i = 0; i < 5; i++ ) {
             highscoreItems.add(new MenuItem(
-                    "",
+                    "No highscores yet!",
                     1.5f,
                     MenuItem.Alignment.LEFT,
                     Colors.MENU_COLOR
@@ -149,9 +149,13 @@ public class LevelSelectRenderer extends ScreenRenderer {
                 .sorted(Comparator.comparingInt(Highscore::getScore))
                 .collect(Collectors.toList());
 
-        for (int i = 0; i < Math.min(highscores.size(), 5); i++) {
-            highscoreItems.get(i).setText(highscores.get(i).getFormattedText());
-            highscoreItems.get(i).draw(batch, HIGHSCORES_X, HIGHSCORES_TOP_Y - i * MARGIN);
+        if (highscores.size() > 0) {
+            for (int i = 0; i < Math.min(highscores.size(), 5); i++) {
+                highscoreItems.get(i).setText(highscores.get(i).getFormattedText());
+                highscoreItems.get(i).draw(batch, HIGHSCORES_X, HIGHSCORES_TOP_Y - i * MARGIN);
+            }
+        } else {
+            highscoreItems.get(0).draw(batch, HIGHSCORES_X + MARGIN * 2, HIGHSCORES_TOP_Y);
         }
     }
 }

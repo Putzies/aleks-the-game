@@ -24,6 +24,6 @@ public class Highscore {
     }
 
     public String getFormattedText() {
-        return name + " -- " + Timer.getFormattedTime(score);
+        return Timer.getFormattedTime(score) + " -- " + name;
     }
 }

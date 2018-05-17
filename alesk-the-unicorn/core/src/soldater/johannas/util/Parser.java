@@ -38,6 +38,8 @@ public class Parser {
             String newMeta = gson.toJson(levelInfo);
             Files.write(Paths.get(BASE_PATH + level + ".meta.json"), newMeta.getBytes());
 
+            System.out.println("Successfully saved highscores for " + name + " with score " + score);
+
         } catch (IOException e) {
             System.out.println("Unable to save highscore!");
             e.printStackTrace();

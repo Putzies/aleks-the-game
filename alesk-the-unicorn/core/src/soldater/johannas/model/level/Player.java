@@ -134,8 +134,12 @@ public class Player extends Character implements Movable, DrawablePlayer {
 
     @Override
     public void stop() {
-        if (state != JUMPING) {
+        if (state != JUMPING && state != FALLING) {
             state = STANDING;
+        }
+
+        if (yVel > 0) {
+            yVel *= 0.5f;
         }
 
         xVel = 0;
