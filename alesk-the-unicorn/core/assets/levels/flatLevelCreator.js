@@ -20,12 +20,19 @@ const levelMetadata = {
     highScores: []
 }
 
-for (let i = 0; i < 500; i += BLOCKWIDTH) {
+for (let i = 0; i < 6000; i += BLOCKWIDTH) {
     enemies.push({
         x: i + 1300,
-        y: 300
+        y: 300,
+        leftBound: 1300,
+        rightBound: 6000,
     });
 }
+
+enemies.push({
+    x: 40000,
+    y: 300,
+});
 
 const level = {
     grassPlatforms: [{
@@ -39,19 +46,64 @@ const level = {
     enemies,
     player,
     lunchboxes: [{
-        x: 6000,
+        x: 40000,
         y: 100
     }],
     wings: [{
-        x: 600,
+        x: 500,
         y: 100
+    }, {
+        x: 3500,
+        y: 100,
+    }, {
+        x: 1500,
+        y: 1000,
+    }, {
+        x: 5000,
+        y: 3000
+    }, {
+        x: 5000,
+        y: 100,
+    }, {
+        x: 8000,
+        y: 100,
     }],
     energyDrinks: [{
-        x: 800,
+        x: 700,
         y: 100,
+    }, {
+        x: 6000,
+        y: 100,
+    }, {
+        x: 10000,
+        y: 100,
+    }, {
+        x: 15000,
+        y: 100,
+    }, {
+        x: 20000,
+        y: 100, 
+    }, {
+        x: 30000,
+        y: 100
+    }, {
+        x: 40000,
+        y: 100
     }],
     baguettes: [{
         x: 1000,
+        y: 100
+    }, {
+        x: 3000,
+        y: 100,
+    }, {
+        x: 5000,
+        y: 100
+    }, {
+        x: 7000,
+        y: 100,
+    }, {
+        x: 9000,
         y: 100
     }],
 };

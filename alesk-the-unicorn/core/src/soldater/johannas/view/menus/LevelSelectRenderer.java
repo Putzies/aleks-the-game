@@ -56,7 +56,7 @@ public class LevelSelectRenderer extends ScreenRenderer {
 
         for (int i = 0; i < 5; i++ ) {
             highscoreItems.add(new MenuItem(
-                    "No highscores yet!",
+                    "",
                     1.5f,
                     MenuItem.Alignment.LEFT,
                     Colors.MENU_COLOR
@@ -155,6 +155,7 @@ public class LevelSelectRenderer extends ScreenRenderer {
                 highscoreItems.get(i).draw(batch, HIGHSCORES_X, HIGHSCORES_TOP_Y - i * MARGIN);
             }
         } else {
+            highscoreItems.get(0).setText("No high scores yet!");
             highscoreItems.get(0).draw(batch, HIGHSCORES_X + MARGIN * 2, HIGHSCORES_TOP_Y);
         }
     }

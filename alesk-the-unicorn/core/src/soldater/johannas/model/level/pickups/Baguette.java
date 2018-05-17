@@ -45,5 +45,9 @@ public class Baguette extends Pickup implements PlayerPickup {
         // Tiden behöver fixas till
         taskTimer.schedule(t, 4000);
     }
+
+    public void cancelTimout() {
+        taskTimer.cancel();
+    }
 }
 

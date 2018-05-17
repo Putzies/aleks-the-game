@@ -142,13 +142,19 @@ public class Game implements DrawableGame {
 
             // Check if player and some character are colliding.
             if (playerBox.intersects(other)) {
-                player.damage();
+
+                // If strong, crush the spiders
+                if (player.getPickupState() == Player.STRONG) {
+                    character.damage();
+                } else { // Else take some damage
+                    player.damage();
+                }
             }
         }
         for (Character character : hangingEnemies){
             other = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
             // Check if player and some character are colliding.
-            if (playerBox.intersects(other)) {
+            if (playerBox.intersects(other) && player.getPickupState() != Player.STRONG) {
                 player.damageInverted();
             }
         }

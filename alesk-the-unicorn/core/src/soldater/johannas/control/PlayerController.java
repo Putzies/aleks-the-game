@@ -34,12 +34,13 @@ public class PlayerController implements Controller{
             leftPressed = false;
         }
 
-        if (player.getYvel() >= 0 && (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.UP))) {
+        if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isKeyPressed(Input.Keys.UP))) {
             // Only play jump sound once
             if (player.getYvel() == 0 && !spacePressed) {
                 soundController.jump();
-                player.jump();
             }
+
+            player.jump();
 
             spacePressed = true;
 

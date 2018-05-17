@@ -9,6 +9,7 @@ import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawableGame;
 import soldater.johannas.model.DrawablePlayer;
 import soldater.johannas.model.level.HangingEnemy;
+import soldater.johannas.model.level.Player;
 
 
 import java.util.HashMap;
@@ -144,7 +145,7 @@ public class GameRenderer {
                 1,
                 player.getX()+player.getWidth()/2,
                 player.getY(),
-                (player.getState() == FALLING || player.getState() == JUMPING)
+                (player.getState() == FALLING || player.getState() == JUMPING || player.getPickupState() == Player.FAST)
         );
 
         rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY(), player.getPickupState() == FAST);
