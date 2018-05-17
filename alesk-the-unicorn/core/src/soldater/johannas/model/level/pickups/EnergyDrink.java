@@ -1,10 +1,11 @@
 package soldater.johannas.model.level.pickups;
 
 import soldater.johannas.model.level.Player;
-import soldater.johannas.model.level.pickups.Pickup;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static soldater.johannas.model.level.Player.FAST;
 
 public class EnergyDrink extends Pickup implements PlayerPickup {
 
@@ -30,12 +31,14 @@ public class EnergyDrink extends Pickup implements PlayerPickup {
 
     public void doIt(Player player){
         this.taskTimer = new Timer();
-        player.setPickup(Player.ENERGYDRINK,true);
+        player.setPickup(FAST);
 
         this.t = new TimerTask() {
             @Override
             public void run() {
-                player.setPickup(Player.ENERGYDRINK,false);
+                if (player.getPickupState() == FAST) {
+                    player.setPickup(Player.NORMAL);
+                }
             }
         };
 
