@@ -10,8 +10,6 @@ public class RainbowEmitter {
 
     private List<RainbowParticle> rainbow;
     private Map<String, Texture> textures;
-    private Texture normalTexture = new Texture("rainbow.png");
-    private Texture fireTexture = new Texture("rainbowFast.png");
     private int width = 3;
     private int roundedTipSize;
     private double x;
@@ -22,10 +20,10 @@ public class RainbowEmitter {
 
     public RainbowEmitter(){
         rainbow = new ArrayList<RainbowParticle>();
-        roundedTipSize = normalTexture.getWidth()/width;
         textures = new HashMap<>();
         textures.put("rainbow", new Texture("rainbow.png"));
         textures.put("rainbowFast", new Texture("rainbowFast.png"));
+        roundedTipSize = textures.get("rainbow").getWidth()/width;
     }
 
     // Add new rainbow particles after the unicorn and delete them after a while
@@ -111,6 +109,5 @@ public class RainbowEmitter {
         } else {
             return 3*(int) (Math.floor((n/3)));
         }
-
     }
 }
