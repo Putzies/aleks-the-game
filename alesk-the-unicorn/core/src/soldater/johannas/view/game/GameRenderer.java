@@ -23,14 +23,12 @@ public class GameRenderer {
 
     private int frameTimer = 0;
 
-
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
 
     private Map<String, Texture> textures;
 
     private int playerFrame = 0;
-
 
     private DrawableGame game;
     private RainbowEmitter rainbowEmitter;
@@ -61,10 +59,9 @@ public class GameRenderer {
 
         shapeRenderer.setAutoShapeType(true);
         shapeRenderer.begin();
+
         drawBackgrounds();
-
         drawShapes();
-
         drawRainbow();
         drawPlayer();
         drawDrawables();
@@ -82,12 +79,13 @@ public class GameRenderer {
 
     private void loadTextures() {
         textures = new HashMap<>();
+
         textures.put(game.getPlayer().getName(), new Texture(game.getPlayer().getName() + ".png"));
-        textures.put("background", new Texture("background.png"));
-        textures.put("sky", new Texture("starsky.png"));
         textures.put("playerFlying", new Texture("playerFlying.png"));
         textures.put("playerStrong", new Texture("playerStrong.png"));
 
+        textures.put("clouds", new Texture("cloudSky.png"));
+        textures.put("stars", new Texture("starSky.png"));
 
         for (Drawable drawable : game.getDrawables()) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
@@ -101,43 +99,59 @@ public class GameRenderer {
     }
 
     private void drawBackgrounds() {
-        Texture background = textures.get("background");
         Drawable player = game.getPlayer();
+        Texture clouds = textures.get("clouds");
+        Texture stars = textures.get("stars");
 
-        int addFstBackground = ((int)(player.getX() * 0.25) / background.getWidth()) % 2;
-        int addSndBackground = (((int)(player.getX() * 0.25) + background.getWidth()) / background.getWidth()) % 2;
+        // Calculate x-positions of backgrounds
+        int bgX1 = calculate1stBgX((int)(player.getX() * 0.25), clouds.getWidth());
+        int bgX2 = calculate2ndBgX((int)(player.getX() * 0.25), clouds.getWidth());
 
-        double playerOffsetFirstX = (-player.getX() * 0.25) % (background.getWidth() * 2);
-        double playerOffsetSecondX = ((-player.getX() * 0.25) - background.getWidth()) % (background.getWidth() * 2);
+        // Calculate Y position of cloud background
+        int cloudsY = (int)(((-player.getY())+player.getHeight()/2)*0.25);
 
-        int bgX1 = (int)(playerOffsetFirstX + addFstBackground * background.getWidth() * 2);
-        int bgX2 = (int)(playerOffsetSecondX + addSndBackground * background.getWidth() * 2);
-        int bgY = (int)(((-player.getY())+player.getHeight()/2)*0.25);
-        batch.draw(background, bgX1, bgY);
-        batch.draw(background, bgX2, bgY);
+        // Draw cloud background
+        batch.draw(clouds, bgX1, cloudsY);
+        batch.draw(clouds, bgX2, cloudsY);
 
-        Texture sky = textures.get("sky");
+        // Calculate Y positions of star background
+        int starsY1 = calculate1stStarsY((int)(player.getY() * 0.25), stars.getHeight());
+        int starsY2 = calculate2ndStarsY((int)(player.getY() * 0.25), stars.getHeight());
 
-        int addFirstSky = ((int)(player.getY() * 0.25) / sky.getHeight()) % 2;
-        int addSecondSky = (((int)(player.getY() * 0.25) + sky.getHeight()) / sky.getHeight()) % 2;
-
-        double playerOffsetFirstY = (-player.getY() * 0.25) % (sky.getHeight() * 2);
-        double playerOffsetSecondY = ((-player.getY() * 0.25) - sky.getHeight()) % (sky.getHeight() * 2);
-
-        int skyY1 = (int)(playerOffsetFirstY + addFirstSky * sky.getHeight() * 2);
-        int skyY2 = (int)(playerOffsetSecondY + addSecondSky * sky.getHeight() * 2);
-
-        if (player.getY() >= background.getHeight()*4) {
-            batch.draw(sky, bgX1, skyY1);
-            batch.draw(sky, bgX2, skyY1);
+        // Draw star background
+        if (player.getY() >= clouds.getHeight()*4) {
+            batch.draw(stars, bgX1, starsY1);
+            batch.draw(stars, bgX2, starsY1);
         }
         if (player.getY() >= 0) {
-            batch.draw(sky, bgX1, skyY2);
-            batch.draw(sky, bgX2, skyY2);
+            batch.draw(stars, bgX1, starsY2);
+            batch.draw(stars, bgX2, starsY2);
         }
     }
 
+    private int calculate1stBgX(int scaledPlayerX, int bgWidth) {
+        int addFstBackground = (scaledPlayerX / bgWidth) % 2;
+        double playerOffsetFirstX = (-scaledPlayerX) % (bgWidth * 2);
+        return (int)(playerOffsetFirstX + addFstBackground * bgWidth * 2);
+    }
 
+    private int calculate2ndBgX(int scaledPlayerX, int bgWidth) {
+        int addSndBackground = ((scaledPlayerX + bgWidth) / bgWidth) % 2;
+        double playerOffsetSecondX = ((-scaledPlayerX) - bgWidth) % (bgWidth * 2);
+        return (int)(playerOffsetSecondX + addSndBackground * bgWidth * 2);
+    }
+
+    private int calculate1stStarsY(int scaledPlayerY, int starsHeight) {
+        int addFirstSky = (scaledPlayerY / starsHeight) % 2;
+        double playerOffsetFirstY = (-scaledPlayerY) % (starsHeight * 2);
+        return (int)(playerOffsetFirstY + addFirstSky * starsHeight * 2);
+    }
+
+    private int calculate2ndStarsY(int scaledPlayerY, int starsHeight) {
+        int addSecondSky = ((scaledPlayerY + starsHeight) / starsHeight) % 2;
+        double playerOffsetSecondY = ((-scaledPlayerY) - starsHeight) % (starsHeight * 2);
+        return (int)(playerOffsetSecondY + addSecondSky * starsHeight * 2);
+    }
 
     private void drawRainbow() {
         DrawablePlayer player = game.getPlayer();
@@ -148,11 +162,18 @@ public class GameRenderer {
                 (player.getState() == FALLING || player.getState() == JUMPING || player.getPickupState() == Player.FAST)
         );
 
-        rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY(), player.getPickupState() == FAST);
+        rainbowEmitter.draw(
+                batch,
+                playerX - (int)player.getX(),
+                playerY - (int)player.getY(),
+                player.getPickupState() == FAST
+        );
     }
 
     private void drawPlayer() {
         DrawablePlayer player = game.getPlayer();
+
+        // Determine which texture to use
         String textureStr = "player";
         switch(player.getPickupState()) {
             case FLY:
@@ -162,6 +183,8 @@ public class GameRenderer {
                 textureStr += "Strong";
                 break;
         }
+
+        // Draw the player
         batch.draw(
                 textures.get(textureStr),
                 playerX,
@@ -186,12 +209,15 @@ public class GameRenderer {
 
         for (Drawable drawable : game.getDrawables()) {
             if (textures.get(drawable.getName()).getWidth() == drawable.getWidth()) {
+
+                // Draw all drawables that are not animated
                 batch.draw(
                         textures.get(drawable.getName()),
                         (int)(drawable.getX() - player.getX() + playerX),
                         (int)(drawable.getY() - player.getY() + playerY)
                 );
             } else {
+                // Draw all drawables that are animated
                 batch.draw(
                         textures.get(drawable.getName()),
                         (int)(drawable.getX() - player.getX() + playerX),
@@ -200,7 +226,6 @@ public class GameRenderer {
                         0,
                         drawable.getWidth(),
                         drawable.getHeight()
-
                 );
             }
         }
@@ -208,6 +233,8 @@ public class GameRenderer {
 
     private void drawShapes() {
         Drawable player = game.getPlayer();
+
+        // Draw all the threads of hanging enemies
         for(HangingEnemy hangingE : game.getHangingEnemies()) {
             float x = (float) (hangingE.getX() - player.getX() + playerX + hangingE.getWidth()/2);
             float y = (float) (hangingE.getY() - player.getY() + playerY + hangingE.getHeight() -5);
