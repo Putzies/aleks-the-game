@@ -138,7 +138,7 @@ public class Player extends Character implements Movable {
 
     @Override
     public void stop() {
-        if (state != JUMPING) {
+        if (state != JUMPING && state != FALLING) {
             state = STANDING;
         }
 
