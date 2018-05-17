@@ -2,9 +2,10 @@ package soldater.johannas.model.level;
 
 import soldater.johannas.model.Character;
 import soldater.johannas.model.Drawable;
+import soldater.johannas.model.DrawablePlayer;
 import soldater.johannas.model.Movable;
 
-public class Player extends Character implements Movable {
+public class Player extends Character implements Movable, DrawablePlayer {
 
     public static final int WIDTH       = 132;
     public static final int HEIGHT      = 105;
@@ -13,20 +14,15 @@ public class Player extends Character implements Movable {
     public static final int JUMPING     = 2;
     public static final int FALLING     = 3;
 
-    // For flying, or a state with wings.
-    public static final int FLYING      = 4;
-
-    // For pickups
-    public static final int WINGS       = 0;
-    public static final int BAGUETTE    = 1;
-    public static final int ENERGYDRINK = 2;
-
     private int state = 0;
 
-    // New booleans
-    private final boolean[] pickups = {false,false,false};
+    // For pickups
+    public static final int NORMAL  = 0;
+    public static final int FLY     = 1;
+    public static final int STRONG  = 2;
+    public static final int FAST    = 3;
 
-
+    private int pickupState = 0;
 
     public Player() {
         super();
@@ -88,7 +84,7 @@ public class Player extends Character implements Movable {
             if (!collisions[Character.LEFT]) {
                 xVel = -600;
 
-                if (pickups[ENERGYDRINK]) {
+                if (pickupState == FAST) {
                     xVel = -1500;
                 }
             }
@@ -106,7 +102,7 @@ public class Player extends Character implements Movable {
             if (!collisions[Character.RIGHT]) {
                 xVel = 600;
 
-                if (pickups[ENERGYDRINK]) {
+                if (pickupState == FAST) {
                     xVel = 1500;
                 }
             }
@@ -122,7 +118,7 @@ public class Player extends Character implements Movable {
     public void jump() {
         // CHANGED here. First check the state, if we are in a falling or jumping state already, we cannot enemyJump. UNLESS
         // Wings.
-        if (state != FALLING && state != JUMPING || this.pickups[WINGS]) {
+        if (state != FALLING && state != JUMPING || pickupState == FLY) {
             state = JUMPING;
 
             // There are actually TWO cases where we can trigger jumping, this because of resetCollision().
@@ -149,31 +145,17 @@ public class Player extends Character implements Movable {
         xVel = 0;
     }
 
-    public void setPickup(int pickup, boolean value){
-
-        this.pickups[pickup] = value;
-
-        // This should probably be in some giant setState function instead of setPickup
-        // Set state to Flying if wings & true otherwise set it to falling, which will be changed into the proper state
-        // On the next tick.
-        if (pickup == WINGS && value){
-            state = FLYING;
-        } else if (pickup == BAGUETTE && value){
-            /* Do something here*/
-        } else if (pickup == ENERGYDRINK && value){
-            /* Do something here*/
-        } else { state = FALLING; }
-
-
-    }
-
-
-    public boolean getPickup(int pickup){
-        return this.pickups[pickup];
+    public void setPickup(int pickup){
+        pickupState = pickup;
     }
 
     private void applyGravity() {
         yVel -= 25;
+    }
+
+    @Override
+    public int getPickupState() {
+        return pickupState;
     }
 
 }

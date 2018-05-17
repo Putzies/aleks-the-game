@@ -1,10 +1,11 @@
 package soldater.johannas.model.level.pickups;
 
 import soldater.johannas.model.level.Player;
-import soldater.johannas.model.level.pickups.Pickup;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static soldater.johannas.model.level.Player.FLY;
 
 public class Wings extends Pickup implements PlayerPickup {
 
@@ -30,12 +31,14 @@ public class Wings extends Pickup implements PlayerPickup {
 
     public void doIt(Player player){
         this.taskTimer = new Timer();
-        player.setPickup(Player.WINGS,true);
+        player.setPickup(FLY);
 
         this.t = new TimerTask() {
             @Override
             public void run() {
-                player.setPickup(Player.WINGS,false);
+                if (player.getPickupState() == FLY) {
+                    player.setPickup(Player.NORMAL);
+                }
             }
         };
 
