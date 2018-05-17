@@ -2,10 +2,8 @@ package soldater.johannas.view.modal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.GameMenu;
-import soldater.johannas.util.Colors;
 import soldater.johannas.util.Parser;
 import soldater.johannas.util.Timer;
 import soldater.johannas.view.Highscore;
@@ -14,7 +12,7 @@ import soldater.johannas.view.menus.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WonModalMenu extends ModalMenu implements Input.TextInputListener {
+public class WonModalMenu extends ModalMenu {
 
     private final int HIGHSCORE_X = Gdx.graphics.getWidth() / 2;
 
@@ -23,7 +21,7 @@ public class WonModalMenu extends ModalMenu implements Input.TextInputListener {
     private Parser parser;
 
     private boolean willExit = false;
-    private boolean isHighscore;
+    private boolean showHighscore;
 
     public WonModalMenu(GameMenu gameMenu, Timer gameTimer) {
         super(gameMenu);
@@ -31,18 +29,11 @@ public class WonModalMenu extends ModalMenu implements Input.TextInputListener {
         score = gameTimer.getMillis();
         formattedScore = gameTimer.getFormattedTime();
         List<Highscore> highscores = parser.loadLevelInfo(gameMenu.getLevelName()).getHighscores();
-        isHighscore = highscores.size() == 0 || highscores.get(0).getScore() > score;
+        showHighscore = highscores.size() == 0 || highscores.get(0).getScore() > score;
 
         addItems();
 
-        System.out.println("pajwd");
-
-
-        Gdx.input.getTextInput(
-                this,
-                "New high score!",
-                "Anonymous",
-                "Your name");
+        System.out.println("This is the constructor of the WonModalMenu.");
     }
 
     @Override
@@ -63,9 +54,15 @@ public class WonModalMenu extends ModalMenu implements Input.TextInputListener {
     public void render(SpriteBatch batch, float delta) {
         super.render(batch, delta);
 
-        if (willExit) {
-            gameMenu.exitLevel();
-            return;
+        if (showHighscore) {
+            popupHighscore();
+            while(showHighscore) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted!");
+                }
+            }
         }
     }
 
@@ -78,14 +75,22 @@ public class WonModalMenu extends ModalMenu implements Input.TextInputListener {
         setTitle(new MenuItem("menu/won.png"));
     }
 
-    @Override
-    public void input(String text) {
-        willExit = true;
-        parser.saveHighscore(score, gameMenu.getLevelName(), text);
-    }
+    private void popupHighscore() {
+        Gdx.input.getTextInput(
+                new Input.TextInputListener() {
+                    @Override
+                    public void input(String text) {
+                        showHighscore = false;
+                        parser.saveHighscore(score, gameMenu.getLevelName(), text);
+                    }
 
-    @Override
-    public void canceled() {
-        willExit = true;
+                    @Override
+                    public void canceled() {
+                        showHighscore = false;
+                    }
+                },
+                "New high score!",
+                "Anonymous",
+                "Your name");
     }
 }
