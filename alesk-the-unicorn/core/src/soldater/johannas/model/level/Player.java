@@ -142,6 +142,10 @@ public class Player extends Character implements Movable {
             state = STANDING;
         }
 
+        if (yVel > 0) {
+            yVel *= 0.5f;
+        }
+
         xVel = 0;
     }
 

@@ -14,7 +14,7 @@ import soldater.johannas.view.menus.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WonModalMenu extends ModalMenu {
+public class WonModalMenu extends ModalMenu implements Input.TextInputListener {
 
     private final int HIGHSCORE_X = Gdx.graphics.getWidth() / 2;
 
@@ -34,6 +34,15 @@ public class WonModalMenu extends ModalMenu {
         isHighscore = highscores.size() == 0 || highscores.get(0).getScore() > score;
 
         addItems();
+
+        System.out.println("pajwd");
+
+
+        Gdx.input.getTextInput(
+                this,
+                "New high score!",
+                "Anonymous",
+                "Your name");
     }
 
     @Override
@@ -52,33 +61,12 @@ public class WonModalMenu extends ModalMenu {
 
     @Override
     public void render(SpriteBatch batch, float delta) {
-        if (isHighscore) {
-            Gdx.input.getTextInput(
-                    new Input.TextInputListener() {
-                        @Override
-                        public void input(String text) {
-                            willExit = true;
-                            parser.saveHighscore(score, gameMenu.getLevelName(), text);
-                            isHighscore = false;
-                        }
-
-                        @Override
-                        public void canceled() {
-                            willExit = true;
-                        }
-                    },
-                    "New high score!",
-                    "Anonymous",
-                    "Your name");
-            isHighscore = false;
-        }
+        super.render(batch, delta);
 
         if (willExit) {
             gameMenu.exitLevel();
             return;
         }
-
-        super.render(batch, delta);
     }
 
     private void addItems() {
@@ -88,5 +76,16 @@ public class WonModalMenu extends ModalMenu {
         items.add(new MenuItem("menu/exit.png", MenuItem.Alignment.LEFT));
         setItems(items);
         setTitle(new MenuItem("menu/won.png"));
+    }
+
+    @Override
+    public void input(String text) {
+        willExit = true;
+        parser.saveHighscore(score, gameMenu.getLevelName(), text);
+    }
+
+    @Override
+    public void canceled() {
+        willExit = true;
     }
 }
