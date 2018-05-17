@@ -5,6 +5,8 @@ import soldater.johannas.model.level.Player;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static soldater.johannas.model.level.Player.STRONG;
+
 public class Baguette extends Pickup implements PlayerPickup {
 
     // TODO Remember to double check the actual size of the Lunchboxes!
@@ -29,12 +31,14 @@ public class Baguette extends Pickup implements PlayerPickup {
     
     public void doIt(Player player){
         this.taskTimer = new Timer();
-        player.setPickup(Player.BAGUETTE, true);
+        player.setPickup(STRONG);
 
         this.t = new TimerTask() {
             @Override
             public void run() {
-                player.setPickup(Player.BAGUETTE, false);
+                if(player.getPickupState() == STRONG) {
+                    player.setPickup(Player.NORMAL);
+                }
             }
         };
 

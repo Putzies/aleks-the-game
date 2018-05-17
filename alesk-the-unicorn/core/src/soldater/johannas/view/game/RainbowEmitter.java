@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.view.game.RainbowParticle;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class RainbowEmitter {
 
     private List<RainbowParticle> rainbow;
-    private Texture texture = new Texture("rainbow2.png");
+    private Map<String, Texture> textures;
+    private Texture normalTexture = new Texture("rainbow.png");
+    private Texture fireTexture = new Texture("rainbowFast.png");
     private int width = 3;
     private int roundedTipSize;
     private double x;
@@ -23,7 +22,10 @@ public class RainbowEmitter {
 
     public RainbowEmitter(){
         rainbow = new ArrayList<RainbowParticle>();
-        roundedTipSize = texture.getWidth()/width;
+        roundedTipSize = normalTexture.getWidth()/width;
+        textures = new HashMap<>();
+        textures.put("rainbow", new Texture("rainbow.png"));
+        textures.put("rainbowFast", new Texture("rainbowFast.png"));
     }
 
     // Add new rainbow particles after the unicorn and delete them after a while
@@ -67,14 +69,19 @@ public class RainbowEmitter {
     }
 
     // Draw the rainbow
-    public void draw(SpriteBatch batch, int xOffset, int yOffset) {
+    public void draw(SpriteBatch batch, int xOffset, int yOffset, boolean isFast) {
+        String textureString = "rainbow";
+        if (isFast) {
+            textureString += "Fast";
+        }
+
             for (int i = 0; i< rainbow.size(); i++) {
                 RainbowParticle rp = rainbow.get(i);
 
                 // Draw a rounded tip at the beginning of the rainbow
                 if(rainbow.size() - i < roundedTipSize) {
                     batch.draw(
-                            texture,
+                            textures.get(textureString),
                             (int)(rp.getX() + xOffset),
                             (int)(rp.getY() + yOffset),
                             Math.abs((rainbow.size() - i)-roundedTipSize)*rp.getWidth(),
@@ -85,7 +92,7 @@ public class RainbowEmitter {
                 // Draw the rest of the rainbow
                 } else {
                     batch.draw(
-                            texture,
+                            textures.get(textureString),
                             (int)(rp.getX() + xOffset),
                             (int)(rp.getY() + yOffset),
                             0,
@@ -97,6 +104,7 @@ public class RainbowEmitter {
             }
     }
 
+    // Rounds a number to a multiple of 3
     private int roundTo3(double n) {
         if (n > 0) {
             return 3*(int) (Math.ceil((n/3)));

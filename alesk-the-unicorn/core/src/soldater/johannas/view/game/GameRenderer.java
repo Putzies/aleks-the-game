@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawableGame;
+import soldater.johannas.model.DrawablePlayer;
 import soldater.johannas.model.level.HangingEnemy;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static soldater.johannas.model.level.Player.FALLING;
-import static soldater.johannas.model.level.Player.JUMPING;
+import static soldater.johannas.model.level.Player.*;
 
 public class GameRenderer {
 
@@ -85,6 +85,9 @@ public class GameRenderer {
         textures.put(game.getPlayer().getName(), new Texture(game.getPlayer().getName() + ".png"));
         textures.put("background", new Texture("background.png"));
         textures.put("sky", new Texture("starsky.png"));
+        textures.put("playerFlying", new Texture("playerFlying.png"));
+        textures.put("playerStrong", new Texture("playerStrong.png"));
+
 
         for (Drawable drawable : game.getDrawables()) {
             textures.put(drawable.getName(), new Texture(drawable.getName() + ".png"));
@@ -137,16 +140,25 @@ public class GameRenderer {
 
 
     private void drawRainbow() {
-        Drawable player = game.getPlayer();
+        DrawablePlayer player = game.getPlayer();
 
         rainbowEmitter.update(1, player.getX()+player.getWidth()/2, player.getY(), (player.getState() == FALLING || player.getState() == JUMPING));
-        rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY());
+        rainbowEmitter.draw(batch, playerX - (int)player.getX(), playerY - (int)player.getY(), player.getPickupState() == FAST);
     }
 
     private void drawPlayer() {
-        Drawable player = game.getPlayer();
+        DrawablePlayer player = game.getPlayer();
+        String textureStr = "player";
+        switch(player.getPickupState()) {
+            case FLY:
+                textureStr += "Flying";
+                break;
+            case STRONG:
+                textureStr += "Strong";
+                break;
+        }
         batch.draw(
-                textures.get("player"),
+                textures.get(textureStr),
                 playerX,
                 playerY,
                 player.getWidth(),
@@ -158,13 +170,10 @@ public class GameRenderer {
                 player.getDirection() == Drawable.LEFT,
                 false
         );
-
         // Debugging collisions
 //        shapeRenderer.setColor(Color.GREEN);
 //        shapeRenderer.box(playerX,playerY,0,player.getWidth(),player.getHeight(),0);
 //        shapeRenderer.setColor(Color.WHITE);
-
-
     }
 
     private void drawDrawables() {
