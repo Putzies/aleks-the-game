@@ -107,18 +107,18 @@ public class GameRenderer {
         int bgX1 = calculate1stBgX((int)(player.getX() * 0.25), clouds.getWidth());
         int bgX2 = calculate2ndBgX((int)(player.getX() * 0.25), clouds.getWidth());
 
-        // Calculate Y position of cloud background
+        // Calculate Y position of cloud backgrounds
         int cloudsY = (int)(((-player.getY())+player.getHeight()/2)*0.25);
 
-        // Draw cloud background
+        // Draw cloud backgrounds
         batch.draw(clouds, bgX1, cloudsY);
         batch.draw(clouds, bgX2, cloudsY);
 
-        // Calculate Y positions of star background
+        // Calculate Y positions of star backgrounds
         int starsY1 = calculate1stStarsY((int)(player.getY() * 0.25), stars.getHeight());
         int starsY2 = calculate2ndStarsY((int)(player.getY() * 0.25), stars.getHeight());
 
-        // Draw star background
+        // Draw star backgrounds
         if (player.getY() >= clouds.getHeight()*4) {
             batch.draw(stars, bgX1, starsY1);
             batch.draw(stars, bgX2, starsY1);
