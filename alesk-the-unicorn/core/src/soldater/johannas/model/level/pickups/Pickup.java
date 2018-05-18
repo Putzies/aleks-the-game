@@ -2,20 +2,19 @@ package soldater.johannas.model.level.pickups;
 
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.Entity;
-import soldater.johannas.model.level.Player;
+import soldater.johannas.model.level.Positionable;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class Pickup implements Drawable, Entity {
+public abstract class Pickup extends Positionable implements Drawable, Entity {
     private final int UP = 1;
     private final int DOWN = -1;
 
     private final int Y_VEL_LIMIT = 40;
     private double BOUNCING_SPEED = 2;
 
-    private double x,y;
     private double yVel = 0;
     private int dir = DOWN;
 
@@ -31,16 +30,6 @@ public abstract class Pickup implements Drawable, Entity {
         this();
         this.x = x;
         this.y = y;
-    }
-
-    @Override
-    public double getX() {
-        return x;
-    }
-
-    @Override
-    public double getY() {
-        return y;
     }
 
     @Override
