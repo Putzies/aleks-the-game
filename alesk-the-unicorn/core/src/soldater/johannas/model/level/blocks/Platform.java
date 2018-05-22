@@ -1,11 +1,11 @@
 package soldater.johannas.model.level.blocks;
 
 import soldater.johannas.model.level.HangingEnemy;
-import soldater.johannas.model.level.blocks.Block;
+import soldater.johannas.model.level.Positionable;
 
 import java.util.List;
 
-public abstract class Platform {
+public abstract class Platform extends Positionable{
     public static final int VERTICAL = 0;
     public static final int HORIZONTAL = 1;
 
@@ -15,9 +15,6 @@ public abstract class Platform {
     protected int length;
     protected int dir;
 
-    protected int X;
-    protected int Y;
-
     private List<HangingEnemy> hangingEnemies;
 
     // For safety reasons, dont make the platforms larger than 10-15 platforms each.
@@ -26,14 +23,6 @@ public abstract class Platform {
     public abstract void construct();
 
     public abstract boolean isHarmful();
-
-    public double getX() {
-        return X;
-    }
-
-    public double getY() {
-        return Y;
-    }
 
     public int getWidth() {
         return WIDTH;

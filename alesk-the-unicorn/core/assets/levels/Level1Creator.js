@@ -17,8 +17,8 @@ if(!name) {
 function createPlatforms(){
   // P1
   grassPlatforms.push({
-    X: 0,
-    Y: 0,
+    x: 0,
+    y: 0,
     dir: 0,
     length: 20,
     hangingEnemies: [],
@@ -26,8 +26,8 @@ function createPlatforms(){
 
   //P2
   grassPlatforms.push({
-    X:22*BLOCKWIDTH,
-    Y:0,
+    x:22*BLOCKWIDTH,
+    y:0,
     dir: 0,
     length: 10,
     hangingEnemies: [],
@@ -35,8 +35,8 @@ function createPlatforms(){
 
   //P3
   grassPlatforms.push({
-    X:36*BLOCKWIDTH,
-    Y:0,
+    x:36*BLOCKWIDTH,
+    y:0,
     dir:0,
     length: 14,
     hangingEnemies: [],
@@ -44,8 +44,8 @@ function createPlatforms(){
 
   //P4
   grassPlatforms.push({
-    X:54*BLOCKWIDTH,
-    Y:0,
+    x:54*BLOCKWIDTH,
+    y:0,
     dir:0 ,
     length: 5,
     hangingEnemies: [],
@@ -53,8 +53,8 @@ function createPlatforms(){
 
   //P5
   grassPlatforms.push({
-    X:60*BLOCKWIDTH,
-    Y:2*BLOCKHEIGHT,
+    x:60*BLOCKWIDTH,
+    y:2*BLOCKHEIGHT,
     dir:0 ,
     length: 5,
     hangingEnemies: [],
@@ -62,8 +62,8 @@ function createPlatforms(){
 
   //P6
   grassPlatforms.push({
-    X:68*BLOCKWIDTH,
-    Y:2*BLOCKHEIGHT,
+    x:68*BLOCKWIDTH,
+    y:2*BLOCKHEIGHT,
     dir:0 ,
     length: 5,
     hangingEnemies: [],
@@ -71,8 +71,8 @@ function createPlatforms(){
 
   //P7
   grassPlatforms.push({
-    X:75*BLOCKWIDTH,
-    Y:0*BLOCKHEIGHT,
+    x:75*BLOCKWIDTH,
+    y:0*BLOCKHEIGHT,
     dir:0 ,
     length: 16,
     hangingEnemies: [],
@@ -80,8 +80,8 @@ function createPlatforms(){
 
   //P8
   grassPlatforms.push({
-    X:97*BLOCKWIDTH,
-    Y:0*BLOCKHEIGHT,
+    x:97*BLOCKWIDTH,
+    y:0*BLOCKHEIGHT,
     dir:0 ,
     length: 11,
     hangingEnemies: [],
@@ -89,8 +89,8 @@ function createPlatforms(){
 
   //P9
   grassPlatforms.push({
-    X:107*BLOCKWIDTH,
-    Y:1*BLOCKHEIGHT,
+    x:107*BLOCKWIDTH,
+    y:1*BLOCKHEIGHT,
     dir: 1,
     length: 5,
     hangingEnemies: [],
@@ -98,8 +98,8 @@ function createPlatforms(){
 
   //P10
   grassPlatforms.push({
-    X:108*BLOCKWIDTH,
-    Y:5*BLOCKHEIGHT,
+    x:108*BLOCKWIDTH,
+    y:5*BLOCKHEIGHT,
     dir:0 ,
     length: 5,
     hangingEnemies: [],

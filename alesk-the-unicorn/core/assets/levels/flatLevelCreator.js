@@ -36,8 +36,8 @@ enemies.push({
 
 const level = {
     grassPlatforms: [{
-        X: -5000,
-        Y: 0,
+        x: -5000,
+        y: 0,
         dir: 0,
         length: 1000
     }],
@@ -82,7 +82,7 @@ const level = {
         y: 100,
     }, {
         x: 20000,
-        y: 100, 
+        y: 100,
     }, {
         x: 30000,
         y: 100
