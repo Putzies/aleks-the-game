@@ -32,7 +32,7 @@ public class AABB {
         return HEIGHT;
     }
 
-    // Check if intersecting in both X-Axis and Y-Axis
+    // Check if intersecting in both x-Axis and y-Axis
     public boolean intersects(AABB other){
         return isWithinX(other) && isWithinY(other);
     }
@@ -43,7 +43,7 @@ public class AABB {
                 Math.abs(this.getY() - (box2.getY() + box2.getHeight()-1)) > 0;
     }
 
-    // Check for intersection in X-Axis
+    // Check for intersection in x-Axis
     private boolean isWithinX(AABB other) {
         boolean withinX = this.x + this.WIDTH > other.x &&
                 this.x < other.x + other.WIDTH;
@@ -51,7 +51,7 @@ public class AABB {
         return withinX;
     }
 
-    // Check for intersection in Y-Axis
+    // Check for intersection in y-Axis
     private boolean isWithinY(AABB other) {
         boolean withinY = this.y + this.HEIGHT > other.y &&
                 this.y  < other.y + other.HEIGHT;

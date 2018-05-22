@@ -1,17 +1,16 @@
 package soldater.johannas.model.level.blocks;
 
 import soldater.johannas.model.Drawable;
+import soldater.johannas.model.level.Positionable;
 
-public abstract class Block implements Drawable {
+public abstract class Block extends Positionable implements Drawable {
     public static final int WIDTH = 54;
     public static final int HEIGHT = 51;
 
-    protected int X;
-    protected int Y;
 
-    public Block (int x, int y) {
-        this.X = x;
-        this.Y = y;
+    public Block (double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -34,15 +33,6 @@ public abstract class Block implements Drawable {
         return 0;
     }
 
-    @Override
-    public double getX() {
-        return X;
-    }
-
-    @Override
-    public double getY() {
-        return Y;
-    }
 
     @Override
     public abstract String getName();

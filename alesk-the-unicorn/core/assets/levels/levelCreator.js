@@ -36,8 +36,8 @@ function createBlocks() {
 
     // Create ground
     grassPlatforms.push({
-        X: -5000,
-        Y: 0,
+        x: -5000,
+        y: 0,
         dir: 0,
         length: 500,
         hangingEnemies: [],
@@ -45,8 +45,8 @@ function createBlocks() {
 
     // Create another platform
     grassPlatforms.push({
-        X: -2000,
-        Y: 200,
+        x: -2000,
+        y: 200,
         dir: 0,
         length: 5,
         hangingEnemies: [],
@@ -54,8 +54,8 @@ function createBlocks() {
 
     // Create lava
     lavaPlatforms.push({
-        X: 1740,
-        Y: 400,
+        x: 1740,
+        y: 400,
         dir: 0,
         length: 5,
         hangingEnemies: [],
@@ -63,8 +63,8 @@ function createBlocks() {
 
    //Create spikes
    spikePlatforms.push({
-        X: -1770,
-        Y: 400,
+        x: -1770,
+        y: 400,
         dir: 0,
         length: 5,
         hangingEnemies: [],
@@ -83,8 +83,8 @@ function createBlocks() {
 
     // Create some blocks with hanging spiders
     grassPlatforms.push({
-        X: -1500,
-        Y: 500,
+        x: -1500,
+        y: 500,
         dir: 0,
         length: 60,
         hangingEnemies,

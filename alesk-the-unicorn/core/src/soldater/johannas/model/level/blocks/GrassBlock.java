@@ -2,7 +2,7 @@ package soldater.johannas.model.level.blocks;
 
 public class GrassBlock extends Block {
 
-    public GrassBlock(int x, int y) {
+    public GrassBlock(double x, double y) {
         super(x, y);
     }
 

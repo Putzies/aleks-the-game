@@ -1,7 +1,7 @@
 package soldater.johannas.model.level.blocks;
 
 public class SpikeBlock extends Block {
-    public SpikeBlock(int x, int y) {
+    public SpikeBlock(double x, double y) {
         super(x, y);
     }
 

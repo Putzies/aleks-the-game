@@ -19,8 +19,8 @@ if(!name) {
 function createPlatforms(){
   // P21
   grassPlatforms.push({
-    X: 0,
-    Y: 11*BLOCKHEIGHT,
+    x: 0,
+    y: 11*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -28,8 +28,8 @@ function createPlatforms(){
 
   //P23
   grassPlatforms.push({
-    X: 1*BLOCKWIDTH,
-    Y: 19*BLOCKHEIGHT,
+    x: 1*BLOCKWIDTH,
+    y: 19*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -42,8 +42,8 @@ function createPlatforms(){
 
   //P20
   grassPlatforms.push({
-    X: 6*BLOCKWIDTH,
-    Y: 8*BLOCKHEIGHT,
+    x: 6*BLOCKWIDTH,
+    y: 8*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -56,8 +56,8 @@ function createPlatforms(){
 
   //P22
   grassPlatforms.push({
-    X: 6*BLOCKWIDTH,
-    Y: 15*BLOCKHEIGHT,
+    x: 6*BLOCKWIDTH,
+    y: 15*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -70,8 +70,8 @@ function createPlatforms(){
 
   //P24
   grassPlatforms.push({
-    X: 6*BLOCKWIDTH,
-    Y: 23*BLOCKHEIGHT,
+    x: 6*BLOCKWIDTH,
+    y: 23*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -84,8 +84,8 @@ function createPlatforms(){
 
   //P19
   grassPlatforms.push({
-    X: 12*BLOCKWIDTH,
-    Y: 5*BLOCKHEIGHT,
+    x: 12*BLOCKWIDTH,
+    y: 5*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -103,8 +103,8 @@ function createPlatforms(){
 
   //P25
   grassPlatforms.push({
-    X: 13*BLOCKWIDTH,
-    Y: 25*BLOCKHEIGHT,
+    x: 13*BLOCKWIDTH,
+    y: 25*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -136,8 +136,8 @@ function createPlatforms(){
   });
   //P26
   grassPlatforms.push({
-    X: 17*BLOCKWIDTH,
-    Y: 17*BLOCKHEIGHT,
+    x: 17*BLOCKWIDTH,
+    y: 17*BLOCKHEIGHT,
     dir: 1,
     length: 9,
     hangingEnemies: [],
@@ -145,8 +145,8 @@ function createPlatforms(){
 
   //P27
   grassPlatforms.push({
-    X: 18*BLOCKWIDTH,
-    Y: 17*BLOCKHEIGHT,
+    x: 18*BLOCKWIDTH,
+    y: 17*BLOCKHEIGHT,
     dir: 0,
     length: 8,
     hangingEnemies: [],
@@ -154,8 +154,8 @@ function createPlatforms(){
 
   //P18
   grassPlatforms.push({
-    X: 19*BLOCKWIDTH,
-    Y: 2*BLOCKHEIGHT,
+    x: 19*BLOCKWIDTH,
+    y: 2*BLOCKHEIGHT,
     dir: 0,
     length: 9,
     hangingEnemies: [],
@@ -163,8 +163,8 @@ function createPlatforms(){
 
   //P28
   grassPlatforms.push({
-    X: 26*BLOCKWIDTH,
-    Y: 13*BLOCKHEIGHT,
+    x: 26*BLOCKWIDTH,
+    y: 13*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -172,8 +172,8 @@ function createPlatforms(){
 
   //P29
   lavaPlatforms.push({
-    X: 30*BLOCKWIDTH,
-    Y: 13*BLOCKHEIGHT,
+    x: 30*BLOCKWIDTH,
+    y: 13*BLOCKHEIGHT,
     dir: 0,
     length: 5,
     hangingEnemies:  [{
@@ -186,8 +186,8 @@ function createPlatforms(){
 
   //P17
   grassPlatforms.push({
-    X: 30*BLOCKWIDTH,
-    Y: 2*BLOCKHEIGHT,
+    x: 30*BLOCKWIDTH,
+    y: 2*BLOCKHEIGHT,
     dir: 0,
     length: 6,
     hangingEnemies: [],
@@ -195,8 +195,8 @@ function createPlatforms(){
 
   //P16
   grassPlatforms.push({
-    X: 38*BLOCKWIDTH,
-    Y: 2*BLOCKHEIGHT,
+    x: 38*BLOCKWIDTH,
+    y: 2*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -204,8 +204,8 @@ function createPlatforms(){
 
   //P15
   grassPlatforms.push({
-    X: 45*BLOCKWIDTH,
-    Y: 2*BLOCKHEIGHT,
+    x: 45*BLOCKWIDTH,
+    y: 2*BLOCKHEIGHT,
     dir: 0,
     length: 6,
     hangingEnemies: [],
@@ -213,8 +213,8 @@ function createPlatforms(){
 
   //P14
   grassPlatforms.push({
-    X: 52*BLOCKWIDTH,
-    Y: 0*BLOCKHEIGHT,
+    x: 52*BLOCKWIDTH,
+    y: 0*BLOCKHEIGHT,
     dir: 0,
     length: 9,
     hangingEnemies: [],
@@ -222,8 +222,8 @@ function createPlatforms(){
 
   //PX
   spikePlatforms.push({
-    X:63*BLOCKWIDTH,
-    Y:2*BLOCKHEIGHT,
+    x:63*BLOCKWIDTH,
+    y:2*BLOCKHEIGHT,
     dir:0,
     length:3,
     hangingEnemies:[]
@@ -231,8 +231,8 @@ function createPlatforms(){
 
   //P13
   grassPlatforms.push({
-    X: 68*BLOCKWIDTH,
-    Y: 1*BLOCKHEIGHT,
+    x: 68*BLOCKWIDTH,
+    y: 1*BLOCKHEIGHT,
     dir: 0,
     length: 7,
     hangingEnemies: [],
@@ -240,8 +240,8 @@ function createPlatforms(){
 
   //P12
   lavaPlatforms.push({
-    X: 75*BLOCKWIDTH,
-    Y: 1*BLOCKHEIGHT,
+    x: 75*BLOCKWIDTH,
+    y: 1*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -249,8 +249,8 @@ function createPlatforms(){
 
   //P11
   grassPlatforms.push({
-    X: 79*BLOCKWIDTH,
-    Y: 1*BLOCKHEIGHT,
+    x: 79*BLOCKWIDTH,
+    y: 1*BLOCKHEIGHT,
     dir: 0,
     length: 30,
     hangingEnemies: [],
@@ -258,8 +258,8 @@ function createPlatforms(){
 
   //P30
   grassPlatforms.push({
-    X: 35*BLOCKWIDTH,
-    Y: 13*BLOCKHEIGHT,
+    x: 35*BLOCKWIDTH,
+    y: 13*BLOCKHEIGHT,
     dir: 0,
     length: 3,
     hangingEnemies:  [{
@@ -272,8 +272,8 @@ function createPlatforms(){
 
   //P31
   lavaPlatforms.push({
-    X: 38*BLOCKWIDTH,
-    Y: 13*BLOCKHEIGHT,
+    x: 38*BLOCKWIDTH,
+    y: 13*BLOCKHEIGHT,
     dir: 0,
     length: 2,
     hangingEnemies:  [{
@@ -286,8 +286,8 @@ function createPlatforms(){
 
   //P32
   grassPlatforms.push({
-    X: 40*BLOCKWIDTH,
-    Y: 13*BLOCKHEIGHT,
+    x: 40*BLOCKWIDTH,
+    y: 13*BLOCKHEIGHT,
     dir: 0,
     length: 3,
     hangingEnemies:  [{
@@ -300,8 +300,8 @@ function createPlatforms(){
 
   //P33
   lavaPlatforms.push({
-    X: 43*BLOCKWIDTH,
-    Y: 13*BLOCKHEIGHT,
+    x: 43*BLOCKWIDTH,
+    y: 13*BLOCKHEIGHT,
     dir: 0,
     length: 4,
     hangingEnemies: [],
@@ -309,8 +309,8 @@ function createPlatforms(){
 
   //P34
   grassPlatforms.push({
-    X: 47*BLOCKWIDTH,
-    Y: 13*BLOCKHEIGHT,
+    x: 47*BLOCKWIDTH,
+    y: 13*BLOCKHEIGHT,
     dir: 0,
     length: 5,
     hangingEnemies:  [{
@@ -323,8 +323,8 @@ function createPlatforms(){
 
   //P35
   grassPlatforms.push({
-    X: 54*BLOCKWIDTH,
-    Y: 15*BLOCKHEIGHT,
+    x: 54*BLOCKWIDTH,
+    y: 15*BLOCKHEIGHT,
     dir: 0,
     length: 38,
     hangingEnemies: [],
@@ -332,8 +332,8 @@ function createPlatforms(){
 
   //P36
   grassPlatforms.push({
-    X: 92*BLOCKWIDTH,
-    Y: 16*BLOCKHEIGHT,
+    x: 92*BLOCKWIDTH,
+    y: 16*BLOCKHEIGHT,
     dir: 1,
     length: 35,
     hangingEnemies: [],
@@ -341,8 +341,8 @@ function createPlatforms(){
 
   //37
   grassPlatforms.push({
-    X: 66*BLOCKWIDTH,
-    Y: 21*BLOCKHEIGHT,
+    x: 66*BLOCKWIDTH,
+    y: 21*BLOCKHEIGHT,
     dir: 0,
     length: 5,
     hangingEnemies:  [{
@@ -355,8 +355,8 @@ function createPlatforms(){
 
   //P38
   grassPlatforms.push({
-    X: 80*BLOCKWIDTH,
-    Y: 21*BLOCKHEIGHT,
+    x: 80*BLOCKWIDTH,
+    y: 21*BLOCKHEIGHT,
     dir: 0,
     length: 5,
     hangingEnemies:  [{
@@ -369,8 +369,8 @@ function createPlatforms(){
 
   //P39
   grassPlatforms.push({
-    X: 71*BLOCKWIDTH,
-    Y: 25*BLOCKHEIGHT,
+    x: 71*BLOCKWIDTH,
+    y: 25*BLOCKHEIGHT,
     dir: 0,
     length: 9,
     hangingEnemies: [],
