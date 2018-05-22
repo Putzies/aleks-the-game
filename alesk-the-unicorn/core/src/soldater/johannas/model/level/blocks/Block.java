@@ -6,6 +6,14 @@ public abstract class Block implements Drawable {
     public static final int WIDTH = 54;
     public static final int HEIGHT = 51;
 
+    protected int X;
+    protected int Y;
+
+    public Block (int x, int y) {
+        this.X = x;
+        this.Y = y;
+    }
+
     @Override
     public int getWidth() {
         return WIDTH;
@@ -24,6 +32,16 @@ public abstract class Block implements Drawable {
     @Override
     public int getState() {
         return 0;
+    }
+
+    @Override
+    public double getX() {
+        return X;
+    }
+
+    @Override
+    public double getY() {
+        return Y;
     }
 
     @Override
