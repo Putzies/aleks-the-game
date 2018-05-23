@@ -46,6 +46,7 @@ public class Game implements DrawableGame {
             );
 
         return level != null;
+
     }
 
     @Override

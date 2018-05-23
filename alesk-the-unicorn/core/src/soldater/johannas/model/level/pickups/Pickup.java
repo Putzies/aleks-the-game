@@ -2,6 +2,7 @@ package soldater.johannas.model.level.pickups;
 
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.Entity;
+import soldater.johannas.model.level.Player;
 import soldater.johannas.model.level.Positionable;
 
 import java.util.Random;
@@ -21,6 +22,7 @@ public abstract class Pickup extends Positionable implements Drawable, Entity {
     // Task object used for disabling a pickup effect after a set time.
     protected TimerTask t;
     protected Timer taskTimer;
+
 
     public Pickup(){
         BOUNCING_SPEED += new Random().nextDouble() * 2;

@@ -8,7 +8,7 @@ if(!name) {
 }
 
 
-const player = {
+const Player = {
     x: 2*BLOCKWIDTH,
     y: 1*BLOCKHEIGHT + 1,
 };
@@ -44,7 +44,7 @@ const level = {
     lavaPlatforms: [],
     spikePlatforms: [],
     enemies,
-    player,
+    Player,
     lunchboxes: [{
         x: 40000,
         y: 100
@@ -93,18 +93,23 @@ const level = {
     baguettes: [{
         x: 1000,
         y: 100
+        player: Player
     }, {
         x: 3000,
         y: 100,
+        player:[player]
     }, {
         x: 5000,
-        y: 100
+        y: 100,
+        player:[player]
     }, {
         x: 7000,
         y: 100,
+        player:[player]
     }, {
         x: 9000,
-        y: 100
+        y: 100,
+        player:[player]
     }],
 };
 

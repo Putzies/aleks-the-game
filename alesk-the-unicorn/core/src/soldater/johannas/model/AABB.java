@@ -7,7 +7,7 @@ public class AABB {
     protected final int HEIGHT;
 
 
-    AABB(double x, double y, int width, int height){
+    public AABB(double x, double y, int width, int height){
         this.x = x;
         this.y = y;
 
