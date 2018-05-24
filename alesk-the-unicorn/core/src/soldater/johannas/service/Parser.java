@@ -1,4 +1,4 @@
-package soldater.johannas.util;
+package soldater.johannas.service;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

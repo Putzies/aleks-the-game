@@ -9,11 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.model.DrawableGame;
-import soldater.johannas.util.Parser;
 import soldater.johannas.view.modal.LostModalMenu;
 import soldater.johannas.view.modal.ModalMenu;
 import soldater.johannas.view.modal.PauseModalMenu;
-import soldater.johannas.util.Colors;
+import soldater.johannas.view.Colors;
 import soldater.johannas.view.modal.WonModalMenu;
 
 public class UIRenderer {

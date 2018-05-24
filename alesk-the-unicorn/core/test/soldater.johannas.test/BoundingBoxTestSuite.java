@@ -1,4 +1,4 @@
-package soldater.johannas.testing;
+package soldater.johannas.test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
-        BoundingBoxTestUnit.class
+        soldater.johannas.test.BoundingBoxTestUnit.class
 })
 
 public class BoundingBoxTestSuite {

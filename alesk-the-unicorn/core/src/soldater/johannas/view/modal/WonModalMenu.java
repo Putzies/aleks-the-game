@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import soldater.johannas.control.menu.GameMenu;
-import soldater.johannas.util.Parser;
+import soldater.johannas.service.Parser;
 import soldater.johannas.util.Timer;
 import soldater.johannas.view.Highscore;
 import soldater.johannas.view.menus.MenuItem;

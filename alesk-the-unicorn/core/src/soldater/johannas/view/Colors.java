@@ -1,4 +1,4 @@
-package soldater.johannas.util;
+package soldater.johannas.view;
 
 import com.badlogic.gdx.graphics.Color;
 

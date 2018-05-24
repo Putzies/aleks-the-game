@@ -8,7 +8,7 @@ import soldater.johannas.control.SoundController;
 import soldater.johannas.control.menu.GameMenu;
 import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.control.menu.MainMenu;
-import soldater.johannas.util.Parser;
+import soldater.johannas.service.Parser;
 import soldater.johannas.view.LevelInfo;
 import soldater.johannas.view.menus.LevelSelectRenderer;
 import soldater.johannas.view.menus.MainMenuRenderer;

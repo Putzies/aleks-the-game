@@ -1,5 +1,4 @@
-package soldater.johannas.testing;
-
+package soldater.johannas.test;
 
 import junit.framework.TestCase;
 import org.junit.Before;
