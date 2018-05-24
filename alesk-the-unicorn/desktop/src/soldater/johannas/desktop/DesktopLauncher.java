@@ -9,6 +9,9 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1000;
 		config.height = 600;
+		//config.fullscreen = true;
+		config.title = "Alesk The Unicorn";;
+		config.resizable = false;
 
 		new LwjglApplication(new AleskTheUnicorn(), config);
 	}

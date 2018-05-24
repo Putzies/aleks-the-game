@@ -12,9 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Game implements DrawableGame {
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = 600;
-
     private Level level;
 
     private soldater.johannas.util.Timer timer = new soldater.johannas.util.Timer();

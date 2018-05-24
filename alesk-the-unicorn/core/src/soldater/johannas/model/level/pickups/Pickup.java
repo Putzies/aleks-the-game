@@ -2,8 +2,7 @@ package soldater.johannas.model.level.pickups;
 
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.Entity;
-import soldater.johannas.model.level.Player;
-import soldater.johannas.model.level.Positionable;
+import soldater.johannas.model.Positionable;
 
 import java.util.Random;
 import java.util.Timer;

@@ -1,7 +1,5 @@
 package soldater.johannas.model;
 
-import soldater.johannas.model.level.Positionable;
-
 import java.util.Timer;
 import java.util.TimerTask;
 

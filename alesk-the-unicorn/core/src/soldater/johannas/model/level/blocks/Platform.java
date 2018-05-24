@@ -1,7 +1,7 @@
 package soldater.johannas.model.level.blocks;
 
 import soldater.johannas.model.level.HangingEnemy;
-import soldater.johannas.model.level.Positionable;
+import soldater.johannas.model.Positionable;
 
 import java.util.List;
 

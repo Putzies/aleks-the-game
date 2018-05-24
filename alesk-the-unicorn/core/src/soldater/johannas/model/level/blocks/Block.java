@@ -1,7 +1,7 @@
 package soldater.johannas.model.level.blocks;
 
 import soldater.johannas.model.Drawable;
-import soldater.johannas.model.level.Positionable;
+import soldater.johannas.model.Positionable;
 
 public abstract class Block extends Positionable implements Drawable {
     public static final int WIDTH = 54;

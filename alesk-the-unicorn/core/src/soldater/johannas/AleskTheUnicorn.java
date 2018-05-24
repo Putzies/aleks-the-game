@@ -31,6 +31,7 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 
         screen = new MainMenuRenderer(this);
         this.setScreen(screen);
+
         soundController = new SoundController();
         soundController.loopTheme();
 	}

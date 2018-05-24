@@ -1,14 +1,9 @@
-package soldater.johannas.model.level;
+package soldater.johannas.model;
 
 public abstract class Positionable {
     protected double x,y;
 
-    public Positionable(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public Positionable(){};
+    public Positionable(){}
 
     public double getX() {
         return x;
