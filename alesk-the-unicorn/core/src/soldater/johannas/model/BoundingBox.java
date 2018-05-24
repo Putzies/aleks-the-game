@@ -1,13 +1,13 @@
 package soldater.johannas.model;
 
-public class AABB {
+public class BoundingBox {
     protected double x, y;
     // The width and height of the bounding box does not change
     protected final int WIDTH;
     protected final int HEIGHT;
 
 
-    public AABB(double x, double y, int width, int height){
+    public BoundingBox(double x, double y, int width, int height){
         this.x = x;
         this.y = y;
 
@@ -33,18 +33,18 @@ public class AABB {
     }
 
     // Check if intersecting in both X-Axis and Y-Axis
-    public boolean intersects(AABB other){
+    public boolean intersects(BoundingBox other){
         return isWithinX(other) && isWithinY(other);
     }
 
     // Not the smartest of functions but saves space.
-    public boolean lookaheadY(AABB box2){
+    public boolean lookaheadY(BoundingBox box2){
         return Math.abs(this.getY() - (box2.getY() + box2.getHeight()-1)) < 1 &&
                 Math.abs(this.getY() - (box2.getY() + box2.getHeight()-1)) > 0;
     }
 
     // Check for intersection in X-Axis
-    private boolean isWithinX(AABB other) {
+    private boolean isWithinX(BoundingBox other) {
         boolean withinX = this.x + this.WIDTH > other.x &&
                 this.x < other.x + other.WIDTH;
 
@@ -52,7 +52,7 @@ public class AABB {
     }
 
     // Check for intersection in Y-Axis
-    private boolean isWithinY(AABB other) {
+    private boolean isWithinY(BoundingBox other) {
         boolean withinY = this.y + this.HEIGHT > other.y &&
                 this.y  < other.y + other.HEIGHT;
 

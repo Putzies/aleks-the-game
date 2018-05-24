@@ -8,13 +8,13 @@ import static org.junit.Assert.assertEquals;
 import soldater.johannas.model.*;
 
 public class BoundingBoxTestUnit extends TestCase {
-    AABB a,b,c;
+    BoundingBox a,b,c;
 
     @Before
     public void setUp(){
-        a = new AABB(0,0,40,40);
-        b = new AABB(50, 50, 100, 100);
-        c = new AABB(20,-39.5,50,40);
+        a = new BoundingBox(0,0,40,40);
+        b = new BoundingBox(50, 50, 100, 100);
+        c = new BoundingBox(20,-39.5,50,40);
     }
 
 

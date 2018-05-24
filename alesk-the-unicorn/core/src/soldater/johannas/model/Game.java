@@ -95,13 +95,13 @@ public class Game implements DrawableGame {
     // Version 2: Checks for a collision and triggers the response.
     private void collidePickups() {
         // Future code cleanup.
-        AABB playerBox = new AABB(getPlayer().getX(), getPlayer().getY(), getPlayer().getWidth(), getPlayer().getHeight());
-        AABB other;
+        BoundingBox playerBox = new BoundingBox(getPlayer().getX(), getPlayer().getY(), getPlayer().getWidth(), getPlayer().getHeight());
+        BoundingBox other;
 
         for (Iterator<Pickup> iterator = level.pickups.iterator(); iterator.hasNext();) {
             Pickup pickup = iterator.next();
 
-            other = new AABB(pickup.getX(), pickup.getY(), pickup.getWidth(), pickup.getHeight());
+            other = new BoundingBox(pickup.getX(), pickup.getY(), pickup.getWidth(), pickup.getHeight());
 
             boolean remove = true;
 
@@ -131,12 +131,12 @@ public class Game implements DrawableGame {
         // We will constantly be using player. So lets store it for the time being.
         Player player = level.player;
 
-        AABB playerBox = new AABB(getPlayer().getX(), getPlayer().getY(), getPlayer().getWidth(), getPlayer().getHeight());
-        AABB other;
+        BoundingBox playerBox = new BoundingBox(getPlayer().getX(), getPlayer().getY(), getPlayer().getWidth(), getPlayer().getHeight());
+        BoundingBox other;
 
         for (Character character : characters) {
             if (character == player) { continue; }
-            other = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
+            other = new BoundingBox(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
 
             // Check if player and some character are colliding.
             if (playerBox.intersects(other)) {
@@ -150,7 +150,7 @@ public class Game implements DrawableGame {
             }
         }
         for (Character character : hangingEnemies){
-            other = new AABB(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
+            other = new BoundingBox(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
             // Check if player and some character are colliding.
             if (playerBox.intersects(other) && player.getPickupState() != Player.STRONG) {
                 player.damageInverted();
@@ -160,17 +160,17 @@ public class Game implements DrawableGame {
     }
 
     private void collideTerrain(){
-            AABB playerBox; // Not really the "playerbox" here but lets use it.
-            AABB other;     // Preferably platformBox but lets use this for now. (Easier to reason about improvements with same names everywhere).
+            BoundingBox playerBox; // Not really the "playerbox" here but lets use it.
+            BoundingBox other;     // Preferably platformBox but lets use this for now. (Easier to reason about improvements with same names everywhere).
 
             // Just loop through everything now. Creating a new other for each item to collide against and check for intersect.
             for (Character character : characters) {
                 character.resetCollisions();
 
-                playerBox = new AABB(character.getX(), character.getY() + 1, character.getWidth(), character.getHeight());
+                playerBox = new BoundingBox(character.getX(), character.getY() + 1, character.getWidth(), character.getHeight());
 
                 for (Platform platform: level.platforms) {
-                    other = new AABB(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
+                    other = new BoundingBox(platform.getX(), platform.getY(), platform.getWidth(), platform.getHeight());
 
                     if (playerBox.intersects(other)) {
                         if (playerBox.getX() + playerBox.getWidth() > other.getX() + other.getWidth() && character.xVel < 0) {
