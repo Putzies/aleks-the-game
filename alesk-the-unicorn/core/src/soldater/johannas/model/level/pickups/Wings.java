@@ -9,7 +9,6 @@ import static soldater.johannas.model.level.Player.FLY;
 
 public class Wings extends Pickup implements PlayerPickup {
 
-    // TODO Remember to double check the actual size of the Wings!
     public static final int WIDTH = 75;
     public static final int HEIGHT = 66;
 
@@ -25,7 +24,6 @@ public class Wings extends Pickup implements PlayerPickup {
 
     @Override
     public String getName() {
-        // TODO get the Wings spritename
         return "wings";
     }
 

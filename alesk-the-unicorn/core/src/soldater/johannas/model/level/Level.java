@@ -1,6 +1,5 @@
 package soldater.johannas.model.level;
 
-import soldater.johannas.model.*;
 import soldater.johannas.model.level.platforms.GrassPlatform;
 import soldater.johannas.model.level.platforms.LavaPlatform;
 import soldater.johannas.model.level.platforms.Platform;

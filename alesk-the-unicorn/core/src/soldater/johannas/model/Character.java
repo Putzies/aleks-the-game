@@ -8,10 +8,10 @@ import java.util.TimerTask;
  * Represents all characters in the game that collides with blocks and can be damaged.
  */
 public abstract class Character extends Positionable implements Entity {
-    public static final int UP = 0;
+    protected static final int UP = 0;
     public static final int RIGHT = 1;
     public static final int LEFT = 2;
-    public static final int DOWN = 3;
+    protected static final int DOWN = 3;
 
     protected final boolean[] collisions;
 
@@ -20,18 +20,15 @@ public abstract class Character extends Positionable implements Entity {
     protected double xVel, yVel;
     protected int life;
 
-    // The maximum interaction distance, used for sound and collision
-    protected double max_dist = 800;
-
-    // Boolean for disabling arrow key movement while being knockbacked.
-    protected boolean knockbacked = false;
+    // Boolean for disabling arrow key movement while being knockedBack.
+    protected boolean knockedBack = false;
 
     // Boolean for disabling damage in short time intervals
-    protected boolean damaged = false;
+    private boolean damaged = false;
 
     // Mid points, used for calculating sound distance.
     // TODO use midpoints for collisions
-    protected double midX,midY;
+    private double midX,midY;
 
     public Character(int x, int y) {
         this();
@@ -118,7 +115,7 @@ public abstract class Character extends Positionable implements Entity {
             life--;
         }
 
-        knockbacked = true;
+        knockedBack = true;
         damaged = true;
 
         // Set timer to not take damage again immediately

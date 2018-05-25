@@ -9,7 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Pickup extends Positionable implements Drawable, Entity {
-    private final int UP = 1;
     private final int DOWN = -1;
 
     private final int Y_VEL_LIMIT = 40;

@@ -10,7 +10,6 @@ import java.util.List;
  */
 public abstract class Platform extends Positionable{
     public static final int VERTICAL = 0;
-    public static final int HORIZONTAL = 1;
 
     protected int WIDTH;
     protected int HEIGHT;

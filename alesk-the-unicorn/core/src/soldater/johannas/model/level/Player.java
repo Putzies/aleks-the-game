@@ -13,8 +13,8 @@ public class Player extends Character implements Movable, DrawablePlayer {
 
     // States of the player character
     private int state = 0;
-    public static final int STANDING    = 0;
-    public static final int RUNNING     = 1;
+    private static final int STANDING    = 0;
+    private static final int RUNNING     = 1;
     public static final int JUMPING     = 2;
     public static final int FALLING     = 3;
 
@@ -69,7 +69,7 @@ public class Player extends Character implements Movable, DrawablePlayer {
 
         if(isOnGround()){
             this.xVel = 0;
-            knockbacked = false;
+            knockedBack = false;
         }
     }
 
@@ -83,7 +83,7 @@ public class Player extends Character implements Movable, DrawablePlayer {
 
     @Override
     public void left () {
-        if (!knockbacked) {
+        if (!knockedBack) {
             if (!collisions[Character.LEFT]) {
                 xVel = -600;
 
@@ -101,7 +101,7 @@ public class Player extends Character implements Movable, DrawablePlayer {
 
     @Override
     public void right() {
-        if (!knockbacked) {
+        if (!knockedBack) {
             if (!collisions[Character.RIGHT]) {
                 xVel = 600;
 
@@ -126,7 +126,7 @@ public class Player extends Character implements Movable, DrawablePlayer {
 
             // There are actually TWO cases where we can trigger jumping, this because of resetCollision().
             // The second case is what was being triggered
-            if (!collisions[UP] && collisions[DOWN] || !collisions[UP] && !collisions[DOWN]) {
+            if (!collisions[UP] && collisions[DOWN] || !collisions[UP]) {
                 yVel = 1000;
             }
         }

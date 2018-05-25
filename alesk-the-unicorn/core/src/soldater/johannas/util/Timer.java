@@ -11,19 +11,19 @@ public class Timer {
         return millis;
     }
 
-    public static int getHundreds(int millis) {
+    private static int getHundreds(int millis) {
         return (millis / 10) % 100;
     }
 
-    public static int getSeconds(int millis) {
+    private static int getSeconds(int millis) {
         return (millis / 1000) % 60;
     }
 
-    public static int getMinutes(int millis) {
+    private static int getMinutes(int millis) {
         return getSeconds(millis) / 60;
     }
 
-    public static int getHours(int millis) {
+    private static int getHours(int millis) {
         return getMinutes(millis) / 60;
     }
 

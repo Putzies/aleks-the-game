@@ -59,7 +59,7 @@ public class Game implements DrawableGame {
     @Override
     public int getTakenLunchBoxes(){
         return level.takenLunchboxes;
-    };
+    }
 
     @Override
     public int getTotalLunchBoxes() {
@@ -136,7 +136,7 @@ public class Game implements DrawableGame {
 
         for (Character character : characters) {
             if (character == player) { continue; }
-            other = new BoundingBox(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
+            other = new BoundingBox(character.getX(), character.getY(), character.getWidth(), character.getHeight());
 
             // Check if player and some character are colliding.
             if (playerBox.intersects(other)) {
@@ -150,7 +150,7 @@ public class Game implements DrawableGame {
             }
         }
         for (Character character : hangingEnemies){
-            other = new BoundingBox(character.getX(), character.getY(), character.getWidth(), character.getHeight());;
+            other = new BoundingBox(character.getX(), character.getY(), character.getWidth(), character.getHeight());
             // Check if player and some character are colliding.
             if (playerBox.intersects(other) && player.getPickupState() != Player.STRONG) {
                 player.damageInverted();

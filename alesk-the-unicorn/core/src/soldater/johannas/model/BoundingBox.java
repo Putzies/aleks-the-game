@@ -45,18 +45,14 @@ public class BoundingBox {
 
     // Check for intersection in X-Axis
     private boolean isWithinX(BoundingBox other) {
-        boolean withinX = this.x + this.WIDTH > other.x &&
+        return this.x + this.WIDTH > other.x &&
                 this.x < other.x + other.WIDTH;
-
-        return withinX;
     }
 
     // Check for intersection in Y-Axis
     private boolean isWithinY(BoundingBox other) {
-        boolean withinY = this.y + this.HEIGHT > other.y &&
+        return this.y + this.HEIGHT > other.y &&
                 this.y  < other.y + other.HEIGHT;
-
-        return withinY;
     }
 
 
