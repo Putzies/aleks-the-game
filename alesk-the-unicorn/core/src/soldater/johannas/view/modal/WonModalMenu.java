@@ -3,7 +3,7 @@ package soldater.johannas.view.modal;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import soldater.johannas.control.menu.GameMenu;
+import soldater.johannas.view.menus.GameMenu;
 import soldater.johannas.service.Parser;
 import soldater.johannas.util.Timer;
 import soldater.johannas.view.Highscore;

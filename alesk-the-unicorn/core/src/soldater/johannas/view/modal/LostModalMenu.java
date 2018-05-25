@@ -1,6 +1,6 @@
 package soldater.johannas.view.modal;
 
-import soldater.johannas.control.menu.GameMenu;
+import soldater.johannas.view.menus.GameMenu;
 import soldater.johannas.view.menus.MenuItem;
 
 import java.util.ArrayList;
