@@ -1,4 +1,4 @@
-package soldater.johannas.control.menu;
+package soldater.johannas.view.menus;
 
 public interface LevelSelection {
     void startLevel(String level);

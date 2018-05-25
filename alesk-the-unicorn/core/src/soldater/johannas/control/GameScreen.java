@@ -1,8 +1,8 @@
 package soldater.johannas.control;
 
-import soldater.johannas.control.menu.GameMenu;
+import soldater.johannas.view.menus.GameMenu;
 import soldater.johannas.view.game.GameRenderer;
-import soldater.johannas.view.ScreenRenderer;
+import soldater.johannas.view.menus.ScreenRenderer;
 import soldater.johannas.view.game.UIRenderer;
 
 import java.util.ArrayList;

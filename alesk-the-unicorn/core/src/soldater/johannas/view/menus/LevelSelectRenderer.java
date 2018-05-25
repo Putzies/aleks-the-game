@@ -5,11 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import soldater.johannas.control.menu.LevelSelection;
 import soldater.johannas.view.Colors;
 import soldater.johannas.view.Highscore;
 import soldater.johannas.view.LevelInfo;
-import soldater.johannas.view.ScreenRenderer;
 
 import java.util.ArrayList;
 import java.util.Comparator;

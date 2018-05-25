@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import soldater.johannas.control.menu.MainMenu;
-import soldater.johannas.view.ScreenRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
