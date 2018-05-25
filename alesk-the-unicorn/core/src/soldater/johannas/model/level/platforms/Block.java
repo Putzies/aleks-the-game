@@ -1,4 +1,4 @@
-package soldater.johannas.model.level.blocks;
+package soldater.johannas.model.level.platforms;
 
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.Positionable;

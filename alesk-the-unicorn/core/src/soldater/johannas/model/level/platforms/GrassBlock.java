@@ -1,4 +1,4 @@
-package soldater.johannas.model.level.blocks;
+package soldater.johannas.model.level.platforms;
 
 public class GrassBlock extends Block {
 

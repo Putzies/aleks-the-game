@@ -1,7 +1,7 @@
 package soldater.johannas.model;
 
 import soldater.johannas.model.level.*;
-import soldater.johannas.model.level.blocks.Platform;
+import soldater.johannas.model.level.platforms.Platform;
 import soldater.johannas.model.level.pickups.LevelPickup;
 import soldater.johannas.model.level.pickups.Pickup;
 import soldater.johannas.model.level.pickups.PlayerPickup;
