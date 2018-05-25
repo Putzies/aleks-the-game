@@ -422,7 +422,7 @@ function createEnemies(){
       lunchboxes,
       wings: [],
       energyDrinks: [],
-      baguettes: [],
+      dumbbells: [],
   };
 
 

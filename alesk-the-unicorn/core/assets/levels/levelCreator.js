@@ -126,7 +126,7 @@ const level = {
     lunchboxes,
     wings: [{x: 100, y: 50 * 2}],
     energyDrinks: [{x: 500, y: 50 * 2}],
-    baguettes: [{x: -200, y: 50 * 15}],
+    dumbbells: [{x: -200, y: 50 * 15}],
 };
 
 const levelMetadata = {

@@ -299,7 +299,7 @@ const level = {
     lunchboxes,
     wings: [],
     energyDrinks: [],
-    baguettes: [],
+    dumbbells: [],
 };
 
 
@@ -313,7 +313,7 @@ fs.writeFile(fileName + '.meta.json', JSON.stringify(levelMetadata, 'utf8', () =
     lunchboxes,
     wings: [],
     energyDrinks: [],
-    baguettes: [],
+    dumbbells: [],
 };
 
 

@@ -110,7 +110,7 @@ const level = {
     lunchboxes,
     wings: [],
     energyDrinks: [],
-    baguettes: [],
+    dumbbells: [],
 };
 
 

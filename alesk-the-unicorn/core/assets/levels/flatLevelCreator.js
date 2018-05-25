@@ -90,7 +90,7 @@ const level = {
         x: 40000,
         y: 100
     }],
-    baguettes: [{
+    dumbbells: [{
         x: 1000,
         y: 100
         player: Player

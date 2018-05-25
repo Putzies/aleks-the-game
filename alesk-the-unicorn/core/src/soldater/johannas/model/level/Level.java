@@ -22,7 +22,7 @@ public class Level {
     private final List<Lunchbox> lunchboxes;
     private final List<Wings> wings;
     private final List<EnergyDrink>energyDrinks;
-    private final List<Baguette> baguettes;
+    private final List<Dumbbell> dumbbells;
 
     public int totalLunchboxes;
     public int takenLunchboxes;
@@ -31,7 +31,7 @@ public class Level {
                  List<GrassPlatform> grassPlatforms, List<LavaPlatform> lavaPlatforms, List<SpikePlatform> spikePlatforms,
                  List<WalkingEnemy> enemies,
                  List<Lunchbox> lunchboxes, List<Wings> wings,
-                 List<Baguette> baguettes, List<EnergyDrink>energyDrinks) {
+                 List<Dumbbell> dumbbells, List<EnergyDrink>energyDrinks) {
         this.player = player;
         this.grassPlatforms = grassPlatforms;
         this.lavaPlatforms = lavaPlatforms;
@@ -44,7 +44,7 @@ public class Level {
         this.lunchboxes = lunchboxes;
         this.wings = wings;
         this.energyDrinks = energyDrinks;
-        this.baguettes = baguettes;
+        this.dumbbells = dumbbells;
         totalLunchboxes = lunchboxes.size();
         takenLunchboxes = 0;
     }
@@ -65,7 +65,7 @@ public class Level {
         pickups.addAll(lunchboxes);
         totalLunchboxes = lunchboxes.size();
         pickups.addAll(energyDrinks);
-        pickups.addAll(baguettes);
+        pickups.addAll(dumbbells);
         pickups.addAll(wings);
     }
 

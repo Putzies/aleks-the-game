@@ -7,7 +7,7 @@ import java.util.TimerTask;
 
 import static soldater.johannas.model.level.Player.STRONG;
 
-public class Baguette extends Pickup implements PlayerPickup {
+public class Dumbbell extends Pickup implements PlayerPickup {
 
     public static final int WIDTH = 51;
     public static final int HEIGHT = 39;
@@ -24,9 +24,9 @@ public class Baguette extends Pickup implements PlayerPickup {
 
     @Override
     public String getName() {
-        return "baguette";
+        return "dumbbell";
     }
-    
+
     public void doIt(Player player){
         this.taskTimer = new Timer();
         player.setPickup(STRONG);
@@ -48,4 +48,3 @@ public class Baguette extends Pickup implements PlayerPickup {
         taskTimer.cancel();
     }
 }
-
