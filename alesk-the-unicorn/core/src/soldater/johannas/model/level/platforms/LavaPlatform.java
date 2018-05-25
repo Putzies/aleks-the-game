@@ -2,6 +2,9 @@ package soldater.johannas.model.level.platforms;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a lava platform in the game
+ */
 public class LavaPlatform extends Platform {
 
     @Override

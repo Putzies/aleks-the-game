@@ -2,6 +2,9 @@ package soldater.johannas.model.level.platforms;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a spike platform in the game
+ */
 public class SpikePlatform extends Platform {
 
     @Override

@@ -5,6 +5,9 @@ import soldater.johannas.model.Positionable;
 
 import java.util.List;
 
+/**
+ * Represents a platform in the game
+ */
 public abstract class Platform extends Positionable{
     public static final int VERTICAL = 0;
     public static final int HORIZONTAL = 1;
@@ -22,6 +25,7 @@ public abstract class Platform extends Positionable{
 
     public abstract void construct();
 
+    // Decides weather a platform should give damage
     public abstract boolean isHarmful();
 
     public int getWidth() {

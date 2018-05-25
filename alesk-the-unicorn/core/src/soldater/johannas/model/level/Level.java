@@ -12,9 +12,9 @@ import java.util.List;
 
 public class Level {
     public List<Platform> platforms;
-    public final List<GrassPlatform> grassPlatforms;
-    public final List<LavaPlatform> lavaPlatforms;
-    public final List<SpikePlatform> spikePlatforms;
+    private final List<GrassPlatform> grassPlatforms;
+    private final List<LavaPlatform> lavaPlatforms;
+    private final List<SpikePlatform> spikePlatforms;
     public final Player player;
     public final List<WalkingEnemy> enemies;
     public final List<Score> scores;
