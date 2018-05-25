@@ -8,6 +8,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * An object possible to pick up by the player character
+ */
 public abstract class Pickup extends Positionable implements Drawable, Entity {
     private final int DOWN = -1;
 
@@ -42,6 +45,10 @@ public abstract class Pickup extends Positionable implements Drawable, Entity {
         return 0;
     }
 
+    /**
+     * Makes the pickup move up and down
+     * @param dTime the time step of the game
+     */
     @Override
     public void update(double dTime) {
         yVel += BOUNCING_SPEED * dir;

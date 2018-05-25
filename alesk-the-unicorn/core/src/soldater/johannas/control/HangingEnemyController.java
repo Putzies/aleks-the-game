@@ -4,6 +4,9 @@ import soldater.johannas.model.level.HangingEnemy;
 
 import java.util.Random;
 
+/**
+ * Controlls the movement of hanging enemies
+ */
 public class HangingEnemyController implements Controller{
     private HangingEnemy enemy;
     private Random random = new Random();
@@ -13,6 +16,9 @@ public class HangingEnemyController implements Controller{
         this.enemy = hangingEnemy;
     }
 
+    /**
+     * Updates the enemy, and makes it go up and down in a random manner within a specified range
+     */
     public void update() {
         if ((enemy.getY() > enemy.getStartY() && goingUp) || random.nextDouble() > 0.99) {
             enemy.down();

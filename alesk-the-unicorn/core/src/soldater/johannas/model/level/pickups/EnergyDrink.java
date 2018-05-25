@@ -7,6 +7,9 @@ import java.util.TimerTask;
 
 import static soldater.johannas.model.level.Player.FAST;
 
+/**
+ * An energy drink pickup
+ */
 public class EnergyDrink extends Pickup implements PlayerPickup {
 
     public static final int WIDTH = 27;
@@ -27,6 +30,11 @@ public class EnergyDrink extends Pickup implements PlayerPickup {
         return "energydrink";
     }
 
+    /**
+     * Sets the player state to FAST for a specific amount of time
+     * @param player the player character
+     */
+    @Override
     public void doIt(Player player){
         this.taskTimer = new Timer();
         player.setPickup(FAST);

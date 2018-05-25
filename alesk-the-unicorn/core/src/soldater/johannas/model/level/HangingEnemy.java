@@ -11,6 +11,7 @@ public class HangingEnemy extends Character {
 
     private double startY;
 
+    // Decides how far down the enemy will climb
     private double range;
 
     public HangingEnemy(int x, int y) {

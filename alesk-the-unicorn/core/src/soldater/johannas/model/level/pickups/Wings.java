@@ -7,6 +7,9 @@ import java.util.TimerTask;
 
 import static soldater.johannas.model.level.Player.FLY;
 
+/**
+ * A pickup in the form of a pair of wings
+ */
 public class Wings extends Pickup implements PlayerPickup {
 
     public static final int WIDTH = 75;
@@ -27,6 +30,11 @@ public class Wings extends Pickup implements PlayerPickup {
         return "wings";
     }
 
+    /**
+     * Sets the player state to FLY for a specific amount of time
+     * @param player the player character
+     */
+    @Override
     public void doIt(Player player){
         this.taskTimer = new Timer();
         player.setPickup(FLY);

@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import soldater.johannas.model.Movable;
 
+/**
+ * Controls the movement of player character through user input
+ */
 public class PlayerController implements Controller{
     private Movable player;
     private SoundController soundController;
@@ -17,6 +20,9 @@ public class PlayerController implements Controller{
         this.soundController = soundController;
     }
 
+    /**
+     * Makes the player character go left, right or jump based on keys pressed
+     */
     public void update() {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             player.right();

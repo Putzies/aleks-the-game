@@ -23,8 +23,8 @@ public class RainbowParticle {
     }
 
     /**
-     * Updates the rainbowparticle and make it fade after time
-     * @param dTime The time of the game
+     * Updates the rainbow particle and makes it faded and displaced after time
+     * @param dTime The time step of the game
      */
     public void update(double dTime) {
 
@@ -36,9 +36,7 @@ public class RainbowParticle {
             fadeLevel = 0;
             randPos = 0;
         }
-
         timeExisted += dTime;
-
     }
 
     public double getX() {

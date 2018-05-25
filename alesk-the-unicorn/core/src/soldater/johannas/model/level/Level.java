@@ -9,6 +9,9 @@ import soldater.johannas.model.level.pickups.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a level in the game
+ */
 public class Level {
     public List<Platform> platforms;
     private final List<GrassPlatform> grassPlatforms;

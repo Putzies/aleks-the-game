@@ -1,7 +1,7 @@
 package soldater.johannas.model;
 
 /**
- * Holds info about the player character required by the view
+ * Holds info required by the view about the player character
  */
 public interface DrawablePlayer extends Drawable {
 

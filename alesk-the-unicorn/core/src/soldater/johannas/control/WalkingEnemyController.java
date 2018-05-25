@@ -5,6 +5,9 @@ import soldater.johannas.model.level.WalkingEnemy;
 
 import java.util.Random;
 
+/**
+ * Controls the movement of walking enemies
+ */
 public class WalkingEnemyController implements Controller{
 
     private WalkingEnemy enemy;
@@ -19,6 +22,9 @@ public class WalkingEnemyController implements Controller{
         this.soundController = soundController;
     }
 
+    /**
+     * Updates the enemy, and makes it go back and forth and jump in a random manner within a specified range
+     */
     public void update() {
         if (random.nextInt(200) > 198 && enemy.isOnGround()) {
             enemy.jump();
@@ -38,6 +44,10 @@ public class WalkingEnemyController implements Controller{
         }
     }
 
+    /**
+     * Calculates the distance between the player character and the enemy
+     * @return the distance to the player
+     */
     private double getDistanceToPlayer() {
         double dX = player.getX() - enemy.getX();
         double dY = player.getY() - enemy.getY();

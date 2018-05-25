@@ -5,6 +5,9 @@ import soldater.johannas.model.level.Player;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * A dumbbell pickup
+ */
 import static soldater.johannas.model.level.Player.STRONG;
 
 public class Dumbbell extends Pickup implements PlayerPickup {
@@ -27,6 +30,11 @@ public class Dumbbell extends Pickup implements PlayerPickup {
         return "dumbbell";
     }
 
+    /**
+     * Sets the player state to STRONG for a specific amount of time
+     * @param player the player character
+     */
+    @Override
     public void doIt(Player player){
         this.taskTimer = new Timer();
         player.setPickup(STRONG);
