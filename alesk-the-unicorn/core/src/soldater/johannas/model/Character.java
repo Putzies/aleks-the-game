@@ -3,6 +3,10 @@ package soldater.johannas.model;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+/**
+ * Represents all characters in the game that collides with blocks and can be damaged.
+ */
 public abstract class Character extends Positionable implements Entity {
     public static final int UP = 0;
     public static final int RIGHT = 1;

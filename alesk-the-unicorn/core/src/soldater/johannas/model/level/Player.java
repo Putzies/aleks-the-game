@@ -5,24 +5,27 @@ import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawablePlayer;
 import soldater.johannas.model.Movable;
 
+// Models the player character. Is controlled by user input through PlayerController
 public class Player extends Character implements Movable, DrawablePlayer {
 
     public static final int WIDTH       = 132;
     public static final int HEIGHT      = 105;
+
+    // States of the player character
+    private int state = 0;
     public static final int STANDING    = 0;
     public static final int RUNNING     = 1;
     public static final int JUMPING     = 2;
     public static final int FALLING     = 3;
 
-    private int state = 0;
 
-    // For pickups
+    // Pickup states of the player character
+    private int pickupState = 0;
     public static final int NORMAL  = 0;
     public static final int FLY     = 1;
     public static final int STRONG  = 2;
     public static final int FAST    = 3;
 
-    private int pickupState = 0;
 
     public Player() {
         super();

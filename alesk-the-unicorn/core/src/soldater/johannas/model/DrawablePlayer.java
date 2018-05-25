@@ -1,8 +1,11 @@
 package soldater.johannas.model;
 
+/**
+ * Holds info about the player character required by the view
+ */
 public interface DrawablePlayer extends Drawable {
 
-    public int getLife();
+    int getLife();
 
-    public int getPickupState();
+    int getPickupState();
 }

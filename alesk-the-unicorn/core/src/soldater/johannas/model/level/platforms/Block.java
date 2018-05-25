@@ -3,6 +3,9 @@ package soldater.johannas.model.level.platforms;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.Positionable;
 
+/**
+ * Represents a block in the game
+ */
 public abstract class Block extends Positionable implements Drawable {
     public static final int WIDTH = 54;
     public static final int HEIGHT = 51;

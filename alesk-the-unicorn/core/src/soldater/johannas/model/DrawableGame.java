@@ -5,6 +5,9 @@ import soldater.johannas.util.Timer;
 
 import java.util.List;
 
+/**
+ * Holds info about the game required by the view
+ */
 public interface DrawableGame {
     List<Drawable> getDrawables();
     DrawablePlayer getPlayer();

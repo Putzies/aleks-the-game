@@ -4,6 +4,9 @@ import soldater.johannas.model.Character;
 import soldater.johannas.model.Drawable;
 import soldater.johannas.model.Movable;
 
+/**
+ * Models walking enemies. Controlled by WalkingEnemyController
+ */
 public class WalkingEnemy extends Character implements Movable {
     public static final int WIDTH = 93;
     public static final int HEIGHT = 36;

@@ -1,8 +1,10 @@
 package soldater.johannas.model.level;
 
-import com.badlogic.gdx.math.Vector3;
 import soldater.johannas.model.Character;
 
+/**
+ * Models hanging enemies. Controlled by WalkingEnemyController
+ */
 public class HangingEnemy extends Character {
     public static final int WIDTH = 93;
     public static final int HEIGHT = 36;

@@ -6,6 +6,9 @@ import soldater.johannas.view.game.RainbowParticle;
 
 import java.util.*;
 
+/**
+ * Renders the rainbow
+ */
 public class RainbowEmitter {
 
     private List<RainbowParticle> rainbow;
@@ -16,10 +19,9 @@ public class RainbowEmitter {
     private double y;
     private double xVel;
     private double yVel;
-    private Random rand = new Random();
 
     public RainbowEmitter(){
-        rainbow = new ArrayList<RainbowParticle>();
+        rainbow = new ArrayList<>();
         textures = new HashMap<>();
         textures.put("rainbow", new Texture("rainbow.png"));
         textures.put("rainbowFast", new Texture("rainbowFast.png"));
@@ -32,7 +34,7 @@ public class RainbowEmitter {
         // Make the rainbow start at the middle of the unicorn
         y += 15;
 
-        // Since the width of the rainbow particle sprite is 3, xVel has to be rounded to a multiple of three, to make it look nice
+        // Since the width of the rainbow particle sprite is 3, xVel has to be rounded to a multiple of three, in order to make it look nice
         xVel = roundTo3(x - this.x);
 
         yVel = (y - this.y);

@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+/**
+ * Holds info about objects required by the view
+ */
 public interface Drawable {
     int LEFT = -1;
     int RIGHT = 1;
