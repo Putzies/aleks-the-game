@@ -1,4 +1,4 @@
-package soldater.johannas.model.level.blocks;
+package soldater.johannas.model.level.platforms;
 
 public class SpikeBlock extends Block {
     public SpikeBlock(double x, double y) {

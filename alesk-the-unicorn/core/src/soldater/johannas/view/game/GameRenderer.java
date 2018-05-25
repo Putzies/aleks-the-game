@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import static soldater.johannas.model.level.Player.*;
 
+//Renders the playable game
 public class GameRenderer {
 
     public final int NUM_FRAMES = 6;
@@ -50,6 +51,7 @@ public class GameRenderer {
         playerY = Gdx.graphics.getHeight() / 2 - game.getPlayer().getHeight() / 2;
     }
 
+    // Renders the playable game
     public void render() {
         Drawable player = game.getPlayer();
 
@@ -72,11 +74,13 @@ public class GameRenderer {
         incrementFrames();
     }
 
+
     public void dispose() {
-        //batch.dispose();
+        batch.dispose();
         disposeTextures();
     }
 
+    // Loads the sprites and backgroundtextures
     private void loadTextures() {
         textures = new HashMap<>();
 
@@ -92,6 +96,8 @@ public class GameRenderer {
         }
     }
 
+
+    // Disposes the textures in order to free up memory
     private void disposeTextures() {
         for (Texture texture : textures.values()) {
             texture.dispose();
