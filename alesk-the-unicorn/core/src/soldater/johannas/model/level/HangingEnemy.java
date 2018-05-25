@@ -33,9 +33,6 @@ public class HangingEnemy extends Character {
 
     @Override
     public void update(double dTime) {
-        if (!collisions[DOWN]) {
-        }
-
         super.update(dTime);
     }
 
@@ -73,13 +70,13 @@ public class HangingEnemy extends Character {
     }
 
     public void down() {
-        if (!collisions[super.DOWN]) {
+        if (!collisions[DOWN]) {
             y -= 2;
         }
     }
 
     public void up() {
-        if (!collisions[super.UP]) {
+        if (!collisions[UP]) {
             y += 2;
         }
     }

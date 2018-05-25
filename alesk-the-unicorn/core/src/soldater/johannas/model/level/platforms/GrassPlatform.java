@@ -2,6 +2,9 @@ package soldater.johannas.model.level.platforms;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a grass platform in the game
+ */
 public class GrassPlatform extends Platform {
     @Override
     public void construct() {
