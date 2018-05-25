@@ -15,6 +15,9 @@ import soldater.johannas.view.modal.PauseModalMenu;
 import soldater.johannas.view.Colors;
 import soldater.johannas.view.modal.WonModalMenu;
 
+/**
+ * Renders the UI of the playable game
+ */
 public class UIRenderer {
 
     private final int TOP_Y = Gdx.graphics.getHeight() * 19 / 20;
