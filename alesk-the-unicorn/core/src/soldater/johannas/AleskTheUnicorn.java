@@ -66,11 +66,6 @@ public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, G
 	}
 
 	@Override
-	public void settings() {
-
-	}
-
-	@Override
 	public void quitGame() {
 	    screen.dispose();
         Gdx.app.exit();

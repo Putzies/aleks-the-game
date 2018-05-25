@@ -17,7 +17,6 @@ public class Level {
     public final List<SpikePlatform> spikePlatforms;
     public final Player player;
     public final List<WalkingEnemy> enemies;
-    public final List<Score> scores;
 
     public List<Pickup> pickups;
 
@@ -32,7 +31,7 @@ public class Level {
     public Level(Player player,
                  List<GrassPlatform> grassPlatforms, List<LavaPlatform> lavaPlatforms, List<SpikePlatform> spikePlatforms,
                  List<WalkingEnemy> enemies,
-                 List<Lunchbox> lunchboxes, List<Score> scores, List<Wings> wings,
+                 List<Lunchbox> lunchboxes, List<Wings> wings,
                  List<Baguette> baguettes, List<EnergyDrink>energyDrinks) {
         this.player = player;
         this.grassPlatforms = grassPlatforms;
@@ -44,7 +43,6 @@ public class Level {
         platforms.addAll(lavaPlatforms);
         this.enemies = enemies;
         this.lunchboxes = lunchboxes;
-        this.scores = scores;
         this.wings = wings;
         this.energyDrinks = energyDrinks;
         this.baguettes = baguettes;
@@ -70,10 +68,6 @@ public class Level {
         pickups.addAll(energyDrinks);
         pickups.addAll(baguettes);
         pickups.addAll(wings);
-    }
-
-    public void incrementLunchBoxes() {
-        takenLunchboxes++;
     }
 
 }
