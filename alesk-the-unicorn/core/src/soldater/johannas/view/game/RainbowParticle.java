@@ -2,6 +2,9 @@ package soldater.johannas.view.game;
 
 import java.util.Random;
 
+/**
+ * The smallest part of the rainbow
+ */
 public class RainbowParticle {
 
     private final int width = 3;
@@ -19,10 +22,13 @@ public class RainbowParticle {
         this.y = y;
     }
 
+    /**
+     * Updates the rainbowparticle and make it fade after time
+     * @param dTime The time of the game
+     */
     public void update(double dTime) {
 
         double lifePart = (timeExisted/lifetime)*10;
-
         if (lifePart > 5) {
             randPos = rand.nextInt((int)Math.pow(lifePart-4, 2.2));
             fadeLevel = (int) ((lifePart-5)*1.4) + rand.nextInt(3);

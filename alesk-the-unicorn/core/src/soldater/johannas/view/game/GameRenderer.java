@@ -74,13 +74,13 @@ public class GameRenderer {
         incrementFrames();
     }
 
-
+    // Frees up memory
     public void dispose() {
         batch.dispose();
         disposeTextures();
     }
 
-    // Loads the sprites and backgroundtextures
+    // Loads the sprites and background textures
     private void loadTextures() {
         textures = new HashMap<>();
 
@@ -104,6 +104,7 @@ public class GameRenderer {
         }
     }
 
+    // Draws the backgrounds in parallax
     private void drawBackgrounds() {
         Drawable player = game.getPlayer();
         Texture clouds = textures.get("clouds");
@@ -135,32 +136,41 @@ public class GameRenderer {
         }
     }
 
+    // Calculates the X position of the first background
     private int calculate1stBgX(int scaledPlayerX, int bgWidth) {
         int addFstBackground = (scaledPlayerX / bgWidth) % 2;
         double playerOffsetFirstX = (-scaledPlayerX) % (bgWidth * 2);
         return (int)(playerOffsetFirstX + addFstBackground * bgWidth * 2);
     }
 
+    // Calculates the X position of the second background
     private int calculate2ndBgX(int scaledPlayerX, int bgWidth) {
         int addSndBackground = ((scaledPlayerX + bgWidth) / bgWidth) % 2;
         double playerOffsetSecondX = ((-scaledPlayerX) - bgWidth) % (bgWidth * 2);
         return (int)(playerOffsetSecondX + addSndBackground * bgWidth * 2);
     }
 
+    // Calculates the Y position of the first background added in top of base backgrounds
     private int calculate1stStarsY(int scaledPlayerY, int starsHeight) {
         int addFirstSky = (scaledPlayerY / starsHeight) % 2;
         double playerOffsetFirstY = (-scaledPlayerY) % (starsHeight * 2);
         return (int)(playerOffsetFirstY + addFirstSky * starsHeight * 2);
     }
 
+    // Calculates the Y position of the second background added in top of base backgrounds
     private int calculate2ndStarsY(int scaledPlayerY, int starsHeight) {
         int addSecondSky = ((scaledPlayerY + starsHeight) / starsHeight) % 2;
         double playerOffsetSecondY = ((-scaledPlayerY) - starsHeight) % (starsHeight * 2);
         return (int)(playerOffsetSecondY + addSecondSky * starsHeight * 2);
     }
 
+    /**
+     * Draws the rainbow
+     */
     private void drawRainbow() {
         DrawablePlayer player = game.getPlayer();
+
+        // Updates the rainbow by adding rainbow particles based on player characters position
         rainbowEmitter.update(
                 1,
                 player.getX()+player.getWidth()/2,
@@ -168,6 +178,7 @@ public class GameRenderer {
                 (player.getState() == FALLING || player.getState() == JUMPING || player.getPickupState() == Player.FAST)
         );
 
+        // Draws the rainbow
         rainbowEmitter.draw(
                 batch,
                 playerX - (int)player.getX(),
@@ -176,10 +187,13 @@ public class GameRenderer {
         );
     }
 
+    /**
+     * Draws the player character
+     */
     private void drawPlayer() {
         DrawablePlayer player = game.getPlayer();
 
-        // Determine which texture to use
+        // Determine which texture to use based on pickup states
         String textureStr = "player";
         switch(player.getPickupState()) {
             case FLY:
@@ -204,12 +218,11 @@ public class GameRenderer {
                 player.getDirection() == Drawable.LEFT,
                 false
         );
-        // Debugging collisions
-//        shapeRenderer.setColor(Color.GREEN);
-//        shapeRenderer.box(playerX,playerY,0,player.getWidth(),player.getHeight(),0);
-//        shapeRenderer.setColor(Color.WHITE);
     }
 
+    /**
+     * Draws the rest of the drawable entities of the game
+     */
     private void drawDrawables() {
         Drawable player = game.getPlayer();
 
@@ -237,10 +250,12 @@ public class GameRenderer {
         }
     }
 
+    /**
+     * Draws the threads of the hanging spiders
+     */
     private void drawShapes() {
         Drawable player = game.getPlayer();
 
-        // Draw all the threads of hanging enemies
         for(HangingEnemy hangingE : game.getHangingEnemies()) {
             float x = (float) (hangingE.getX() - player.getX() + playerX + hangingE.getWidth()/2);
             float y = (float) (hangingE.getY() - player.getY() + playerY + hangingE.getHeight() -5);
@@ -250,6 +265,9 @@ public class GameRenderer {
         }
     }
 
+    /**
+     * Increments the frames, in order to enable animation of sprites
+     */
     private void incrementFrames() {
         frameTimer += 1;
         if (frameTimer > FRAME_FREQ) {
