@@ -5,7 +5,7 @@ import soldater.johannas.model.level.HangingEnemy;
 import java.util.Random;
 
 /**
- * Controlls the movement of hanging enemies
+ * Controls the movement of hanging enemies
  */
 public class HangingEnemyController implements Controller{
     private HangingEnemy enemy;

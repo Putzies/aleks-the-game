@@ -14,8 +14,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for parsing levels and level meta infos
+ */
 public class Parser {
-    public static final String BASE_PATH = "levels/";
+    private static final String BASE_PATH = "levels/";
 
     private Gson gson = new GsonBuilder().create();
 

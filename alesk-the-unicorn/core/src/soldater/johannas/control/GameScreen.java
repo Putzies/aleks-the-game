@@ -8,6 +8,9 @@ import soldater.johannas.view.game.UIRenderer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main game controller class. Connects GameRenderer with the model. Updates the model, the controllers and the GameRenderer.
+ */
 public class GameScreen extends ScreenRenderer {
 
 	private final GameMenu gameMenu;

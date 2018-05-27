@@ -26,16 +26,10 @@ public abstract class Character extends Positionable implements Entity {
     // Boolean for disabling damage in short time intervals
     private boolean damaged = false;
 
-    // Mid points, used for calculating sound distance.
-    // TODO use midpoints for collisions
-    private double midX,midY;
-
     public Character(int x, int y) {
         this();
         this.x = x;
         this.y = y;
-        this.midX = x + getWidth() / 2;
-        this.midY = y + getHeight() / 2;
     }
 
     public Character() {
@@ -69,10 +63,6 @@ public abstract class Character extends Positionable implements Entity {
             xVel = 0;
         }
     }
-
-    public double getMidX(){ return midX;}
-
-    public double getMidY(){ return midY;}
 
     public double getYvel() {
         return yVel;

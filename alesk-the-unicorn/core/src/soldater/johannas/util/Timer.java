@@ -1,5 +1,9 @@
 package soldater.johannas.util;
 
+/**
+ * Class for keeping track of the time in milliseconds, such as the score of the player in a level.
+ * Can also format the time nicely into a string. This class can be reused in a completely different context.
+ */
 public class Timer {
     private int millis = 0;
 

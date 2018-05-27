@@ -5,11 +5,11 @@ import soldater.johannas.model.level.Player;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static soldater.johannas.model.level.Player.STRONG;
+
 /**
  * A dumbbell pickup
  */
-import static soldater.johannas.model.level.Player.STRONG;
-
 public class Dumbbell extends Pickup implements PlayerPickup {
 
     public static final int WIDTH = 51;

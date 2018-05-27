@@ -1,5 +1,8 @@
 package soldater.johannas.model;
 
+/**
+ * Represents a box for detecting collision easier and cleaner. Is a simple rectangle.
+ */
 public class BoundingBox {
     protected double x, y;
     // The width and height of the bounding box does not change

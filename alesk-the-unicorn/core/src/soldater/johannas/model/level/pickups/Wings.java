@@ -8,7 +8,7 @@ import java.util.TimerTask;
 import static soldater.johannas.model.level.Player.FLY;
 
 /**
- * A pickup in the form of a pair of wings
+ * A pickup in the form of a pair of wings, allowing the player to fly for a short while
  */
 public class Wings extends Pickup implements PlayerPickup {
 

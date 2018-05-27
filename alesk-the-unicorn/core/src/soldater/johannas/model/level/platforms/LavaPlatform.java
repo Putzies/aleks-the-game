@@ -3,7 +3,7 @@ package soldater.johannas.model.level.platforms;
 import java.util.ArrayList;
 
 /**
- * Represents a lava platform in the game
+ * Represents a lava platform in the game. Will damage the player upon contact.
  */
 public class LavaPlatform extends Platform {
 

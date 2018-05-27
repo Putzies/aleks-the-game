@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a level in the game
+ * Represents a complete level in the game
  */
 public class Level {
     public List<Platform> platforms;

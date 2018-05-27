@@ -15,7 +15,9 @@ import soldater.johannas.view.menus.MainMenuRenderer;
 
 import java.util.List;
 
-
+/**
+ * Main entry class and actually the top level controller. Controls all navigation in the application.
+ */
 public class AleskTheUnicorn extends Game implements MainMenu, LevelSelection, GameMenu {
 
 	private Screen screen;

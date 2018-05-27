@@ -5,7 +5,9 @@ import soldater.johannas.model.Drawable;
 import soldater.johannas.model.DrawablePlayer;
 import soldater.johannas.model.Movable;
 
-// Models the player character. Is controlled by user input through PlayerController
+/** Models the player character. Is controlled by user input through PlayerController
+ *  Only contains logic specific for the Player.
+ */
 public class Player extends Character implements Movable, DrawablePlayer {
 
     public static final int WIDTH       = 132;

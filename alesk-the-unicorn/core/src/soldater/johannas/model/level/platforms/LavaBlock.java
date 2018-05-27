@@ -1,7 +1,7 @@
 package soldater.johannas.model.level.platforms;
 
 /**
- * Represents a block in the game
+ * Represents a block of lava in the game
  */
 public class LavaBlock extends Block {
 

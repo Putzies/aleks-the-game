@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The main class for the model. Handles collisions and keeps track of all live objects in the level.
+ */
 public class Game implements DrawableGame {
     private Level level;
 

@@ -6,7 +6,7 @@ import soldater.johannas.model.Positionable;
 import java.util.List;
 
 /**
- * Represents a platform in the game
+ * Represents a generic platform in the game, i.e. a collection of blocks
  */
 public abstract class Platform extends Positionable{
     public static final int VERTICAL = 0;

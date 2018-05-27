@@ -4,7 +4,7 @@ import soldater.johannas.model.Drawable;
 import soldater.johannas.model.Positionable;
 
 /**
- * Represents a block in the game
+ * Represents a single block in the game
  */
 public abstract class Block extends Positionable implements Drawable {
     public static final int WIDTH = 54;

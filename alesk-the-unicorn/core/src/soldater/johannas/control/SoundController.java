@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import soldater.johannas.model.Game;
 
+
+/**
+ * Responsible for loading and giving easy access to sounds
+ */
 public class SoundController {
     private Sound enemyJump = Gdx.audio.newSound(Gdx.files.internal("sounds/jump_02.wav"));
     private Sound jump = Gdx.audio.newSound(Gdx.files.internal("sounds/jump_07.wav"));

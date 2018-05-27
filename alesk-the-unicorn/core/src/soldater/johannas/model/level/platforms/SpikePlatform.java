@@ -3,7 +3,7 @@ package soldater.johannas.model.level.platforms;
 import java.util.ArrayList;
 
 /**
- * Represents a spike platform in the game
+ * Represents a spike platform in the game. Will damage the player upon contact.
  */
 public class SpikePlatform extends Platform {
 
