@@ -12,16 +12,19 @@ import soldater.johannas.view.menus.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Base class for all modal menus and contains all common code.
+ */
 public abstract class ModalMenu extends AnimatedMenu {
 
-    protected GameMenu gameMenu;
-    protected int selectedItem = 0;
+    GameMenu gameMenu;
+    int selectedItem = 0;
 
     private List<MenuItem> items;
     private MenuItem title;
     private Texture background;
     private int margin = 0;
-    int modalX, modalY;
+    private int modalX, modalY;
 
     public ModalMenu(GameMenu gameMenu) {
         loadTextures();

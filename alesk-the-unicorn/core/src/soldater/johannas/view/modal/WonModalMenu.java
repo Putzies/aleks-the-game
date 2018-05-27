@@ -12,15 +12,14 @@ import soldater.johannas.view.menus.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Rendering the modal menu when won. Prompts to save high score if there is a new high score.
+ */
 public class WonModalMenu extends ModalMenu {
-
-    private final int HIGHSCORE_X = Gdx.graphics.getWidth() / 2;
 
     private int score;
     private String formattedScore;
     private Parser parser;
-
-    private boolean willExit = false;
     private boolean showHighscore;
 
     public WonModalMenu(GameMenu gameMenu, Timer gameTimer) {

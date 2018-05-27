@@ -6,6 +6,9 @@ import soldater.johannas.view.menus.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The modal menu shown when losing a game. Handles rendering and user input.
+ */
 public class LostModalMenu extends ModalMenu {
 
     public LostModalMenu(GameMenu gameMenu) {

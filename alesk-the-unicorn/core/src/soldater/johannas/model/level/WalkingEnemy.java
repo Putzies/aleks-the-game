@@ -36,7 +36,7 @@ public class WalkingEnemy extends Character implements Movable {
 
     @Override
     public void left() {
-        if (!collisions[LEFT]) {
+        if (!collisions[Character.LEFT]) {
             x -= 2;
         }
         direction = Drawable.LEFT;
@@ -44,7 +44,7 @@ public class WalkingEnemy extends Character implements Movable {
 
     @Override
     public void right() {
-        if (!collisions[RIGHT]) {
+        if (!collisions[Character.RIGHT]) {
             x += 2;
         }
         direction = Drawable.RIGHT;

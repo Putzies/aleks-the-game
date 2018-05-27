@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Responsible for rendering the main menu and listen for user input and act on them
+ */
 public class MainMenuRenderer extends ScreenRenderer {
 
-    private final int ITEM_WIDTH = 225;
     private int START_Y = Gdx.graphics.getHeight() / 3;
     private final int MARGIN = 40;
 

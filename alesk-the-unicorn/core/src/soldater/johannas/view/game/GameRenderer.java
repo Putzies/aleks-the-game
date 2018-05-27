@@ -16,11 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 import static soldater.johannas.model.level.Player.*;
 
-//Renders the playable game
+// Renders the playable game, including sprites and animations
 public class GameRenderer {
 
-    public final int NUM_FRAMES = 6;
-    public final int FRAME_FREQ = 3;
+    private final int NUM_FRAMES = 6;
+    private final int FRAME_FREQ = 3;
 
     private int frameTimer = 0;
 

@@ -16,7 +16,7 @@ import soldater.johannas.view.Colors;
 import soldater.johannas.view.modal.WonModalMenu;
 
 /**
- * Renders the UI of the playable game
+ * Renders the UI of the playable game, such as the score, the time and health. Keeps track of modal menus.
  */
 public class UIRenderer {
 

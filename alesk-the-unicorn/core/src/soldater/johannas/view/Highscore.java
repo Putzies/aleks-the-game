@@ -2,10 +2,14 @@ package soldater.johannas.view;
 
 import soldater.johannas.util.Timer;
 
+/**
+ * Class for serializing and deserializing high scores of a level
+ */
 public class Highscore {
     private int score;
     private String name;
 
+    // Required for parsing
     public Highscore() {
 
     }

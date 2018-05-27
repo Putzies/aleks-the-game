@@ -5,6 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import soldater.johannas.view.menus.AnimatedMenu;
 
+/**
+ * Facade (?) pattern class, hiding a lot of the Screen-interface methods and doing some simple reusable logic
+ */
 public abstract class ScreenRenderer extends AnimatedMenu implements Screen {
 
     @Override

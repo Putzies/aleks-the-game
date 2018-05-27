@@ -6,6 +6,9 @@ import soldater.johannas.view.menus.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Renders the modal menu when game is paused.
+ */
 public class PauseModalMenu extends ModalMenu {
 
     public PauseModalMenu(GameMenu gameMenu) {

@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Align;
 
+/**
+ * Represents either a sprite or a piece of text in a unified way.
+ */
 public class MenuItem {
     public enum Alignment {
         LEFT,
         CENTER
-    };
+    }
 
     private Texture texture;
 

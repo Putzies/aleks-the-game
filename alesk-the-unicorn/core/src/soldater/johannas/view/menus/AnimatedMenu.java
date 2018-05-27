@@ -1,9 +1,12 @@
 package soldater.johannas.view.menus;
 
-public class AnimatedMenu {
+/**
+ * Class for gathering all animation logic for menus
+ */
+public abstract class AnimatedMenu {
     protected final int N_FRAMES = 10;
     protected int frame;
-    protected float frameCounter = 0;
+    private float frameCounter = 0;
 
     protected void incrementFrames(float delta) {
         frameCounter += delta;

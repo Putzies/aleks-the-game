@@ -3,7 +3,7 @@ package soldater.johannas.view.game;
 import java.util.Random;
 
 /**
- * The smallest part of the rainbow
+ * The smallest part of the rainbow, emitted by the RainbowEmitter
  */
 public class RainbowParticle {
 

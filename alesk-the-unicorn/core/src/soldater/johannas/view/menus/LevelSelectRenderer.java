@@ -14,12 +14,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Responsible for rendering the level selection menu and acting on user input.
+ */
 public class LevelSelectRenderer extends ScreenRenderer {
     private final int SELECTED_LEVEL_Y = Gdx.graphics.getHeight() / 2;
     private final int SELECTED_LEVEL_X = 250;
 
     private final int HIGHSCORES_X = Gdx.graphics.getWidth() * 2 / 3;
-    private final int HIGHSCORES_TOP_Y = Gdx.graphics.getHeight() * 1 / 4;
+    private final int HIGHSCORES_TOP_Y = Gdx.graphics.getHeight() / 4;
 
     private final int MARGIN = 20;
 

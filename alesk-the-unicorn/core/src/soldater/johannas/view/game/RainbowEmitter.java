@@ -7,7 +7,7 @@ import soldater.johannas.view.game.RainbowParticle;
 import java.util.*;
 
 /**
- * Renders the rainbow
+ * Renders the rainbow, emitting its particles
  */
 public class RainbowEmitter {
 
